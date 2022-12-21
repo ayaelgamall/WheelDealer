@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604474291978",
+    "project_id": "bar2-banzeen",
+    "storage_bucket": "bar2-banzeen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604474291978:android:166d83a012546157792cf3",
+        "android_client_info": {
+          "package_name": "com.example.bar2_banzeen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604474291978-p6b87bnr4dl7t5hu9qm9ioqofbh7rd6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1xzY7aR90M1HD_3CCZPs3as-DtP_YHW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604474291978-p6b87bnr4dl7t5hu9qm9ioqofbh7rd6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
