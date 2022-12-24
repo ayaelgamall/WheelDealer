@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/facebook_login_button.dart';
 import 'package:email_validator/email_validator.dart';
@@ -7,18 +9,19 @@ import 'package:provider/provider.dart';
 
 import '../widgets/google_login_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({Key? key}) : super(key: key);
 
-  static const routeName = '/login';
+  static const routeName = '/signup';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
+  late TextEditingController _confirmPasswordTextController;
 
   bool _formHasErrors = true;
 
@@ -27,12 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
+    _confirmPasswordTextController = TextEditingController();
   }
 
   @override
   void dispose() {
     _emailTextController.dispose();
     _passwordTextController.dispose();
+    _confirmPasswordTextController.dispose();
     super.dispose();
   }
 
@@ -47,13 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             width: 10,
           ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 300),
-            child: Text(
-              msg,
-              maxLines: 2,
-              style: const TextStyle(fontSize: 18),
-            ),
+          Text(
+            msg,
+            style: const TextStyle(fontSize: 18),
           ),
         ],
       ),
@@ -80,8 +81,10 @@ class _LoginScreenState extends State<LoginScreen> {
           onChanged: () {
             bool validEmail =
                 EmailValidator.validate(_emailTextController.text);
+            bool validPassword = _confirmPasswordTextController.text ==
+                _passwordTextController.text;
             bool notEmptyPassword = _passwordTextController.text.isNotEmpty;
-            updateError(!(validEmail && notEmptyPassword));
+            updateError(!(validEmail && validPassword && notEmptyPassword));
           },
           child: LayoutBuilder(
             builder:
@@ -95,9 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextFormField(
                       controller: _emailTextController,
-                      validator: (value) => EmailValidator.validate(value!)
-                          ? null
-                          : "Please enter a valid email address",
+                      validator: (value) {
+                        return EmailValidator.validate(value!)
+                            ? null
+                            : "Please enter a valid email address";
+                      },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Email",
@@ -115,11 +120,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        InkWell(child: Text("Forgot your password?"))
-                      ],
+                    TextFormField(
+                      controller: _confirmPasswordTextController,
+                      obscureText: true,
+                      validator: (value) {
+                        return value == _passwordTextController.text
+                            ? null
+                            : "Passwords are incompatible";
+                      },
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Confirm Password"),
                     ),
                     const SizedBox(
                       height: 40,
@@ -131,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: !_formHasErrors
                             ? () async {
                                 String? err = await AuthenticationService()
-                                    .signInWithEmail(_emailTextController.text,
+                                    .signUpWithEmail(_emailTextController.text,
                                         _passwordTextController.text);
                                 if (err != null) {
                                   ScaffoldMessenger.of(context)
@@ -152,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   : const Color(0xffcccccc)),
                         ),
                         child: const Text(
-                          "Login",
+                          "Sign Up",
                           style: TextStyle(fontSize: 22),
                         ),
                       ),
@@ -193,16 +204,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account? "),
+                        const Text("Already have an account? "),
                         InkWell(
                           child: const Text(
-                            "Sign up",
+                            "Login",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 183, 147, 0)),
                           ),
                           onTap: () {
                             Navigator.of(context)
-                                .pushReplacementNamed('/signup');
+                                .pushReplacementNamed('/login');
                           },
                         )
                       ],
