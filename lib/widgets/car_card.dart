@@ -4,13 +4,19 @@ import 'package:flutter/material.dart';
 class CarCard extends StatelessWidget {
   double height;
   double width;
-  CarCard({super.key, required this.width, required this.height});
+  double rightMargin;
+  CarCard(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.rightMargin});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {},
         child: Card(
+          margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
           color: Color.fromARGB(255, 178, 178, 178),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
           elevation: 4,
@@ -62,7 +68,7 @@ class CarCard extends StatelessWidget {
                           Icon(
                             Icons.bolt,
                             color: Color.fromARGB(255, 183, 150, 19),
-                            size: 14,
+                            size: 16,
                           ),
                           Text(
                             "Top bid",

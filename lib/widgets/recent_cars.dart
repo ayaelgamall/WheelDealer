@@ -1,11 +1,12 @@
-import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:bar2_banzeen/widgets/view_more_button.dart';
 import 'package:flutter/material.dart';
 
-class TrendyCars extends StatelessWidget {
-  double height;
+import 'car_card.dart';
+
+class RecentCars extends StatelessWidget {
   double width;
-  TrendyCars({super.key, required this.width, required this.height});
+  double height;
+  RecentCars({super.key, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,11 @@ class TrendyCars extends StatelessWidget {
         itemBuilder: (ctx, idx) {
           return idx == count - 1
               ? ViewMoreButton(width: width, height: height)
-              : CarCard(width: width, height: height, rightMargin: 20);
+              : CarCard(
+                  width: width,
+                  height: height,
+                  rightMargin: 20,
+                );
         },
         itemCount: count,
       ),
