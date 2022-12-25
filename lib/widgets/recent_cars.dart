@@ -16,13 +16,11 @@ class RecentCars extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (ctx, idx) {
-          return idx == count - 1
-              ? ViewMoreButton(width: width, height: height)
-              : CarCard(
-                  width: width,
-                  height: height,
-                  rightMargin: 20,
-                );
+          return CarCard(
+            width: width,
+            height: height,
+            rightMargin: 20,
+          );
         },
         itemCount: count,
       ),

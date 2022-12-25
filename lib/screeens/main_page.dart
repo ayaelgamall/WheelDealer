@@ -1,4 +1,4 @@
-import 'package:bar2_banzeen/widgets/all_cars.dart';
+import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/recent_cars.dart';
 import 'package:bar2_banzeen/widgets/trendy_cars.dart';
 import 'package:flutter/material.dart';
@@ -30,50 +30,40 @@ class MainPage extends StatelessWidget {
             itemBuilder: (ctx, idx) {
               return idx == 0
                   ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Trending",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 60, 64, 72),
-                          ),
-                          textAlign: TextAlign.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MainHeading(text: "Trending"),
+                            ViewMoreText(),
+                          ],
                         ),
                         TrendyCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                         ),
-                        Text(
-                          "What's new",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 60, 64, 72),
-                          ),
-                          textAlign: TextAlign.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MainHeading(text: "What's new"),
+                            ViewMoreText()
+                          ],
                         ),
                         RecentCars(width: 0.73 * width, height: 0.4 * height),
-                        Text(
-                          "All cars",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 60, 64, 72),
-                          ),
-                          textAlign: TextAlign.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            ViewMoreText()
+                          ],
                         ),
                         // AllCars(width: 0.89 * width, height: 0.3 * height)
                       ],
                     )
-                  : idx == count - 1
-                      ? ViewMoreButton(
-                          width: 0.89 * width, height: 0.3 * height)
-                      : CarCard(
-                          width: 0.89 * width,
-                          height: 0.3 * height,
-                          rightMargin: 0);
+                  : CarCard(
+                      width: 0.89 * width,
+                      height: 0.4 * height,
+                      rightMargin: 0);
             },
             itemCount: count,
           ),
