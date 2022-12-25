@@ -1,4 +1,3 @@
-
 import 'package:bar2_banzeen/components/theme.dart';
 
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -31,12 +30,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  void initState(){
+  void initState() {
     super.initState();
-    appTheme.addListener((){ //👈 this is to notify the app that the theme has changed
-      setState(() {});       //👈 this is to force a rerender so that the changes are carried out
+    appTheme.addListener(() {
+      //👈 this is to notify the app that the theme has changed
+      setState(
+          () {}); //👈 this is to force a rerender so that the changes are carried out
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -49,8 +51,10 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
         initialRoute: LoginScreen.routeName,
-        themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
-        darkTheme: darkTheme,          //👈 this is the darkTheme that we defined in the theme.dart file
+        themeMode: appTheme
+            .themeMode, //👈 this is the themeMode defined in the AppTheme class
+        darkTheme:
+            darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
         theme: lightTheme,
       ),
     );
