@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bar2_banzeen/screeens/login.dart';
+import './screeens/messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'app_router.dart';
@@ -15,12 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: AppRouter().generateRoute,
-
-      initialRoute: LoginPage.routeName,
+      // initialRoute: LoginPage.routeName,
+      initialRoute: MessagingScreen.routeName,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: Color(0xffc63432),
+          //centerTitle: true,
+          elevation: 0,
+          backgroundColor: Color(0xFF29292A),
           foregroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontFamily: 'Urbanist',
@@ -42,11 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         backgroundColor: Color(0xffeeeff1),
         primaryColor: Color(0xffc63432),
-        accentColor: Color(0xffd59727),
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: Color(0xffd59727)),
       ),
-
     );
   }
 }
-
-
