@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
+import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -7,6 +8,7 @@ class AppRouter {
     var routes = <String, WidgetBuilder>{
       LoginScreen.routeName: (context) => const LoginScreen(),
       SignupScreen.routeName: (context) => const SignupScreen(),
+      MainPage.routeName: (context) => const MainPage(),
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const LoginScreen();
