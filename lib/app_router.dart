@@ -1,6 +1,6 @@
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
-import 'package:bar2_banzeen/screeens/main_page.dart';
+import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -12,5 +12,6 @@ class AppRouter {
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const LoginScreen();
+    return MaterialPageRoute(builder: (ctx) => builder(ctx));
   }
 }
