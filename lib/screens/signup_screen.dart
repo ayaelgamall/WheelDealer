@@ -157,10 +157,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               borderRadius: BorderRadius.circular(7),
                             ),
                           ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              !_formHasErrors
-                                  ? const Color(0xffd5b741)
-                                  : const Color(0xffcccccc)),
+                          //already handled in the theme
+                          // backgroundColor: MaterialStateProperty.all<Color>(
+                          //     !_formHasErrors
+                          //         ? Theme.of(context).buttonColor
+                          //         : Theme.of(context).unselectedWidgetColor),
                         ),
                         child: const Text(
                           "Sign Up",

@@ -146,10 +146,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(7),
                             ),
                           ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              !_formHasErrors
-                                  ? const Color(0xffd5b741)
-                                  : const Color(0xffcccccc)),
+                          // backgroundColor: MaterialStateProperty.all<Color>(
+                          //     !_formHasErrors
+                          //         ? Theme.of(context).buttonColor
+                          //         : Theme.of(context).unselectedWidgetColor),
                         ),
                         child: const Text(
                           "Login",
@@ -198,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 183, 147, 0)),
+                                color: Color.fromARGB(255, 183, 147, 0)), //TODO Cannot make it as the theme requires constant
                           ),
                           onTap: () {
                             Navigator.of(context)
