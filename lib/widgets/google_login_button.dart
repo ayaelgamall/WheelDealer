@@ -23,7 +23,7 @@ class GoogleLoginButton extends StatelessWidget {
               ),
               Text(
                 "Continue with Google",
-                style: TextStyle(fontSize: 18, color: Colors.black54),
+                style: TextStyle(fontSize: 18, color: Colors.black54),//Todo change to be related to the theme
               )
             ],
           ),
