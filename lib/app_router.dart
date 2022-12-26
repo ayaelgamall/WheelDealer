@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/screens/editProfile.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -9,6 +10,8 @@ class AppRouter {
       LoginScreen.routeName: (context) => const LoginScreen(),
       SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
+      EditProfile.routeName: (context) => const EditProfile(),
+
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const LoginScreen();
