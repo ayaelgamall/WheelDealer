@@ -22,7 +22,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   void initializeFirebase() async {
     try {
-      await Firebase.initializeApp();
       setState(() {
         isIntialized = true;
       });
