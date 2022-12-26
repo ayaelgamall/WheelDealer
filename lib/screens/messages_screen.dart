@@ -20,21 +20,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
   bool isError = false;
   String thisUserId = "IKON6R95EWKMNeQbDemX";
 
-  void initializeFirebase() async {
-    try {
-      setState(() {
-        isIntialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        isError = true;
-      });
-    }
-  }
-
   @override
   void initState() {
-    initializeFirebase();
     super.initState();
   }
 
