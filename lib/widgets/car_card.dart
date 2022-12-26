@@ -25,7 +25,6 @@ class CarCard extends StatelessWidget {
         onTap: () {},
         child: Card(
           margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
-          color: Color.fromARGB(255, 178, 178, 178),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
           elevation: 4,
           child: FutureBuilder<DocumentSnapshot>(
@@ -67,7 +66,6 @@ class CarCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 60, 64, 72),
                                 ),
                               ),
                               Row(
@@ -82,7 +80,6 @@ class CarCard extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 60, 64, 72),
                                     ),
                                   ),
                                 ],

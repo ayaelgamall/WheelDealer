@@ -38,6 +38,7 @@ class MainPage extends StatelessWidget {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           MainHeading(text: "Trending"),
                           ViewMoreText(),
@@ -49,6 +50,7 @@ class MainPage extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           MainHeading(text: "What's new"),
                           ViewMoreText()
@@ -57,6 +59,7 @@ class MainPage extends StatelessWidget {
                       RecentCars(width: 0.73 * width, height: 0.4 * height),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           MainHeading(text: "All cars"),
                           ViewMoreText()

@@ -52,7 +52,6 @@ class _CardTimerState extends State<CardTimer> {
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
-          color: Color.fromARGB(255, 60, 64, 72),
         ));
   }
 
