@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -5,14 +8,27 @@ class CarCard extends StatelessWidget {
   double height;
   double width;
   double rightMargin;
+  String? brand;
+  String? model;
+  int? topBid; //TODO: to be added to the cars collection
+  Timestamp? deadline; //TODO: Create card timer
+
   CarCard(
       {super.key,
       required this.width,
       required this.height,
-      required this.rightMargin});
+      required this.rightMargin,
+      this.brand,
+      this.model,
+      this.topBid,
+      this.deadline});
 
   @override
   Widget build(BuildContext context) {
+    final datDiff = deadline!.toDate().difference(DateTime.now());
+    final remHours = datDiff.inHours;
+    final remMin = datDiff.inMinutes % 60;
+    final remSec = datDiff.inMinutes % 60;
     return InkWell(
       onTap: () {},
       child: Card(
@@ -42,7 +58,7 @@ class CarCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Porsche 911 Speedster",
+                        "$brand $model",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -77,7 +93,9 @@ class CarCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "20H:15M:23S",
+                          datDiff.isNegative
+                              ? "Bid ended"
+                              : "${remHours}H:${remMin}M:${remSec}S",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

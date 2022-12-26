@@ -1,9 +1,6 @@
-
 import 'package:bar2_banzeen/components/theme.dart';
-
-import 'package:bar2_banzeen/screens/main_page.dart';
-
 import 'package:bar2_banzeen/screens/login_screen.dart';
+import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,13 +27,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  void initState(){
-    super.initState();
-    appTheme.addListener((){ //👈 this is to notify the app that the theme has changed
-      setState(() {});       //👈 this is to force a rerender so that the changes are carried out
-    });
+  bool _initialized = false;
+  bool _error = false;
+  void initializeFirebase() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (err) {
+      setState(() {
+        _error = true;
+      });
+    }
   }
+
+  // This widget is the root of your application.
+  void initState() {
+    super.initState();
+    appTheme.addListener(() {
+      //👈 this is to notify the app that the theme has changed
+      setState(
+          () {}); //👈 this is to force a rerender so that the changes are carried out
+    });
+    initializeFirebase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -48,9 +64,11 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: LoginScreen.routeName,
-        themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
-        darkTheme: darkTheme,          //👈 this is the darkTheme that we defined in the theme.dart file
+        initialRoute: MainPage.routeName,
+        themeMode: appTheme
+            .themeMode, //👈 this is the themeMode defined in the AppTheme class
+        darkTheme:
+            darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
         theme: lightTheme,
       ),
     );
