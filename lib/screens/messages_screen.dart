@@ -21,11 +21,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   String thisUserId = "IKON6R95EWKMNeQbDemX";
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFF29292A),
