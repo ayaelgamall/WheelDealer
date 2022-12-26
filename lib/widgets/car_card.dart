@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -38,11 +39,6 @@ class CarCard extends StatelessWidget {
                 } else {
                   Map<String, dynamic> carData =
                       doc.data!.data() as Map<String, dynamic>;
-                  final datDiff =
-                      carData['deadline']!.toDate().difference(DateTime.now());
-                  final remHours = datDiff.inHours;
-                  final remMin = datDiff.inMinutes % 60;
-                  final remSec = datDiff.inMinutes % 60;
                   return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,16 +97,8 @@ class CarCard extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  datDiff.isNegative
-                                      ? "Bid ended"
-                                      : "${remHours}H:${remMin}M:${remSec}S",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 60, 64, 72),
-                                  ),
-                                ),
+                                CardTimer(
+                                    deadline: carData['deadline']!.toDate()),
                                 FutureBuilder<QuerySnapshot>(
                                     future: topBid.get(),
                                     builder: (context, qs) {
