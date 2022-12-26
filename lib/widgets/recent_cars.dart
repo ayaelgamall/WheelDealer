@@ -35,10 +35,7 @@ class RecentCars extends StatelessWidget {
                         width: width,
                         height: height,
                         rightMargin: 20,
-                        brand: doc['brand'],
-                        model: doc['model'],
-                        deadline: doc['deadline'],
-                        topBid: 100000);
+                        carId: doc.id);
                   }).toList());
             }
           }),

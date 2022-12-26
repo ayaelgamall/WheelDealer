@@ -29,13 +29,11 @@ class TrendyCars extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   children: snapshot.data!.docs.map((doc) {
                     return CarCard(
-                        width: width,
-                        height: height,
-                        rightMargin: 20,
-                        brand: doc['brand'],
-                        model: doc['model'],
-                        deadline: doc['deadline'],
-                        topBid: 100000);
+                      width: width,
+                      height: height,
+                      rightMargin: 20,
+                      carId: doc.id,
+                    );
                   }).toList());
             }
           }),

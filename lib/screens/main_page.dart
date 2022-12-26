@@ -69,10 +69,7 @@ class MainPage extends StatelessWidget {
                         width: 0.89 * width,
                         height: 0.4 * height,
                         rightMargin: 0,
-                        brand: doc['brand'],
-                        model: doc['model'],
-                        deadline: doc['deadline'],
-                        topBid: 100000);
+                        carId: doc.id);
                   }).toList()
                 ]);
               }
