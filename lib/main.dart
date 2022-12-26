@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/chat_screen.dart';
 
 import 'package:bar2_banzeen/screens/main_page.dart';
 
@@ -50,7 +51,8 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: LoginScreen.routeName,
+        // initialRoute: LoginScreen.routeName,
+        initialRoute: ChatScreen.routeName,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

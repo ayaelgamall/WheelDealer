@@ -3,6 +3,7 @@ import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/messages_screen.dart';
 import 'package:flutter/material.dart';
+import 'screens/chat_screen.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -11,6 +12,7 @@ class AppRouter {
       SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
+      ChatScreen.routeName: (context) => const ChatScreen(),
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const LoginScreen();
