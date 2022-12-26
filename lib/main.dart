@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:bar2_banzeen/screeens/login.dart';
-import './screeens/messaging.dart';
+import 'package:bar2_banzeen/screens/login.dart';
+import 'screens/messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'app_router.dart';
