@@ -198,7 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 183, 147, 0)), //TODO Cannot make it as the theme requires constant
+                                color: Color.fromARGB(255, 183, 147,
+                                    0)), //TODO Cannot make it as the theme requires constant
                           ),
                           onTap: () {
                             Navigator.of(context)

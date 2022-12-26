@@ -1,7 +1,7 @@
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
-import 'package:bar2_banzeen/screens/messaging.dart';
+import 'package:bar2_banzeen/screens/messages_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
