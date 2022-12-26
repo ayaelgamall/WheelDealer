@@ -67,8 +67,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     ),
                     child: Center(
                       child: Container(
-                        margin: const EdgeInsets.only(
-                            bottom: 15.0, left: 10, right: 10),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
                         child: TextField(
                           style: TextStyle(color: Colors.white),
                           textAlign: TextAlign.center,
