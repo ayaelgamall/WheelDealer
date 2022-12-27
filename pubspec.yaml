@@ -41,8 +41,7 @@ dependencies:
   provider: ^6.0.5
   firebase_auth: ^4.2.3
   cloud_firestore: ^4.3.0
-
-  cloud_firestore: ^4.3.0
+  
   intl: ^0.17.0
 
 dev_dependencies:
