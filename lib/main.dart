@@ -64,7 +64,9 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: MainPage.routeName,
+
+        initialRoute: LoginScreen.routeName,
+
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
