@@ -1,43 +1,44 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Car {
   String? id;
-  String? brand;
-  String? color;
-  DateTime? deadline;
-  String? description;
-  int? engineCapacity;
-  String? location;
-  String? model;
+  String brand;
+  String color;
+  DateTime deadline;
+  String description;
+  int engineCapacity;
+  int? mileage;
+  String location;
+  String model;
   List<String>? photos;
-  int? bidsCount;
-  String? sellerId;
-  bool? sold;
-  Float? startingPrice;
-  String? transmission;
-  String? year;
+  List<XFile?>? localPhotos;
+  int bidsCount;
+  String sellerId;
+  bool sold;
+  int startingPrice;
+  String transmission;
+  String year;
   DateTime? creationTime;
-  Car({
-    this.id,
-    this.bidsCount,
-    this.brand,
-    this.color,
-    this.deadline,
-    this.description = "",
-    this.engineCapacity,
-    this.location,
-    this.model,
-    this.photos,
-    this.creationTime,
-    this.sellerId,
-    this.sold,
-    this.startingPrice,
-    this.transmission,
-    this.year,
-  });
+  Car(
+      {this.id,
+      required this.bidsCount,
+      required this.brand,
+      required this.color,
+      required this.deadline,
+      this.description = "",
+      required this.engineCapacity,
+      required this.location,
+      required this.model,
+      this.photos,
+      required this.sellerId,
+      required this.sold,
+      required this.startingPrice,
+      required this.transmission,
+      required this.year,
+      this.mileage,
+      this.localPhotos,
+      this.creationTime});
   factory Car.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,

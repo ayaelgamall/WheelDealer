@@ -1,7 +1,6 @@
 import 'package:bar2_banzeen/components/theme.dart';
-import 'package:bar2_banzeen/screens/login_screen.dart';
-import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -43,6 +42,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   // This widget is the root of your application.
+  @override
   void initState() {
     super.initState();
     appTheme.addListener(() {
@@ -58,15 +58,12 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         StreamProvider<User?>(
-          create: (_) => AuthenticationService().onAuthStateChanged,
-          initialData: null,
-        ),
+            create: (_) => AuthenticationService().onAuthStateChanged,
+            initialData: null)
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-
-        initialRoute: LoginScreen.routeName,
-
+        initialRoute: Wrapper.routeName,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
