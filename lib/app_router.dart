@@ -17,7 +17,7 @@ class AppRouter {
       SellCarScreen.routeName: (context) => const SellCarScreen(),
     };
     WidgetBuilder builder =
-        routes[settings.name] ?? (context) => const LoginScreen();
+        routes[settings.name] ?? (context) => const Wrapper();
     return MaterialPageRoute(builder: (ctx) => builder(ctx));
   }
 }
