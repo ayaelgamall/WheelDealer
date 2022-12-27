@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -15,6 +16,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String ChatId = 'PgaDbmblSQzyKmBviEdP';
+  String thisUserId = 'IKON6R95EWKMNeQbDemX';
 
   Stream<QuerySnapshot> messages() {
     return FirebaseFirestore.instance
@@ -71,8 +73,32 @@ class _ChatScreenState extends State<ChatScreen> {
               }
               return ListView.builder(
                   itemBuilder: (itemContext, index) {
-                    return ListTile(
-                        title: Text(messages.data!.docs[index]['text']));
+                    DateTime dateTime =
+                        (messages.data!.docs[index]['time'] as Timestamp)
+                            .toDate();
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      color: thisUserId == messages.data!.docs[index]['from']
+                          ? Colors.blue.shade100
+                          : Colors.grey.shade400,
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            thisUserId == messages.data!.docs[index]['from']
+                                ? "You: ${messages.data!.docs[index]['text']}"
+                                : messages.data!.docs[index]['text'],
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                        ),
+                        trailing: Text(
+                          DateFormat('hh:mm a').format(dateTime),
+                          style: TextStyle(color: Colors.black87),
+                        ),
+                      ),
+                    );
                   },
                   itemCount: messages.data!.docs.length);
             }));
