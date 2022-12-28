@@ -5,12 +5,8 @@ import 'package:bar2_banzeen/services/messaging_stream_service.dart';
 import 'package:bar2_banzeen/services/sending_messages_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-
-import '../services/sending_messages_service.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -86,27 +82,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   });
             },
           ),
-          // leading: Row(
-          //   children: [
-          //     IconButton(
-          //         onPressed: (() {
-          //           Navigator.of(context).pop();
-          //         }),
-          //         icon: Icon(Icons.arrow_back_ios_new_outlined)),
-          //     Container(
-          //       width: 45,
-          //       height: 45,
-          //       decoration: BoxDecoration(
-          //         shape: BoxShape.circle,
-          //         image: DecorationImage(
-          //             image: NetworkImage(
-          //                 'https://googleflutter.com/sample_image.jpg'),
-          //             fit: BoxFit.fill),
-          //       ),
-          //     ),
-          //     Text('Ahmad Khaled'),
-          //   ],
-          // ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 12.0),
