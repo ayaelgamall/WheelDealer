@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/app_router.dart';
+import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
@@ -16,18 +17,18 @@ class TabNavigator extends StatelessWidget {
   TabNavigator({required this.navigatorKey, required this.tabItem});
   // new routes need to be mapped here as well
   // TODO:: Need to check if I will add all the possible routes for each tab
-  Map<TabItem, String> tabsToRouts = {
-    TabItem.mainPage: MainPage.routeName,
-    TabItem.favourites: MainPage.routeName,
-    TabItem.notification: MainPage.routeName,
-    TabItem.profile: MainPage.routeName,
-    TabItem.newCar: SellCarScreen.routeName,
+  Map<TabItem, Map<TabItem, String>> tabsToRouts = {
+    TabItem.mainPage: {TabItem.mainPage: MainPage.routeName},
+    TabItem.favourites: {TabItem.favourites: LoginScreen.routeName},
+    TabItem.notification: {TabItem.notification: SignupScreen.routeName},
+    TabItem.profile: {TabItem.profile: MessagingScreen.routeName},
+    TabItem.newCar: {TabItem.newCar: SellCarScreen.routeName},
   };
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      initialRoute: tabsToRouts[tabItem],
+      initialRoute: tabsToRouts[tabItem]![tabItem],
       onGenerateRoute: AppRouter().generateRoute,
     );
   }

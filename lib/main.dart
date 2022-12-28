@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             initialData: null)
       ],
       child: MaterialApp(
-        home: const BottomNavTab(),
+        home: BottomNavTab(),
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

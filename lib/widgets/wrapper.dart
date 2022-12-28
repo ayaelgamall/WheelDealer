@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/bottom_nav_tab.dart';
-
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
 
@@ -18,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const LoginScreen();
     } else {
-      return const BottomNavTab();
+      return const SellCarScreen();
     }
   }
 }

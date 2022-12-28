@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     var routes = <String, WidgetBuilder>{
-      Wrapper.routeName: (context) => const Wrapper(),
+      // Wrapper.routeName: (context) => const Wrapper(),
       LoginScreen.routeName: (context) => const LoginScreen(),
       SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
