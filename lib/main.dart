@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
         initialRoute: LoginScreen.routeName,
-        initialRoute: EditProfile.routeName,
+        // initialRoute: EditProfile.routeName,
         themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme: darkTheme,          //👈 this is the darkTheme that we defined in the theme.dart file
 
