@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/screens/editProfile.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
@@ -13,6 +14,8 @@ class AppRouter {
       LoginScreen.routeName: (context) => const LoginScreen(),
       SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
+      EditProfile.routeName: (context) => const EditProfile(),
+
       MessagingScreen.routeName: (context) => const MessagingScreen(),
       SellCarScreen.routeName: (context) => const SellCarScreen(),
     };
