@@ -40,6 +40,11 @@ dependencies:
   email_validator: '^2.1.16'
   provider: ^6.0.5
   firebase_auth: ^4.2.3
+  cloud_firestore: ^4.3.0
+  intl: ^0.17.0
+  dropdown_search: ^5.0.5
+  image_picker: ^0.8.6
+  firebase_storage: ^11.0.9
 
 
 dev_dependencies:
@@ -67,6 +72,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/images/logos/
+    - lib/assets/images/icons/
     - assets/images/
   #   - images/a_dot_ham.jpeg
 

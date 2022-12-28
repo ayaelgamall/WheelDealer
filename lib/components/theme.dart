@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   Map<int, Color> swatch = {};
@@ -22,26 +23,26 @@ MaterialColor createMaterialColor(Color color) {
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
 
-  primarySwatch: createMaterialColor(const Color(0xff00ABB3)), //👈 this is the primary color that stuff like the AppBar and FloatingActionButton Widget will default to
-    backgroundColor: const Color(0xFFEAEAEA),
-    scaffoldBackgroundColor: const Color(0xFFEAEAEA),
-    buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
-    textTheme: const TextTheme(
-        bodyMedium: TextStyle(color: Color(0xff3C4048)),
-        // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
-    ),
-    primaryColor: const Color(0xffB2B2B2),
-    // Color.fromARGB(255, 183, 147, 0)
+  primarySwatch: createMaterialColor(const Color(
+      0xff00ABB3)), //👈 this is the primary color that stuff like the AppBar and FloatingActionButton Widget will default to
+  backgroundColor: const Color(0xFFEAEAEA),
+  scaffoldBackgroundColor: const Color(0xFFEAEAEA),
+  buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
+  textTheme: const TextTheme(
+    bodyMedium: TextStyle(color: Color(0xff3C4048)),
+    // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
+  ),
+  primaryColor: const Color(0xffB2B2B2),
+  // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xffcccccc),
   disabledColor: const Color(0xffcccccc),
 
   highlightColor: const Color(0xffFCE192),
-  cardColor:  const Color(0xffB2B2B2),
+  cardColor: const Color(0xffB2B2B2),
   canvasColor: const Color(0xFFEAEAEA),
   appBarTheme: const AppBarTheme(
     elevation: 0.0,
   ),
-
 );
 
 ThemeData darkTheme = ThemeData(
@@ -54,7 +55,7 @@ ThemeData darkTheme = ThemeData(
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff22A39F)),
   primaryTextTheme: Typography().white,
   textTheme: Typography().white,
-  hintColor: const Color(0xAFF3EFE0) ,
+  hintColor: const Color(0xAFF3EFE0),
 
 //   textTheme: const TextTheme(
 //     bodyText1: TextStyle(color: Color(0xffF3EFE0)),
@@ -66,7 +67,7 @@ ThemeData darkTheme = ThemeData(
   primaryColor: const Color(0xff434242),
 // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xff434242),
-    disabledColor: const Color(0xff434242),
+  disabledColor: const Color(0xff434242),
   // accentColor: kYellow,
   // primaryIconTheme: ,
   inputDecorationTheme: const InputDecorationTheme(
@@ -74,14 +75,20 @@ ThemeData darkTheme = ThemeData(
       borderSide: BorderSide(color: Color(0xffF3EFE0)),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide( color: Color(0xff22A39F)),
+      borderSide: BorderSide(color: Color(0xff22A39F)),
     ),
-
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Color(0xffff0000)),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Color(0xffff0000)),
+    ),
   ),
-  highlightColor:  const Color(0xff372901),
-  textSelectionTheme: const TextSelectionThemeData(selectionColor: Colors.white) ,
+  highlightColor: const Color(0xff372901),
+  textSelectionTheme:
+      const TextSelectionThemeData(selectionColor: Colors.white),
   cardColor: const Color(0xff434242),
-  canvasColor:  const Color(0xFF222222),
+  canvasColor: const Color(0xFF222222),
   // buttonTheme: Theme.of(context).buttonTheme.copyWith(
   //     colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
   appBarTheme: const AppBarTheme(
@@ -90,7 +97,8 @@ ThemeData darkTheme = ThemeData(
 );
 
 class AppTheme with ChangeNotifier {
-  bool isDarkTheme = true; // TODO persist this make use of a storage library to store its value. I suggest get_storage
+  bool isDarkTheme =
+      true; // TODO persist this make use of a storage library to store its value. I suggest get_storage
 
   ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
@@ -99,4 +107,5 @@ class AppTheme with ChangeNotifier {
     notifyListeners();
   }
 }
+
 AppTheme appTheme = AppTheme();

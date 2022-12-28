@@ -1,6 +1,8 @@
 import 'package:bar2_banzeen/widgets/view_more_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../models/Car.dart';
 import 'car_card.dart';
 
 class RecentCars extends StatelessWidget {
@@ -10,20 +12,33 @@ class RecentCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count = 4;
+    final recentCars = FirebaseFirestore.instance
+        .collection('cars')
+        .orderBy("creation_time", descending: true)
+        .limit(5);
+
     return Container(
       height: height,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (ctx, idx) {
-          return CarCard(
-            width: width,
-            height: height,
-            rightMargin: 20,
-          );
-        },
-        itemCount: count,
-      ),
+      child: FutureBuilder<QuerySnapshot>(
+          future: recentCars.get(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              //TODOL: to be replaced by error check maybe?
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: snapshot.data!.docs.map((doc) {
+                    return CarCard(
+                        width: width,
+                        height: height,
+                        rightMargin: 20,
+                        carId: doc.id);
+                  }).toList());
+            }
+          }),
     );
   }
 }
