@@ -144,12 +144,19 @@ class _ChatScreenState extends State<ChatScreen> {
                             height: 40,
                             child: Center(
                               child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   color: Colors.amber.shade100,
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Text(
-                                      DateFormat.yMMMd().format(
-                                          (msg['time'] as Timestamp).toDate()),
+                                      (msg['time'] as Timestamp).toDate().day ==
+                                              DateTime.now().day
+                                          ? "Today"
+                                          : DateFormat.yMMMd().format(
+                                              (msg['time'] as Timestamp)
+                                                  .toDate()),
                                       style: TextStyle(color: Colors.black54),
                                     ),
                                   )),
@@ -161,22 +168,39 @@ class _ChatScreenState extends State<ChatScreen> {
                             : Alignment.centerLeft,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           color: msg['from'] == thisUserId
                               ? Color(0xFF02AEB9)
                               : Color(0xFF4C4C4E),
                           elevation: 8,
                           child: Padding(
-                              padding: EdgeInsets.all(14),
-                              child: Text(msg['text'])),
+                              padding: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10, bottom: 5),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(msg['text']),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, bottom: 0),
+                                      child: Text(
+                                        DateFormat('hh:mm a').format(
+                                            (msg['time'] as Timestamp)
+                                                .toDate()),
+                                        style: TextStyle(
+                                            color: Colors.white54,
+                                            fontSize: 11),
+                                      ),
+                                    )
+                                  ])),
                         ),
                       );
                     },
                   )),
                   Padding(
-                    padding: EdgeInsets.all(10),
-                    // color: Colors.grey.shade400,
+                    padding: EdgeInsets.only(
+                        top: 10, bottom: 20, left: 20, right: 20),
                     child: TextField(
                       controller: textController,
                       style: TextStyle(color: Colors.black),
@@ -203,17 +227,17 @@ class _ChatScreenState extends State<ChatScreen> {
                             borderSide:
                                 BorderSide(width: 1, color: Color(0xFFF5F5F5)),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(90))),
+                                BorderRadius.all(Radius.circular(22))),
                         focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Color(0xFFF5F5F5)),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(90))),
+                                BorderRadius.all(Radius.circular(22))),
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Color(0xFFF5F5F5)),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(90))),
+                                BorderRadius.all(Radius.circular(22))),
                       ),
                       onSubmitted: (msgText) {
                         Message msg = Message(
