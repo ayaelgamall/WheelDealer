@@ -146,7 +146,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    // User user = Provider.of<User>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -582,7 +582,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
                               model: _model.text,
                               localPhotos: _photos,
                               creationTime: DateTime.now(),
-                              sellerId: user.uid,
+                              sellerId: ' user.uid',
                               sold: false,
                               startingPrice: int.parse(_price.text),
                               transmission: _transmission,

@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/screens/bottom_nav_tab.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
@@ -15,9 +16,13 @@ class AppRouter {
       MainPage.routeName: (context) => const MainPage(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
       SellCarScreen.routeName: (context) => const SellCarScreen(),
+      // BottomNavTab.routeName: (context) => const BottomNavTab(),
     };
-    WidgetBuilder builder =
-        routes[settings.name] ?? (context) => const Wrapper();
+    print(settings.name);
+    WidgetBuilder builder = routes[settings.name] ??
+        (context) {
+          return const Wrapper();
+        };
     return MaterialPageRoute(builder: (ctx) => builder(ctx));
   }
 }

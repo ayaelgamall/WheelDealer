@@ -1,4 +1,6 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/bottom_nav_tab.dart';
+import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +28,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //tabs for bottom nav
   bool _initialized = false;
   bool _error = false;
   void initializeFirebase() async {
@@ -62,8 +65,7 @@ class _MyAppState extends State<MyApp> {
             initialData: null)
       ],
       child: MaterialApp(
-        onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: Wrapper.routeName,
+        home: const BottomNavTab(),
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
