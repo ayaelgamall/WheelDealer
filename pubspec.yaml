@@ -43,6 +43,7 @@ dependencies:
 
   cloud_firestore: ^4.3.0
   intl: ^0.17.0
+  grouped_list: ^4.2.0
 
 dev_dependencies:
   flutter_test:
