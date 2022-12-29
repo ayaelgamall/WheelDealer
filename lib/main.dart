@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/editProfile.dart';
+import 'package:bar2_banzeen/screens/chat_screen.dart';
 
 import 'package:bar2_banzeen/screens/main_page.dart';
 
@@ -70,10 +71,10 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
         initialRoute: LoginScreen.routeName,
-        // initialRoute: EditProfile.routeName,
-        themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
-        darkTheme: darkTheme,          //👈 this is the darkTheme that we defined in the theme.dart file
-
+        themeMode: appTheme
+            .themeMode, //👈 this is the themeMode defined in the AppTheme class
+        darkTheme:
+            darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
         theme: lightTheme,
       ),
     );
