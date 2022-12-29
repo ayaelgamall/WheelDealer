@@ -4,6 +4,7 @@ import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/messages_screen.dart';
+import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class AppRouter {
       SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
       EditProfile.routeName: (context) => const EditProfile(),
-
+      UserProfile.routeName: (context) => const UserProfile(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
       SellCarScreen.routeName: (context) => const SellCarScreen(),
     };

@@ -4,8 +4,10 @@ import 'package:bar2_banzeen/screens/editProfile.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 
 import 'package:bar2_banzeen/screens/login_screen.dart';
+import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -69,10 +71,11 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: LoginScreen.routeName,
-        initialRoute: EditProfile.routeName,
-        themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
-        darkTheme: darkTheme,          //👈 this is the darkTheme that we defined in the theme.dart file
+        initialRoute: UserProfile.routeName,
+        themeMode: appTheme
+            .themeMode, //👈 this is the themeMode defined in the AppTheme class
+        darkTheme:
+            darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
 
         theme: lightTheme,
       ),

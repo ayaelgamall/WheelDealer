@@ -2,10 +2,15 @@ import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class TrendyCars extends StatelessWidget {
+class HorizontalCars extends StatelessWidget {
   double height;
   double width;
-  TrendyCars({super.key, required this.width, required this.height});
+  Query<Map<String, dynamic>> carsToShow;
+  HorizontalCars(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.carsToShow});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class TrendyCars extends StatelessWidget {
     return Container(
       height: height,
       child: FutureBuilder<QuerySnapshot>(
-          future: trendyCars.get(),
+          future: carsToShow.get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               //TODOL: to be replaced by error check maybe?
