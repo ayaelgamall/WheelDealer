@@ -1,7 +1,5 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -33,10 +31,10 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    _emailTextController = TextEditingController(text:"mymail@gmail.com");
-    _usernameTextController = TextEditingController(text:"username");
-    _nameTextController = TextEditingController(text:"my name");
-    _phoneTextController = TextEditingController(text:"+201234567890");
+    _emailTextController = TextEditingController(text: "mymail@gmail.com");
+    _usernameTextController = TextEditingController(text: "username");
+    _nameTextController = TextEditingController(text: "my name");
+    _phoneTextController = TextEditingController(text: "+201234567890");
   }
 
   void updateError(bool err) {
