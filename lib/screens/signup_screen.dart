@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/facebook_login_button.dart';
 import 'package:email_validator/email_validator.dart';

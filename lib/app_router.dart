@@ -1,4 +1,4 @@
-import 'package:bar2_banzeen/screens/editProfile.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';

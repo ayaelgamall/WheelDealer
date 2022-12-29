@@ -1,7 +1,7 @@
 import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/Car.dart';
+import '../models/car.dart';
 
 class CarsService {
   final CollectionReference _carsReference =
