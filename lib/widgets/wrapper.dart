@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/screens/bottom_nav_tab.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
@@ -16,7 +17,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const LoginScreen();
     } else {
-      return const SellCarScreen();
+      return const BottomNavTab();
     }
   }
 }

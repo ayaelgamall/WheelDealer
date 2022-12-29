@@ -17,18 +17,18 @@ class TabNavigator extends StatelessWidget {
   TabNavigator({required this.navigatorKey, required this.tabItem});
   // new routes need to be mapped here as well
   // TODO:: Need to check if I will add all the possible routes for each tab
-  Map<TabItem, Map<TabItem, String>> tabsToRouts = {
-    TabItem.mainPage: {TabItem.mainPage: MainPage.routeName},
-    TabItem.favourites: {TabItem.favourites: LoginScreen.routeName},
-    TabItem.notification: {TabItem.notification: SignupScreen.routeName},
-    TabItem.profile: {TabItem.profile: MessagingScreen.routeName},
-    TabItem.newCar: {TabItem.newCar: SellCarScreen.routeName},
+  Map<TabItem, String> tabsToRouts = {
+    TabItem.mainPage: MainPage.routeName,
+    TabItem.favourites: LoginScreen.routeName,
+    TabItem.notification: SignupScreen.routeName,
+    TabItem.profile: MessagingScreen.routeName,
+    TabItem.newCar: SellCarScreen.routeName,
   };
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      initialRoute: tabsToRouts[tabItem]![tabItem],
+      initialRoute: tabsToRouts[tabItem],
       onGenerateRoute: AppRouter().generateRoute,
     );
   }
