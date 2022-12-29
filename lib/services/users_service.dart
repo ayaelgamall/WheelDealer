@@ -2,10 +2,10 @@ import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CarsService {
+class UsersService {
   final CollectionReference _usersReference =
       FirebaseFirestore.instance.collection("users");
-  final String defaultPhoto="link";
+  final String defaultPhoto = "";
   Future<void> addCar(String phone, String username, String email, String name,
       XFile profilePhoto, String userId) async {
     bool exists = await userExists(userId);
@@ -14,13 +14,15 @@ class CarsService {
         "email": email,
         "phone_number": phone,
         "username": username,
+        "display_name": name
       });
     } else {
       DocumentReference carDocument = await _usersReference.add({
         "email": email,
         "phone_number": phone,
         "username": username,
-        "profile_photo": defaultPhoto
+        "profile_photo": defaultPhoto,
+        "display_name": name
       });
 
       String uploadedPhoto =
@@ -42,4 +44,8 @@ Future<bool> userExists(String docId) async {
   } catch (e) {
     throw e;
   }
+}
+
+DocumentReference<Map<String, dynamic>> getUserData(String userId) {
+  return FirebaseFirestore.instance.collection("users").doc(userId);
 }

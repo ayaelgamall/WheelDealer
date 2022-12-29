@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../services/users_service.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -20,6 +24,8 @@ String _photosError = "";
 bool _photosLoading = false;
 bool _enableSubmit = false;
 bool _addingCar = false;
+String userPhotoLink =
+    'https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397';
 
 class _EditProfileState extends State<EditProfile> {
   late TextEditingController _emailTextController;
@@ -29,14 +35,23 @@ class _EditProfileState extends State<EditProfile> {
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
-
+  var userId = "IKON6R95EWKMNeQbDemX";
   @override
   void initState() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      Map<String, dynamic> map =
+          documentSnapshot.data() as Map<String, dynamic>;
+      _emailTextController = TextEditingController(text: map['email']);
+      _usernameTextController = TextEditingController(text: map['username']);
+      _nameTextController = TextEditingController(text: map['display_name']);
+      _phoneTextController = TextEditingController(text: map['phone_number']);
+      userPhotoLink = map['profile_photo'];
+    });
     super.initState();
-    _emailTextController = TextEditingController(text:"mymail@gmail.com");
-    _usernameTextController = TextEditingController(text:"username");
-    _nameTextController = TextEditingController(text:"my name");
-    _phoneTextController = TextEditingController(text:"+201234567890");
   }
 
   void updateError(bool err) {
@@ -109,8 +124,9 @@ class _EditProfileState extends State<EditProfile> {
             padding: const EdgeInsets.all(20),
             child: Column(children: [
               Container(
-                  width: 150,
-                  child: Image.asset('lib/assets/images/icons/userIcon.png')),
+                width: 150,
+                child: Image.network(userPhotoLink),
+              ),
               InkWell(
                 onTap: !_addingCar
                     ? () {
