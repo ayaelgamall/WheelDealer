@@ -50,9 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               msg,
               maxLines: 2,
-              style: const TextStyle(
-                fontSize: 18,
-              ),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
           ),
         ],
@@ -155,7 +153,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .showSnackBar(resetPasswordSnackBar());
                                   }
                                 }
-                              : null,
+                              : () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      createSnackBar(
+                                          "Please enter a valid email address first"));
+                                },
                           child: const Text(
                             "Forgot your password?",
                           ),
