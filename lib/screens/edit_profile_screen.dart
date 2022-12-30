@@ -277,13 +277,13 @@ class _EditProfileState extends State<EditProfile> {
                                 ? () async {
                                     // UPDATE DB
                                     String? err = null;
-                                    await UsersService().addUser(
-                                        _phoneTextController.text,
-                                        _usernameTextController.text,
-                                        _emailTextController.text,
-                                        _nameTextController.text,
-                                        _photo,
-                                        userId);
+                                    // await UsersService().addUser(
+                                    //     _phoneTextController.text,
+                                    //     _usernameTextController.text,
+                                    //     _emailTextController.text,
+                                    //     _nameTextController.text,
+                                    //     _photo,
+                                    //     userId);
                                     if (err != null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(createSnackBar(err));
