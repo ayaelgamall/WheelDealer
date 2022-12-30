@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
@@ -50,7 +51,9 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
-        initialRoute: Wrapper.routeName,
+        // initialRoute: Wrapper.routeName,
+        // initialRoute: LoginScreen.routeName,
+        initialRoute: EditProfile.routeName,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

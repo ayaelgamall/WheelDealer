@@ -207,6 +207,7 @@ class _EditProfileState extends State<EditProfile> {
                                             .validate(value!)
                                         ? null
                                         : "Please enter a valid email address",
+                                    style: TextStyle(color: Color.fromARGB(255, 114, 112, 112)),
                                     readOnly: true,
                                     decoration: const InputDecoration(
                                       border:
