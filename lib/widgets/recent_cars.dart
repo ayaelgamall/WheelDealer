@@ -1,8 +1,6 @@
-import 'package:bar2_banzeen/widgets/view_more_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../models/Car.dart';
 import 'car_card.dart';
 
 class RecentCars extends StatelessWidget {
