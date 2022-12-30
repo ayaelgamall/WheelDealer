@@ -17,19 +17,19 @@ class ProfileAvatar extends StatelessWidget {
             backgroundImage: AssetImage("assets/images/example.jpg"),
             radius: 50,
           ),
-          Positioned(
-              bottom: 0,
-              right: -width / 10,
-              child: RawMaterialButton(
-                onPressed: () {},
-                elevation: 2.0,
-                fillColor: Color(0xff434242),
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                ),
-                padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
-              )),
+          // Positioned(
+          //     bottom: 0,
+          //     right: -width / 10,
+          //     child: RawMaterialButton(
+          //       onPressed: () {},
+          //       elevation: 2.0,
+          //       child: Icon(
+          //         size: 24,
+          //         Icons.camera_alt_outlined,
+          //       ),
+          //       padding: EdgeInsets.all(15.0),
+          //       shape: CircleBorder(),
+          //     )),
         ],
       ),
     );
