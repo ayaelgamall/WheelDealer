@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordTextController;
 
   bool _formHasErrors = true;
-  bool _validEmail = false;
 
   @override
   void initState() {
