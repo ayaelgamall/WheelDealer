@@ -1,6 +1,7 @@
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CarCard extends StatelessWidget {
   double height;
@@ -20,7 +21,9 @@ class CarCard extends StatelessWidget {
     final car = FirebaseFirestore.instance.collection('cars').doc(carId);
 
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          GoRouter.of(context).go('/mainPage/car');
+        },
         child: Card(
           margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
