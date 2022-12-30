@@ -66,6 +66,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Complete Your Profile"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                AuthenticationService().signOut();
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Form(
         key: _formKey,
