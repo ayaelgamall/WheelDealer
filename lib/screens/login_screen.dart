@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../widgets/google_login_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
+  Function switchFunction;
+  LoginScreen(this.switchFunction, {Key? key}) : super(key: key);
   static const routeName = '/login';
 
   @override
@@ -198,8 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     0)), //TODO Cannot make it as the theme requires constant
                           ),
                           onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/signup');
+                            widget.switchFunction();
                           },
                         )
                       ],

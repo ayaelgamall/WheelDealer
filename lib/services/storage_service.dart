@@ -12,8 +12,9 @@ class StorageService {
     String downloadLink = await carImgRef.getDownloadURL();
     return downloadLink;
   }
-  Future<String> uploadUserPhoto(String userId, XFile img) async {
-    final userImgRef = _storageRef.child("images/users/$userId/${img.name}");
+
+  Future<String> uploadUserPhoto(String userID, XFile img) async {
+    final userImgRef = _storageRef.child("images/users/$userID/${img.name}");
     await userImgRef.putFile(File(img.path));
     String downloadLink = await userImgRef.getDownloadURL();
     return downloadLink;

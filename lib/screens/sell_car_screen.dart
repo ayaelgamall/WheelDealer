@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:bar2_banzeen/models/Car.dart';
+import 'package:bar2_banzeen/models/car.dart';
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
 import 'package:bar2_banzeen/widgets/photo_thumbnail.dart';
 import 'package:dropdown_search/dropdown_search.dart';
