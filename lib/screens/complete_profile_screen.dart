@@ -18,7 +18,7 @@ class CompleteProfileScreen extends StatefulWidget {
 }
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
-  XFile? _profile_photo;
+  XFile? _profilePhoto;
   final TextEditingController _username = TextEditingController();
   final TextEditingController _displayName = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
@@ -44,7 +44,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     XFile? profilePhoto = await picker.pickImage(source: ImageSource.gallery);
     if (profilePhoto != null) {
       setState(() {
-        _profile_photo = profilePhoto;
+        _profilePhoto = profilePhoto;
       });
     }
     setState(() {
@@ -90,9 +90,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 ? (Platform.isAndroid
                                     ? const CircularProgressIndicator()
                                     : const CupertinoActivityIndicator())
-                                : (_profile_photo != null
+                                : (_profilePhoto != null
                                     ? Image.file(
-                                        File(_profile_photo!.path),
+                                        File(_profilePhoto!.path),
                                         fit: BoxFit.cover,
                                       )
                                     : Image.asset(
@@ -176,7 +176,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               displayName: _displayName.text,
                               username: _username.text,
                               phoneNumber: _phoneNumber.text,
-                              localPhoto: _profile_photo,
+                              localPhoto: _profilePhoto,
                             );
                             await UsersService().addUser(addedUser);
                             if (mounted) {
