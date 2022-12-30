@@ -1,6 +1,8 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -42,8 +44,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         StreamProvider<User?>(
-            create: (_) => AuthenticationService().onAuthStateChanged,
-            initialData: null)
+          create: (_) => AuthenticationService().onAuthStateChanged,
+          initialData: null,
+        ),
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,

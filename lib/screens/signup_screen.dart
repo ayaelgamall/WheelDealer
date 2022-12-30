@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 import '../widgets/google_login_button.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  Function switchFunction;
+  SignupScreen(this.switchFunction, {Key? key}) : super(key: key);
 
   static const routeName = '/signup';
 
@@ -211,8 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 color: Color.fromARGB(255, 183, 147, 0)),
                           ),
                           onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/login');
+                            widget.switchFunction();
                           },
                         )
                       ],
