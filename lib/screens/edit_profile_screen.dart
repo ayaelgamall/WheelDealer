@@ -1,5 +1,7 @@
+import 'package:bar2_banzeen/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
@@ -277,13 +279,16 @@ class _EditProfileState extends State<EditProfile> {
                                 ? () async {
                                     // UPDATE DB
                                     String? err = null;
-                                    // await UsersService().addUser(
-                                    //     _phoneTextController.text,
-                                    //     _usernameTextController.text,
-                                    //     _emailTextController.text,
-                                    //     _nameTextController.text,
-                                    //     _photo,
-                                    //     userId);
+                                    UserModel user = UserModel(
+                                        uid: userId,
+                                        email: _emailTextController.text,
+                                        displayName: _nameTextController.text,
+                                        username: _usernameTextController.text,
+                                        phoneNumber: _phoneTextController.text,
+                                        profilePhotoLink: userPhotoLink,
+                                        localPhoto: _photo);
+                                    await UsersService().addUser(user);
+
                                     if (err != null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(createSnackBar(err));
