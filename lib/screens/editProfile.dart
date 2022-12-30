@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../services/users_service.dart';
+import 'package:bar2_banzeen/services/users_service.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -28,10 +24,14 @@ String userPhotoLink =
     'https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397';
 
 class _EditProfileState extends State<EditProfile> {
-  late TextEditingController _emailTextController;
-  late TextEditingController _usernameTextController;
-  late TextEditingController _nameTextController;
-  late TextEditingController _phoneTextController;
+  late TextEditingController _emailTextController =
+      TextEditingController(text: 'email');
+  late TextEditingController _usernameTextController =
+      TextEditingController(text: 'username');
+  late TextEditingController _nameTextController =
+      TextEditingController(text: 'display_name');
+  late TextEditingController _phoneTextController =
+      TextEditingController(text: 'phone');
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
@@ -113,6 +113,7 @@ class _EditProfileState extends State<EditProfile> {
   bool validateMobile(String value) {
     String pattern = r'(^(?:[+2])?[0-9]{12,12}$)';
     RegExp regExp = new RegExp(pattern);
+
     return regExp.hasMatch(value);
   }
 
@@ -204,6 +205,7 @@ class _EditProfileState extends State<EditProfile> {
                                             .validate(value!)
                                         ? null
                                         : "Please enter a valid email address",
+                                    readOnly: true,
                                     decoration: const InputDecoration(
                                       border:
                                           UnderlineInputBorder(), // TODO make this line override theme
@@ -274,13 +276,18 @@ class _EditProfileState extends State<EditProfile> {
                             onPressed: !_formHasErrors
                                 ? () async {
                                     // UPDATE DB
-                                    // String? err = await AuthenticationService()
-                                    //     .signInWithEmail(_emailTextController.text,
-                                    //         _passwordTextController.text);
-                                    // if (err != null) {
-                                    //   ScaffoldMessenger.of(context)
-                                    //       .showSnackBar(createSnackBar(err));
-                                    // }
+                                    String? err = null;
+                                    await UsersService().addUser(
+                                        _phoneTextController.text,
+                                        _usernameTextController.text,
+                                        _emailTextController.text,
+                                        _nameTextController.text,
+                                        _photo,
+                                        userId);
+                                    if (err != null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(createSnackBar(err));
+                                    }
                                   }
                                 : null,
                             style: ButtonStyle(

@@ -6,8 +6,9 @@ class UsersService {
   final CollectionReference _usersReference =
       FirebaseFirestore.instance.collection("users");
   final String defaultPhoto = "";
-  Future<void> addCar(String phone, String username, String email, String name,
-      XFile profilePhoto, String userId) async {
+
+  Future<void> addUser(String phone, String username, String email, String name,
+      XFile? profilePhoto, String userId) async {
     bool exists = await userExists(userId);
     if (exists) {
       _usersReference.doc(userId).update({
@@ -25,11 +26,13 @@ class UsersService {
         "display_name": name
       });
 
-      String uploadedPhoto =
-          await StorageService().uploadUserPhoto(userId, profilePhoto);
-      await _usersReference
-          .doc(userId)
-          .update({"profile_photo": uploadedPhoto});
+      if (profilePhoto != null) {
+        String uploadedPhoto =
+            await StorageService().uploadUserPhoto(userId, profilePhoto);
+        await _usersReference
+            .doc(userId)
+            .update({"profile_photo": uploadedPhoto});
+      }
     }
   }
 }
