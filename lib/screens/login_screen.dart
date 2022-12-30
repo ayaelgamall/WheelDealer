@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordTextController;
 
   bool _formHasErrors = true;
+  bool _validEmail = false;
 
   @override
   void initState() {
@@ -50,12 +51,39 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               msg,
               maxLines: 2,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(
+                fontSize: 18,
+              ),
             ),
           ),
         ],
       ),
       backgroundColor: Colors.red.shade400,
+    );
+  }
+
+  SnackBar resetPasswordSnackBar() {
+    return SnackBar(
+      content: Row(
+        children: [
+          const Icon(
+            Icons.error_outline,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: const Text(
+              "Password reset instructions has been sent to your email",
+              maxLines: 2,
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.green.shade400,
     );
   }
 
@@ -113,8 +141,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        InkWell(child: Text("Forgot your password?"))
+                      children: [
+                        InkWell(
+                          onTap: EmailValidator.validate(
+                                  _emailTextController.text)
+                              ? () async {
+                                  String? err = await AuthenticationService()
+                                      .resetPassword(_emailTextController.text);
+                                  if (err != null) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(createSnackBar(err));
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(resetPasswordSnackBar());
+                                  }
+                                }
+                              : null,
+                          child: const Text(
+                            "Forgot your password?",
+                          ),
+                        )
                       ],
                     ),
                     const SizedBox(

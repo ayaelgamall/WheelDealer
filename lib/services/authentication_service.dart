@@ -59,4 +59,13 @@ class AuthenticationService {
   Future<void> signOut() async {
     await _auth.signOut();
   }
+
+  Future<String?> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseException catch (e) {
+      return e.code;
+    }
+    return null;
+  }
 }
