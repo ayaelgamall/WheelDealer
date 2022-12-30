@@ -40,7 +40,7 @@ class ProfileCarCard extends StatelessWidget {
                 } else {
                   Map<String, dynamic> carData =
                       doc.data!.data() as Map<String, dynamic>;
-                  final topBid = (carData['bids_count'] > 0 || bidValue == null)
+                  final topBid = (carData['bids_count'] > 0)
                       ? car
                           .collection("bids")
                           .orderBy("value", descending: true)
@@ -48,7 +48,6 @@ class ProfileCarCard extends StatelessWidget {
                       : null;
 
                   return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(

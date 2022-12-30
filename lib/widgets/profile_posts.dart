@@ -8,7 +8,7 @@ import 'main_page_heading.dart';
 class ProfilePosts extends StatelessWidget {
   double height;
   double width;
-  List<String>? carsToShow;
+  List<dynamic>? carsToShow;
   ProfilePosts(
       {super.key, this.carsToShow, required this.height, required this.width});
 

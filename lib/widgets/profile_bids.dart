@@ -17,7 +17,7 @@ class ProfileBids extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: carsToShow == null
-          ? Text("No posts yet")
+          ? Center(child: Text("No bids yet"))
           : FutureBuilder<QuerySnapshot>(
               future: carsToShow?.get(),
               builder: (context, snapshot) {
