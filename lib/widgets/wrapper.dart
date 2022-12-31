@@ -3,6 +3,7 @@ import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/screens/test_car_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
