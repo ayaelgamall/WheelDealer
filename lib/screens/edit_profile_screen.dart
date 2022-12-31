@@ -49,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
         _usernameTextController = TextEditingController(text: map['username']);
         _nameTextController = TextEditingController(text: map['display_name']);
         _phoneTextController = TextEditingController(text: map['phone_number']);
-    //     userPhotoLink = map['profile_photo'];
+        //     userPhotoLink = map['profile_photo'];
       });
     });
     super.initState();
@@ -143,34 +143,8 @@ class _EditProfileState extends State<EditProfile> {
     return regExp.hasMatch(value);
   }
 
-  // @override
-  // void dispose() {
-  //   _emailTextController.dispose();
-  //   _nameTextController.dispose();
-  //   _phoneTextController.dispose();
-  //   _usernameTextController.dispose();
-
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // FirebaseFirestore.instance
-    //     .collection('users')
-    //     .doc(userId)
-    //     .get()
-    //     .then((DocumentSnapshot documentSnapshot) async {
-    //   Map<String, dynamic> map =
-    //       await documentSnapshot.data() as Map<String, dynamic>;
-
-    //   setState(() {
-    //     _emailTextController = TextEditingController(text: map['email']);
-    //     _usernameTextController = TextEditingController(text: map['username']);
-    //     _nameTextController = TextEditingController(text: map['display_name']);
-    //     _phoneTextController = TextEditingController(text: map['phone_number']);
-    //     // userPhotoLink = map['profile_photo'];
-    //   });
-    // });
     return Scaffold(
         body: Container(
             margin: const EdgeInsets.only(top: 70),
@@ -332,7 +306,6 @@ class _EditProfileState extends State<EditProfile> {
                           child: ElevatedButton(
                             onPressed: !_formHasErrors
                                 ? () async {
-                                    String? err = null;
                                     UserModel user = UserModel(
                                         uid: userId,
                                         email: _emailTextController.text,
@@ -341,16 +314,12 @@ class _EditProfileState extends State<EditProfile> {
                                         phoneNumber: _phoneTextController.text,
                                         profilePhotoLink: userPhotoLink,
                                         localPhoto: _photo);
-                                    await UsersService().addUser(user);
-
-                                    if (err != null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(createSnackBar(err));
-                                    } else {
-                                      setState(() {});
+                                    await UsersService()
+                                        .addUser(user);
+                                        
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(successSnackBar());
-                                    }
+                                  
                                   }
                                 : null,
                             style: ButtonStyle(
