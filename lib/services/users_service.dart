@@ -23,17 +23,6 @@ class UsersService {
     });
   }
 
-Future<bool> userExists(String docId) async {
-  try {
-    final CollectionReference _usersReference =
-        FirebaseFirestore.instance.collection("users");
-
-    var doc = await _usersReference.doc(docId).get();
-    return doc.exists;
-  } catch (e) {
-    throw e;
-  }
-}
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();
   }
