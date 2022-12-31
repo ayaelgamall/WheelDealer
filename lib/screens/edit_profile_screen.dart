@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 
+import '../services/storage_service.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
@@ -61,13 +63,15 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  Future getImages() async {
+  Future getImage() async {
     try {
       setState(() {
         _photosLoading = true;
       });
       XFile? photo = await picker.pickImage(source: ImageSource.gallery);
+      String link = await StorageService().uploadUserPhoto(userId, photo!);
       setState(() {
+        userPhotoLink = link;
         _photosLoading = false;
         _photo = photo;
         _photosError = "";
@@ -147,7 +151,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Sell Your Car"),
+          title: const Text("Update Profile"),
         ),
         body: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -159,206 +163,251 @@ class _EditProfileState extends State<EditProfile> {
               updateError(!(validEmail && notEmptyUsername & notEmptyName));
             },
             child: Container(
-              width:500,height:900,
+                width: 500,
+                height: 900,
                 child: Column(children: [
-              Expanded(
-                  child: SingleChildScrollView(
-                      child: Container(
-                  width: 300,height:900, child:Column(children: [
-                Container(
-                  width: 150,
-                  child: Image.network(userPhotoLink),
-                ),
-                Container(
-                  child: Container(
-                      width: 460,
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 200,
-                            height:20
-                          ),
-                          Container(
-                              width: 30,
-                              height:30,
-                              child: InkWell(
-                                  onTap: !_addingCar
-                                      ? () {
-                                          getImages();
-                                        }
-                                      : null)),
-                          const Icon(
-                            Icons.edit,
-                            size: 20,
-                          )
-                        ],
-                      )),
-                ),
-                const SizedBox(
-                  height: 20,
-
-                ),
-                Container(
-                    width: 400,
-                    height: 700,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                              width: 400,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.person),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(5),
-                                        width: 250,
-                                        height: 45,
-                                        child: TextFormField(
-                                          controller: _nameTextController,
-                                          decoration: const InputDecoration(
-                                            border:
-                                                UnderlineInputBorder(), // TODO make this line override theme
-                                            // hintText: "My current name"
-                                          ),
-                                        ))
-                                  ])),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              width: 460,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.mail),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(5),
-                                        width: 250,
-                                        height: 45,
-                                        child: TextFormField(
-                                          controller: _emailTextController,
-                                          validator: (value) => EmailValidator
-                                                  .validate(value!)
-                                              ? null
-                                              : "Please enter a valid email address",
-                                          style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 114, 112, 112)),
-                                          readOnly: true,
-                                          decoration: const InputDecoration(
-                                            border:
-                                                UnderlineInputBorder(), // TODO make this line override theme
-                                            // hintText: "Mycurrent@email.com",
-                                          ),
-                                        ))
-                                  ])),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              width: 460,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: Container(
+                              width: 300,
+                              height: 900,
+                              child: Column(children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                    width: 120,
+                                    child: Container(
+                                        width: 120.0,
+                                        height: 120.0,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                    userPhotoLink))))),
+                                Container(
+                                    child: Container(
+                                  width: 460,
+                                  child: Row(children: [
+                                    const SizedBox(width: 165, height: 20),
                                     Container(
                                         width: 30,
-                                        child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(40.0),
-                                            child: Image.asset(
-                                                'lib/assets/images/icons/username.png'))),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(5),
-                                        width: 250,
-                                        height: 45,
-                                        child: TextFormField(
-                                          controller: _usernameTextController,
-                                          decoration: const InputDecoration(
-                                            border:
-                                                UnderlineInputBorder(), // TODO make this line override theme
-                                            // hintText: "username"
-                                          ),
-                                        ))
-                                  ])),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              width: 300,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.phone),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(5),
-                                        width: 250,
-                                        height: 45,
-                                        child: TextFormField(
-                                          controller: _phoneTextController,
-                                          validator: (value) => validateMobile(
-                                                  value!)
-                                              ? null
-                                              : "Please enter a valid Egyptian phone number",
-                                          decoration: const InputDecoration(
-                                            border:
-                                                UnderlineInputBorder(), // TODO make this line override theme
-                                            // hintText: "+201234567890",
-                                          ),
-                                        ))
-                                  ])),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 170,
-                            height: 45,
-                            child: ElevatedButton(
-                              onPressed: !_formHasErrors
-                                  ? () async {
-                                      UserModel user = UserModel(
-                                          uid: userId,
-                                          email: _emailTextController.text,
-                                          displayName: _nameTextController.text,
-                                          username:
-                                              _usernameTextController.text,
-                                          phoneNumber:
-                                              _phoneTextController.text,
-                                          profilePhotoLink: userPhotoLink,
-                                          localPhoto: _photo);
-                                      await UsersService().addUser(user);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(successSnackBar());
-                                    }
-                                  : null,
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
+                                        height: 30,
+                                        child: InkWell(
+                                            child: const Icon(Icons.camera_alt,
+                                                size: 20),
+                                            onTap: () => getImage())),
+                                  ]),
+                                )),
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              ),
-                              child: const Text(
-                                "Update Profile",
-                                style: TextStyle(fontSize: 17),
-                              ),
-                            ),
-                          ),
-                        ]))
-              ]))))
-            ]))));
+                                Container(
+                                    width: 400,
+                                    height: 700,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                              width: 400,
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.person),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        width: 250,
+                                                        height: 45,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _nameTextController,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(), // TODO make this line override theme
+                                                            // hintText: "My current name"
+                                                          ),
+                                                        ))
+                                                  ])),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Container(
+                                              width: 460,
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.mail),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        width: 250,
+                                                        height: 45,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _emailTextController,
+                                                          validator: (value) =>
+                                                              EmailValidator
+                                                                      .validate(
+                                                                          value!)
+                                                                  ? null
+                                                                  : "Please enter a valid email address",
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          114,
+                                                                          112,
+                                                                          112)),
+                                                          readOnly: true,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(), // TODO make this line override theme
+                                                            // hintText: "Mycurrent@email.com",
+                                                          ),
+                                                        ))
+                                                  ])),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Container(
+                                              width: 460,
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                        width: 30,
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40.0),
+                                                            child: Image.asset(
+                                                                'lib/assets/images/icons/username.png'))),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        width: 250,
+                                                        height: 45,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _usernameTextController,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(), // TODO make this line override theme
+                                                            // hintText: "username"
+                                                          ),
+                                                        ))
+                                                  ])),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Container(
+                                              width: 300,
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.phone),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        width: 250,
+                                                        height: 45,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _phoneTextController,
+                                                          validator: (value) =>
+                                                              validateMobile(
+                                                                      value!)
+                                                                  ? null
+                                                                  : "Please enter a valid Egyptian phone number",
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(), // TODO make this line override theme
+                                                            // hintText: "+201234567890",
+                                                          ),
+                                                        ))
+                                                  ])),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 170,
+                                            height: 45,
+                                            child: ElevatedButton(
+                                              onPressed: !_formHasErrors
+                                                  ? () async {
+                                                      UserModel user = UserModel(
+                                                          uid: userId,
+                                                          email:
+                                                              _emailTextController
+                                                                  .text,
+                                                          displayName:
+                                                              _nameTextController
+                                                                  .text,
+                                                          username:
+                                                              _usernameTextController
+                                                                  .text,
+                                                          phoneNumber:
+                                                              _phoneTextController
+                                                                  .text,
+                                                          profilePhotoLink:
+                                                              userPhotoLink,
+                                                          localPhoto: _photo);
+                                                      await UsersService()
+                                                          .addUser(user);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              successSnackBar());
+                                                    }
+                                                  : null,
+                                              style: ButtonStyle(
+                                                shape:
+                                                    MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: const Text(
+                                                "Update Profile",
+                                                style: TextStyle(fontSize: 17),
+                                              ),
+                                            ),
+                                          ),
+                                        ]))
+                              ]))))
+                ]))));
   }
 }
