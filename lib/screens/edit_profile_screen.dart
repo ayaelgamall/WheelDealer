@@ -26,18 +26,14 @@ String userPhotoLink =
     'https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397';
 
 class _EditProfileState extends State<EditProfile> {
-  late TextEditingController _emailTextController =
-      TextEditingController(text: 'email');
-  late TextEditingController _usernameTextController =
-      TextEditingController(text: 'username');
-  late TextEditingController _nameTextController =
-      TextEditingController(text: 'display_name');
-  late TextEditingController _phoneTextController =
-      TextEditingController(text: 'phone');
+  late TextEditingController _emailTextController = TextEditingController();
+  late TextEditingController _usernameTextController = TextEditingController();
+  late TextEditingController _nameTextController = TextEditingController();
+  late TextEditingController _phoneTextController = TextEditingController();
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
-  var userId = "IKON6R95EWKMNeQbDemX";
+  var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2";
   @override
   void initState() {
     FirebaseFirestore.instance
@@ -47,11 +43,14 @@ class _EditProfileState extends State<EditProfile> {
         .then((DocumentSnapshot documentSnapshot) {
       Map<String, dynamic> map =
           documentSnapshot.data() as Map<String, dynamic>;
-      _emailTextController = TextEditingController(text: map['email']);
-      _usernameTextController = TextEditingController(text: map['username']);
-      _nameTextController = TextEditingController(text: map['display_name']);
-      _phoneTextController = TextEditingController(text: map['phone_number']);
-      userPhotoLink = map['profile_photo'];
+
+      setState(() {
+        _emailTextController = TextEditingController(text: map['email']);
+        _usernameTextController = TextEditingController(text: map['username']);
+        _nameTextController = TextEditingController(text: map['display_name']);
+        _phoneTextController = TextEditingController(text: map['phone_number']);
+    //     userPhotoLink = map['profile_photo'];
+      });
     });
     super.initState();
   }
@@ -79,6 +78,31 @@ class _EditProfileState extends State<EditProfile> {
         _photosError = "Error in Adding Photos!";
       });
     }
+  }
+
+  SnackBar successSnackBar() {
+    return SnackBar(
+      content: Row(
+        children: [
+          const Icon(
+            Icons.error_outline,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: const Text(
+              "Profile Updated Successfully",
+              maxLines: 2,
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.green,
+    );
   }
 
   void deleteImage(XFile? img) {
@@ -119,8 +143,34 @@ class _EditProfileState extends State<EditProfile> {
     return regExp.hasMatch(value);
   }
 
+  // @override
+  // void dispose() {
+  //   _emailTextController.dispose();
+  //   _nameTextController.dispose();
+  //   _phoneTextController.dispose();
+  //   _usernameTextController.dispose();
+
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    // FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc(userId)
+    //     .get()
+    //     .then((DocumentSnapshot documentSnapshot) async {
+    //   Map<String, dynamic> map =
+    //       await documentSnapshot.data() as Map<String, dynamic>;
+
+    //   setState(() {
+    //     _emailTextController = TextEditingController(text: map['email']);
+    //     _usernameTextController = TextEditingController(text: map['username']);
+    //     _nameTextController = TextEditingController(text: map['display_name']);
+    //     _phoneTextController = TextEditingController(text: map['phone_number']);
+    //     // userPhotoLink = map['profile_photo'];
+    //   });
+    // });
     return Scaffold(
         body: Container(
             margin: const EdgeInsets.only(top: 70),
@@ -182,9 +232,10 @@ class _EditProfileState extends State<EditProfile> {
                                   child: TextFormField(
                                     controller: _nameTextController,
                                     decoration: const InputDecoration(
-                                        border:
-                                            UnderlineInputBorder(), // TODO make this line override theme
-                                        hintText: "My current name"),
+                                      border:
+                                          UnderlineInputBorder(), // TODO make this line override theme
+                                      // hintText: "My current name"
+                                    ),
                                   ))
                             ]),
                         const SizedBox(
@@ -207,12 +258,14 @@ class _EditProfileState extends State<EditProfile> {
                                             .validate(value!)
                                         ? null
                                         : "Please enter a valid email address",
-                                    style: TextStyle(color: Color.fromARGB(255, 114, 112, 112)),
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 114, 112, 112)),
                                     readOnly: true,
                                     decoration: const InputDecoration(
                                       border:
                                           UnderlineInputBorder(), // TODO make this line override theme
-                                      hintText: "Mycurrent@email.com",
+                                      // hintText: "Mycurrent@email.com",
                                     ),
                                   ))
                             ]),
@@ -238,9 +291,10 @@ class _EditProfileState extends State<EditProfile> {
                                   child: TextFormField(
                                     controller: _usernameTextController,
                                     decoration: const InputDecoration(
-                                        border:
-                                            UnderlineInputBorder(), // TODO make this line override theme
-                                        hintText: "username"),
+                                      border:
+                                          UnderlineInputBorder(), // TODO make this line override theme
+                                      // hintText: "username"
+                                    ),
                                   ))
                             ]),
                         const SizedBox(
@@ -265,7 +319,7 @@ class _EditProfileState extends State<EditProfile> {
                                     decoration: const InputDecoration(
                                       border:
                                           UnderlineInputBorder(), // TODO make this line override theme
-                                      hintText: "+201234567890",
+                                      // hintText: "+201234567890",
                                     ),
                                   ))
                             ]),
@@ -278,7 +332,6 @@ class _EditProfileState extends State<EditProfile> {
                           child: ElevatedButton(
                             onPressed: !_formHasErrors
                                 ? () async {
-                                    // UPDATE DB
                                     String? err = null;
                                     UserModel user = UserModel(
                                         uid: userId,
@@ -293,6 +346,10 @@ class _EditProfileState extends State<EditProfile> {
                                     if (err != null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(createSnackBar(err));
+                                    } else {
+                                      setState(() {});
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(successSnackBar());
                                     }
                                   }
                                 : null,
