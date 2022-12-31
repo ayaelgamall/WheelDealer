@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bar2 Banzeen</string>
+    <string name="facebook_app_id">1914327712255023</string>
+    <string name="fb_login_protocol_scheme">fb1914327712255023</string>
+    <string name="facebook_client_token">f2cda096321386141702b2a8e31c3256</string>
+</resources>
