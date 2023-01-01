@@ -45,7 +45,7 @@ class ProfileCarCard extends StatelessWidget {
 
             return carData['sold']
                 ? SoldCar(carData, topBid, doc.data!.id)
-                : InkWell(
+                : GestureDetector(
                     onTap: () {},
                     child: carCard(carData, topBid, doc.data!.id));
           }
