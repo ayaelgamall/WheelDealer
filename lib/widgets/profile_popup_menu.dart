@@ -57,8 +57,9 @@ class ProfilePopUpMenu extends StatelessWidget {
           ),
         ),
       ],
-      offset: const Offset(0, 100),
-      elevation: 2,
+      padding: const EdgeInsets.all(0),
+      offset: const Offset(0, 0),
+      elevation: 0,
       onSelected: (value) {
         if (value == 1) {
         } else if (value == 2) {

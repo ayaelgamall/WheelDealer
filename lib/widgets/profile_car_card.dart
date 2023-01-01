@@ -54,91 +54,112 @@ class ProfileCarCard extends StatelessWidget {
 
   Widget carCard(Map<String, dynamic> carData,
       Query<Map<String, dynamic>>? topBid, String id) {
-    return Card(
-        margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-        elevation: 4,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(7),
-                topRight: Radius.circular(7),
-              ),
-              child: Image(
-                image: const AssetImage(
-                    'assets/images/example.jpg'), // TODO read from db
-                height: 0.73 * height,
-                width: width,
-                fit: BoxFit.cover,
-              )),
-          Container(
-            width: width,
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SizedBox(
+      height: height,
+      width: width,
+      child: Card(
+          margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+          elevation: 4,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${carData['brand']} ${carData['model']}",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+            ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(7),
+                  topRight: Radius.circular(7),
                 ),
-                cardType == 0 && !carData['sold']
-                    ? ProfilePopUpMenu(
-                        carID: id,
-                      )
-                    : const Text(""),
-                //     Row(
-                //       children: [
-                //         Icon(
-                //           Icons.bolt,
-                //           color: Color.fromARGB(255, 183, 150, 19),
-                //           size: 16,
-                //         ),
-                //         Text(
-                //           "Top bid",
-                //           style: TextStyle(
-                //             fontSize: 12,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-              ],
-            ),
-          ),
-          Container(
-              width: width,
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 7),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Image(
+                  image: const AssetImage(
+                      'assets/images/example.jpg'), // TODO read from db
+                  height: 0.7 * height,
+                  width: width,
+                  fit: BoxFit.cover,
+                )),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CardTimer(deadline: carData['deadline']!.toDate()),
-                  topBid == null
-                      ? Text(
-                          "At ${bidValue ?? carData['starting_price']} EGP",
+                  Container(
+                    width: width,
+                    padding: const EdgeInsets.only(left: 10, right: 10, top: 7),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${carData['brand']} ${carData['model']}",
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 183, 150, 19),
+                          ),
+                        ),
+                        cardType == 0 && !carData['sold']
+                            ?
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15.0),
+                          child: SizedBox(
+                            height: 10,
+                            child: ProfilePopUpMenu(
+                              carID: id,
+                            ),
                           ),
                         )
-                      : FutureBuilder<QuerySnapshot>(
-                          future: topBid.get(),
-                          builder: (context, qs) {
-                            return Text(
-                              "At ${qs.data?.docs.first['value']} EGP",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 183, 150, 19),
-                              ),
-                            );
-                          })
+                            : const Text(""),
+                        //     Row(
+                        //       children: [
+                        //         Icon(
+                        //           Icons.bolt,
+                        //           color: Color.fromARGB(255, 183, 150, 19),
+                        //           size: 16,
+                        //         ),
+                        //         Text(
+                        //           "Top bid",
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      width: width,
+
+                      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 7),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CardTimer(deadline: carData['deadline']!.toDate()),
+                          topBid == null
+                              ? Text(
+                                  "At ${bidValue ?? carData['starting_price']} EGP",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 183, 150, 19),
+                                  ),
+                                )
+                              : FutureBuilder<QuerySnapshot>(
+                                  future: topBid.get(),
+                                  builder: (context, qs) {
+                                    return Text(
+                                      "At ${qs.data?.docs.first['value']} EGP",
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 183, 150, 19),
+                                      ),
+                                    );
+                                  })
+                        ],
+                      )),
                 ],
-              ))
-        ]));
+              ),
+            )
+          ])),
+    );
   }
 
   Widget SoldCar(Map<String, dynamic> carData,
@@ -153,22 +174,22 @@ class ProfileCarCard extends StatelessWidget {
           width: width,
           child: Card(
             color: Colors.white54, //TODO: change according to scene,
-            elevation: 0,
+            elevation: 4,
             margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
             child: Text(""),
           ),
         ),
-        const Positioned.fill(
-            left: 120,
-            top: 120,
-            child: Text(
+         Positioned.fill(
+            left: width/2-40,
+            top: height/2-16,
+            child:  Text(
               "Sold",
               style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.amber),
+                  color: Colors.amber),//todo change color
             ))
       ],
     );
