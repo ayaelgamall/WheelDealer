@@ -73,7 +73,7 @@ ThemeData darkTheme = ThemeData(
   // accentColor: kYellow,
   // primaryIconTheme: ,
   inputDecorationTheme: const InputDecorationTheme(
-    enabledBorder: OutlineInputBorder(
+    border: OutlineInputBorder(
       borderSide: BorderSide(color: Color(0xffF3EFE0)),
     ),
     focusedBorder: OutlineInputBorder(
