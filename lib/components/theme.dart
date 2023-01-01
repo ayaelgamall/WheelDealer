@@ -68,6 +68,7 @@ ThemeData darkTheme = ThemeData(
 // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xff434242),
   disabledColor: const Color(0xff434242),
+  hoverColor: Color(0xff22A39F),
   // accentColor: kYellow,
   // primaryIconTheme: ,
   inputDecorationTheme: const InputDecorationTheme(

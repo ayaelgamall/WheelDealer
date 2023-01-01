@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/car_screen.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: AppRouter().generateRoute,
         // initialRoute: Wrapper.routeName,
         // initialRoute: LoginScreen.routeName,
-        initialRoute: EditProfile.routeName,
+        initialRoute: CarPage.routeName,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

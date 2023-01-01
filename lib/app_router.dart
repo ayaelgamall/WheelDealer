@@ -1,5 +1,6 @@
 // import 'dart:js';
 
+import 'package:bar2_banzeen/screens/car_screen.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/complete_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
@@ -18,7 +19,7 @@ class AppRouter {
       Wrapper.routeName: (context) => const Wrapper(),
       // LoginScreen.routeName: (context) => const LoginScreen(),
       // SignupScreen.routeName: (context) => const SignupScreen(),
-      FavouriteCarsScreen.routeName:(context)=>const FavouriteCarsScreen(),
+      FavouriteCarsScreen.routeName: (context) => const FavouriteCarsScreen(),
       MainPage.routeName: (context) => const MainPage(),
       EditProfile.routeName: (context) => const EditProfile(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
@@ -26,6 +27,7 @@ class AppRouter {
       ChatScreen.routeName: (context) => const ChatScreen(),
       CompleteProfileScreen.routeName: (context) =>
           const CompleteProfileScreen(),
+      CarPage.routeName: ((context) => const CarPage())
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const Wrapper();
