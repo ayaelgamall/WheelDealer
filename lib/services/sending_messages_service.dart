@@ -16,14 +16,6 @@ class SendingMessagesService {
   }
 
   Future<String> fetchOtherUserId(String chatId, String userId) async {
-    // FirebaseFirestore.instance
-    //     .collection("chats")
-    //     .doc(chatId)
-    //     .get()
-    //     .then((chatDoc) {
-    //   List usersIds = chatDoc.data()?['users'];
-    //   return userId == usersIds[0] ? usersIds[1] : usersIds[0];
-    // });
     DocumentSnapshot<Map<String, dynamic>> chatDoc =
         await FirebaseFirestore.instance.collection("chats").doc(chatId).get();
 

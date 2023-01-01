@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/models/car.dart';
 import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -33,5 +34,36 @@ class CarsService {
         (localPhoto) async =>
             await StorageService().uploadCarPhoto(carId, localPhoto!)));
     await _carsReference.doc(carId).update({"photos": uploadedPhotos});
+  }
+
+  Future<Car> fetchCar(String carId) async {
+    DocumentSnapshot<Map<String, dynamic>> carDoc = await _carsReference
+        .doc(carId)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+    Car car = Car(
+        bidsCount: carDoc.data()?['bids_count'],
+        brand: carDoc.data()?['brand'],
+        color: carDoc.data()?['color'],
+        deadline: (carDoc.data()?['deadline'] as Timestamp).toDate(),
+        engineCapacity: carDoc.data()?['engine_capacity'],
+        location: carDoc.data()?['location'],
+        model: carDoc.data()?['model'],
+        sellerId: carDoc.data()?['seller_id'],
+        sold: carDoc.data()?['sold'],
+        startingPrice: carDoc.data()?['starting_price'],
+        transmission: carDoc.data()?['transmission'],
+        year: carDoc.data()?['year'].toString() ??
+            "No Specified Year, check method fetchCar in car_service",
+        photos: carDoc.data()?['photos'].cast<String>());
+    return car;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchCarTopBids(String carId) {
+    return _carsReference
+        .doc(carId)
+        .collection("bids")
+        .orderBy("value", descending: true)
+        .limit(3)
+        .snapshots();
   }
 }
