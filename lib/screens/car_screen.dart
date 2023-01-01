@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
+import 'package:bar2_banzeen/widgets/timer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:page_indicator/page_indicator.dart';
+import 'package:provider/provider.dart';
 
 import '../models/Car.dart';
 
@@ -20,27 +23,7 @@ class CarPage extends StatefulWidget {
 class _CarPageState extends State<CarPage> {
   final String defaultPhoto =
       'https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397';
-  late DateTime currentTime;
 
-  // A timer that updates the current time every second
-  late Timer timer;
-  void initState() {
-    super.initState();
-
-    // Set the initial value for currentTime
-    currentTime = DateTime.now();
-
-    // Set up the timer to update currentTime every second
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        currentTime = DateTime.now();
-      });
-    });
-  }
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +51,6 @@ class _CarPageState extends State<CarPage> {
     List userInfo =getUserFromId(car.sellerId);
     String userPhoto = userInfo[0] ?? defaultPhoto;
     String userName=userInfo[1];
-    final difference = car.deadline.difference(currentTime);
 
 
     double width = MediaQuery.of(context).size.width;
@@ -174,7 +156,7 @@ class _CarPageState extends State<CarPage> {
 
                             children: [
                               Text("Ending In",style: TextStyle(color:Theme.of(context).hoverColor,fontWeight:FontWeight.bold)),
-                               Text( '${difference.inDays}D:${difference.inHours % 24}H:${difference.inMinutes % 60}M:${difference.inSeconds % 60}S')
+                              CardTimer(deadline: car.deadline,)
                             ],
                           )
                         ],
@@ -308,7 +290,8 @@ class _CarPageState extends State<CarPage> {
 
   }
 
-  List getUserFromId(String id) {//todo from fireStore
+  List getUserFromId(String uid) {//todo from fireStore
+
     return [null , "Gego Badrawy"] ;
   }
 
