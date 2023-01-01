@@ -1,5 +1,8 @@
+// import 'dart:js';
+
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/complete_profile_screen.dart';
+import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
@@ -15,6 +18,7 @@ class AppRouter {
       Wrapper.routeName: (context) => const Wrapper(),
       // LoginScreen.routeName: (context) => const LoginScreen(),
       // SignupScreen.routeName: (context) => const SignupScreen(),
+      FavouriteCarsScreen.routeName:(context)=>const FavouriteCarsScreen(),
       MainPage.routeName: (context) => const MainPage(),
       EditProfile.routeName: (context) => const EditProfile(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
