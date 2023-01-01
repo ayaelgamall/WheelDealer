@@ -27,11 +27,18 @@ class CarsService {
       "creation_time": Timestamp.fromDate(DateTime.now()),
       "bids_count": 0
     });
-
     String carId = carDocument.id;
     List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
         (localPhoto) async =>
             await StorageService().uploadCarPhoto(carId, localPhoto!)));
     await _carsReference.doc(carId).update({"photos": uploadedPhotos});
+  }
+
+  Future<void> deleteCar(String carID) async {
+    _carsReference.doc(carID).delete();
+  }
+
+  Future<void> setCarSold(String? carID) async {
+    await _carsReference.doc(carID).update({"sold": true});
   }
 }

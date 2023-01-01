@@ -21,8 +21,8 @@ class ProfilePosts extends StatelessWidget {
           : Column(
               children: carsToShow!.map((carID) {
               return ProfileCarCard(
-                width: 0.89 * width,
-                height: 0.4 * height,
+                width: 0.8 * width,
+                height: 0.35 * height,
                 rightMargin: 0,
                 carId: carID,
                 cardType: 0,

@@ -18,10 +18,11 @@ class ProfileBids extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       child: carsToShow == null
           ? Center(child: Text("No bids yet"))
-          : FutureBuilder<QuerySnapshot>(
-              future: carsToShow?.get(),
+          : StreamBuilder<QuerySnapshot>(
+              stream: carsToShow?.snapshots(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (!snapshot.hasData ||
+                    snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
@@ -30,8 +31,8 @@ class ProfileBids extends StatelessWidget {
                       children: snapshot.data!.docs.map((doc) {
                     return ProfileCarCard(
                       bidValue: doc['value'],
-                      width: 0.89 * width,
-                      height: 0.4 * height,
+                      width: 0.8 * width,
+                      height: 0.35 * height,
                       rightMargin: 0,
                       carId: doc['car'],
                       cardType: 1,
