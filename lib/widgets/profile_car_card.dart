@@ -143,22 +143,34 @@ class ProfileCarCard extends StatelessWidget {
 
   Widget SoldCar(Map<String, dynamic> carData,
       Query<Map<String, dynamic>>? topBid, String id) {
-    return InkWell(
-        onTap: () {},
-        child: Stack(
-          children: [
-            carCard(carData, topBid, id),
-            Container(
-              color: Colors.white54,
-              height: 0.73 * height,
-              width: width,
-            ),
-            const Positioned.fill(
-                child: Text(
+    return Stack(
+      children: [
+        carCard(carData, topBid, id),
+        Positioned(
+          top: 0,
+          left: 0,
+          height: height,
+          width: width,
+          child: Card(
+            color: Colors.white54, //TODO: change according to scene,
+            elevation: 0,
+            margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+            child: Text(""),
+          ),
+        ),
+        const Positioned.fill(
+            left: 120,
+            top: 120,
+            child: Text(
               "Sold",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber),
             ))
-          ],
-        ));
+      ],
+    );
   }
 }
