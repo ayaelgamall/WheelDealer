@@ -35,7 +35,7 @@ class _EditProfileState extends State<EditProfile> {
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
-  var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2";
+  var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
   @override
   void initState() {
     FirebaseFirestore.instance
