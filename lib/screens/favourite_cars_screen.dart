@@ -1,11 +1,12 @@
+import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/car.dart';
 
-List<String> favouritesList = [];
-var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
+List<dynamic> favouritesList = [];
+String userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
 
 class FavouriteCarsScreen extends StatefulWidget {
   const FavouriteCarsScreen({super.key});
@@ -20,13 +21,17 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
 
   @override
   void initState() {
-    setState(() {
-      // .get()
-      //   .then((DocumentSnapshot documentSnapshot) {
-      // Map<String, String> map =
-      //     documentSnapshot.data() as Map<String, String>;
-      // favouritesList = map['favs'] as List<String>;
-      // });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      Map<String, dynamic> map =
+          documentSnapshot.data() as Map<String, dynamic>;
+
+      setState(() {
+        favouritesList = map['favs'] as List<dynamic>;
+      });
     });
     super.initState();
   }
@@ -42,62 +47,75 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
     });
   }
 
-  void removeFromFavourites(int i) {
-    setState(() async {
-      favouritesList.remove(favouritesList[i]);
-      // await updateFavsList(favouritesList);
+  Future<void> removeFromFavourites(String i) async {
+    setState(() {
+          favouritesList.remove(i);
     });
+
+    UsersService().editFavs(userId, i);
   }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseFirestore.instance.collection('users');
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      Map<String, dynamic> map =
+          documentSnapshot.data() as Map<String, dynamic>;
+      favouritesList = map['favs'] as List<dynamic>;
+    });
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "BeebBeeb",
-            style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
+            "Favourites",
           ),
         ),
         body: Container(
           margin: EdgeInsets.all(20),
-          child: FutureBuilder<DocumentSnapshot>(
-            future: user.doc(userId).get(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return SizedBox(
-                    height: 700,
-                    child: ListView(
-                      children: (snapshot.data?.get('favs') as List<dynamic>)
-                          .map((mapEntry) {
-                        return Container(
-                            height: 230,
-                            width: 430,
-                            child: ListTile(
-                                title: CarCard(
-                                    width: 400,
-                                    height: 200,
-                                    rightMargin: 0,
-                                    carId: mapEntry)));
-                      }).toList(),
-                    ));
-
-                // ListView(children:(snapshot.data() as Map<String, String>){
-
-                //     return CarCard(
-                //         width: 300,
-                //         height: 200,
-                //         rightMargin: 0,
-                //         carId: f.id);
-                //   }).toList()
-                // ]);
-              }
-            },
-          ),
+          child: ListView.builder(
+              itemCount: favouritesList.length,
+              itemBuilder: (BuildContext context, int index) {
+                {
+                  if (favouritesList.isEmpty) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return SizedBox(
+                        height: 700,
+                        child: ListView(
+                          children: (favouritesList).map((carId) {
+                            return Container(
+                                height: 230,
+                                width: 430,
+                                child: Dismissible(
+                                    background: Container(
+                                        alignment: Alignment.centerRight,
+                                        padding:
+                                            const EdgeInsets.only(right: 20),
+                                        color: Colors.red,
+                                        // ignore: prefer_const_constructors
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                        )),
+                                    key: Key(carId),
+                                    direction: DismissDirection.endToStart,
+                                    onDismissed: (dir) {
+                                      removeFromFavourites(carId);
+                                    },
+                                    child: ListTile(
+                                        title: CarCard(
+                                            width: 400,
+                                            height: 200,
+                                            rightMargin: 0,
+                                            carId: carId))));
+                          }).toList(),
+                        ));
+                  }
+                }
+              }),
         ));
   }
 }
