@@ -6,8 +6,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProfilePopUpMenu extends StatelessWidget {
+  BuildContext ctx;
   String carID;
-  ProfilePopUpMenu({super.key, required this.carID});
+  ProfilePopUpMenu({super.key, required this.carID, required this.ctx});
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +82,13 @@ class ProfilePopUpMenu extends StatelessWidget {
     Widget cancelButton = TextButton(
       child: const Text("Cancel"),
       onPressed: () {
-        Navigator.of(context).pop();
+        Navigator.of(ctx).pop();
       },
     );
     Widget deleteButton = TextButton(
         child: const Text("Delete"),
         onPressed: () async {
+          Navigator.of(context).pop();
           bool success = true;
           await CarsService()
               .deleteCar(carID)
@@ -102,11 +104,10 @@ class ProfilePopUpMenu extends StatelessWidget {
             success = false;
           });
           if (success) {
-            ScaffoldMessenger.of(context).showSnackBar(
+            ScaffoldMessenger.of(ctx).showSnackBar(
                 createSnackBar("Post deleted successfully!", true));
-            Navigator.of(context).pop();
           } else
-            ScaffoldMessenger.of(context)
+            ScaffoldMessenger.of(ctx)
                 .showSnackBar(createSnackBar("Failed to delete post", false));
         });
     // set up the AlertDialog

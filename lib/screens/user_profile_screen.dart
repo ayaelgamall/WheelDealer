@@ -152,9 +152,12 @@ class _UserProfileState extends State<UserProfile> {
                         carsToShow: carsToShow,
                         height: height,
                         width: width,
-                      )
+                        ctx: context)
                     : ProfileBids(
-                        height: height, width: width, carsToShow: carsToShow),
+                        height: height,
+                        width: width,
+                        carsToShow: carsToShow,
+                        ctx: context),
               ]);
             } else {
               return Text("No user");

@@ -8,9 +8,14 @@ import 'main_page_heading.dart';
 class ProfileBids extends StatelessWidget {
   double height;
   double width;
+  BuildContext ctx;
   Query<Map<String, dynamic>>? carsToShow;
   ProfileBids(
-      {super.key, this.carsToShow, required this.height, required this.width});
+      {super.key,
+      this.carsToShow,
+      required this.height,
+      required this.width,
+      required this.ctx});
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +37,11 @@ class ProfileBids extends StatelessWidget {
                     return ProfileCarCard(
                       bidValue: doc['value'],
                       width: 0.8 * width,
-                      height: 0.35 * height,
+                      height: 0.4 * height,
                       rightMargin: 0,
                       carId: doc['car'],
                       cardType: 1,
+                      ctx: ctx,
                     );
                   }).toList());
                 }
