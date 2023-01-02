@@ -1,14 +1,11 @@
 import 'package:bar2_banzeen/components/theme.dart';
-import 'package:bar2_banzeen/screens/editProfile.dart';
-
-import 'package:bar2_banzeen/screens/main_page.dart';
-
-import 'package:bar2_banzeen/screens/login_screen.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
-
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
+import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -34,21 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _initialized = false;
-  bool _error = false;
-  void initializeFirebase() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (err) {
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
   // This widget is the root of your application.
   @override
   void initState() {
@@ -58,7 +40,6 @@ class _MyAppState extends State<MyApp> {
       setState(
           () {}); //👈 this is to force a rerender so that the changes are carried out
     });
-    initializeFirebase();
   }
 
   @override
@@ -66,8 +47,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         StreamProvider<User?>(
-            create: (_) => AuthenticationService().onAuthStateChanged,
-            initialData: null)
+          create: (_) => AuthenticationService().onAuthStateChanged,
+          initialData: null,
+        ),
       ],
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,

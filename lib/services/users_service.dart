@@ -1,8 +1,8 @@
 import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-import '../models/Car.dart';
+import 'package:image_picker/image_picker.dart';
+import '../models/user.dart';
 
 class UsersService {
   final CollectionReference _usersReference =
@@ -44,5 +44,37 @@ class UsersService {
     // (_usersReference.doc().data!.data()!["posted_cars"])
     //               : (userData.collection("bids"));
     _usersReference.doc(userID);
+    final String defaultPhoto = "";
+
+    Future<void> addUser(UserModel user) async {
+      String? profilePhotoLink = user.localPhoto != null
+          ? await StorageService().uploadUserPhoto(user.uid, user.localPhoto!)
+          : null;
+      await _usersReference.doc(user.uid).set({
+        "email": user.email,
+        "display_name": user.displayName,
+        "username": user.username,
+        "phone_number": user.phoneNumber,
+        "profile_photo": profilePhotoLink,
+        "posted_cars": [],
+      });
+    }
+
+    Future<void> editFavs(String uid, String car) async {
+      // String? profilePhotoLink = user.localPhoto != null
+      //     ? await StorageService().uploadUserPhoto(user.uid, user.localPhoto!)
+      //     : null;
+
+      await _usersReference.doc(uid).update({
+        "favs": FieldValue.arrayRemove([car])
+      });
+      // await _usersReference.doc(uid).set({
+      //   "favs": favs,
+      // });
+    }
+
+    Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
+      return _usersReference.doc(userId).snapshots();
+    }
   }
 }
