@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 
 class GoogleLoginButton extends StatelessWidget {
@@ -9,7 +10,9 @@ class GoogleLoginButton extends StatelessWidget {
       width: 300,
       height: 50,
       child: OutlinedButton(
-        onPressed: () {},
+        onPressed: () {
+          AuthenticationService().signInWithGoogle();
+        },
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +26,10 @@ class GoogleLoginButton extends StatelessWidget {
               ),
               Text(
                 "Continue with Google",
-                style: TextStyle(fontSize: 18, color: Colors.black54),//Todo change to be related to the theme
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors
+                        .black54), //Todo change to be related to the theme
               )
             ],
           ),
