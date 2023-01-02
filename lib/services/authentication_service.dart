@@ -98,4 +98,8 @@ class AuthenticationService {
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
+
+  User? geCurrentUser() {
+    return _auth.currentUser;
+  }
 }

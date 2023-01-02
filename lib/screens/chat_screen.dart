@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bar2_banzeen/models/message.dart';
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/messaging_stream_service.dart';
+import 'package:bar2_banzeen/services/notifications_service.dart';
 import 'package:bar2_banzeen/services/sending_messages_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  String chatId = 'PgaDbmblSQzyKmBviEdP';
-  String thisUserId = 'IKON6R95EWKMNeQbDemX';
+  //TODO
+  String chatId = '';
+  late String thisUserId;
   late String? toUserId;
   TextEditingController textController = TextEditingController();
 
@@ -33,6 +36,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    thisUserId = AuthenticationService().geCurrentUser()!.uid;
+    NotificationsService().registerNotifications();
     super.initState();
   }
 
@@ -76,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         SizedBox(
                           width: 15,
                         ),
-                        Text(user.data?['username']),
+                        Text(user.data?['display_name']),
                       ],
                     );
                   });
