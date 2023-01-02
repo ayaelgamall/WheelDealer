@@ -108,7 +108,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
       content: Row(
         children: [
           const Icon(
-            Icons.error_outline,
+            Icons.done,
             color: Colors.white,
           ),
           const SizedBox(
