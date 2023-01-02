@@ -87,14 +87,18 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
                         child: ListView(
                           children: (favouritesList).map((carId) {
                             return Container(
-                                height: 230,
+                                height: 228,
                                 width: 430,
+                                alignment: Alignment.topCenter,
                                 child: Dismissible(
                                     background: Container(
-                                        alignment: Alignment.centerRight,
+                                        height: 160,
                                         padding:
                                             const EdgeInsets.only(right: 30),
+                                        alignment: Alignment.centerRight,
                                         color: Color.fromARGB(255, 135, 17, 8),
+                                        margin:
+                                            EdgeInsets.only(top: 9, bottom: 20),
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.white,
@@ -104,12 +108,11 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
                                     onDismissed: (dir) {
                                       removeFromFavourites(carId);
                                     },
-                                    child: ListTile(
-                                        title: CarCard(
-                                            width: 400,
-                                            height: 200,
-                                            rightMargin: 0,
-                                            carId: carId))));
+                                    child: CarCard(
+                                        width: 400,
+                                        height: 200,
+                                        rightMargin: 0,
+                                        carId: carId)));
                           }).toList(),
                         ));
                   }
