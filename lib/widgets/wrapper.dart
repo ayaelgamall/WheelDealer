@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/screens/complete_profile_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
+import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
@@ -41,7 +42,7 @@ class _WrapperState extends State<Wrapper> {
             if (snapshot.data!.exists) {
               return const SellCarScreen();
             } else {
-              return const CompleteProfileScreen();
+              return const MainPage();
             }
           } else {
             return const Scaffold(

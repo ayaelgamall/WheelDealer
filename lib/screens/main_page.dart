@@ -10,43 +10,22 @@ import '../widgets/view_more_button.dart';
 List<dynamic> favouritesList = [];
 String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
   static const routeName = '/mainPage';
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      Map<String, dynamic> map =
-          documentSnapshot.data() as Map<String, dynamic>;
-
-      setState(() {
-        favouritesList = map['favs'] as List<dynamic>;
-      });
-    });
-    super.initState();
-  }
-
+  // @override
   void addToFavourites(String c) async {
-    setState(() {
-      favouritesList.add(c);
-    });
+    // setState(() {
+    //   favouritesList.add(c);
+    // });
     UsersService().addToFavs(userId, c);
   }
 
   Future<void> removeFromFavourites(String i) async {
-    setState(() {
-      favouritesList.remove(i);
-    });
+    // setState(() {
+    //   favouritesList.remove(i);
+    // });
 
     UsersService().removeFromFavs(userId, i);
   }
@@ -125,18 +104,35 @@ class _MainPageState extends State<MainPage> {
                           rightMargin: 0,
                           carId: doc.id),
                       Positioned(
-                        top: 20,
-                        right: 20,
-                        child: InkWell(
-                            child: favouritesList.contains(doc.id)
-                                ? (const Icon(Icons.favorite))
-                                : const Icon(Icons.favorite_border),
-                            onTap: () {
-                              favouritesList.contains(doc.id)
-                                  ? removeFromFavourites(doc.id)
-                                  : addToFavourites(doc.id);
-                            }),
-                      )
+                          top: 20,
+                          right: 20,
+                          child: StreamBuilder<DocumentSnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(userId)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData ||
+                                    snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                  return InkWell(
+                                      child: Icon(Icons.favorite_border));
+                                } else {
+                                  Map<String, dynamic> map = snapshot.data!
+                                      .data() as Map<String, dynamic>;
+                                  var favouritesList =
+                                      map['favs'] as List<dynamic>;
+                                  return InkWell(
+                                      child: favouritesList.contains(doc.id)
+                                          ? (const Icon(Icons.favorite))
+                                          : const Icon(Icons.favorite_border),
+                                      onTap: () {
+                                        favouritesList.contains(doc.id)
+                                            ? removeFromFavourites(doc.id)
+                                            : addToFavourites(doc.id);
+                                      });
+                                }
+                              }))
                     ]);
                   }).toList()
                 ]);
