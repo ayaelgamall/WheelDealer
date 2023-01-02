@@ -53,5 +53,28 @@
 	<string>Need to upload image</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need to upload image</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1914327712255023</string>
+				<string>com.googleusercontent.apps.604474291978-75rm41s42pr9r2vle1pek4ibj0pi550r</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+<string>1914327712255023</string>
+<key>FacebookClientToken</key>
+<string>f2cda096321386141702b2a8e31c3256</string>
+<key>FacebookDisplayName</key>
+<string>Bar2 Banzeen</string>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>fbapi</string>
+  <string>fb-messenger-share-api</string>
+</array>
 </dict>
 </plist>

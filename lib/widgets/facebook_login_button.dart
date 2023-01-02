@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 
 class FacebookLoginButton extends StatelessWidget {
@@ -9,7 +10,9 @@ class FacebookLoginButton extends StatelessWidget {
       width: 300,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          AuthenticationService().signInWithFacebook();
+        },
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color>(const Color(0xff1877f2))),
