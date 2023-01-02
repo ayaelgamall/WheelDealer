@@ -49,7 +49,7 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
 
   Future<void> removeFromFavourites(String i) async {
     setState(() {
-          favouritesList.remove(i);
+      favouritesList.remove(i);
     });
 
     UsersService().editFavs(userId, i);
