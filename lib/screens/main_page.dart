@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,7 @@ class MainPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
+        drawer: AppDrawer(),
         appBar: AppBar(
           title: const Text(
             "BeebBeeb",

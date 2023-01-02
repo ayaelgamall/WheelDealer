@@ -41,11 +41,10 @@ class UsersService {
     });
   }
 
-  Future<void> getUser(String userID) async {
+  Future<DocumentSnapshot> getUser(String userID) {
     // (_usersReference.doc().data!.data()!["posted_cars"])
     //               : (userData.collection("bids"));
-    _usersReference.doc(userID);
-    final String defaultPhoto = "";
+    return _usersReference.doc(userID).get();
   }
 
   Future<void> addUser(UserModel user) async {
@@ -67,12 +66,12 @@ class UsersService {
       "favs": FieldValue.arrayUnion([car])
     });
   }
-    Future<void> removeFromFavs(String uid, String car) async {
+
+  Future<void> removeFromFavs(String uid, String car) async {
     await _usersReference.doc(uid).update({
       "favs": FieldValue.arrayRemove([car])
     });
   }
-
 
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();
