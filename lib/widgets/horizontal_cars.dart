@@ -46,7 +46,7 @@ class HorizontalCars extends StatelessWidget {
                       ),
                       Positioned(
                           top: 20,
-                          right: 20,
+                          right: 30,
                           child: StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('users')
@@ -57,7 +57,8 @@ class HorizontalCars extends StatelessWidget {
                                     snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                   return const InkWell(
-                                      child: Icon(Icons.favorite_border));
+                                      child: Icon(Icons.favorite_border,
+                                          ));
                                 } else {
                                   Map<String, dynamic> map = snapshot.data!
                                       .data() as Map<String, dynamic>;
@@ -65,8 +66,10 @@ class HorizontalCars extends StatelessWidget {
                                       map['favs'] as List<dynamic>;
                                   return InkWell(
                                       child: favouritesList.contains(doc.id)
-                                          ? (const Icon(Icons.favorite))
-                                          : const Icon(Icons.favorite_border),
+                                          ? (const Icon(Icons.favorite,
+                                          color: Color.fromARGB(255, 146, 21, 12)))
+                                          : const Icon(Icons.favorite_border,
+                                         ),
                                       onTap: () {
                                         favouritesList.contains(doc.id)
                                             ? UsersService()

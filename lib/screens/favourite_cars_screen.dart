@@ -58,7 +58,7 @@ class FavouriteCarsScreen extends StatelessWidget {
                                 children: (favouritesList).map((carId) {
                                   return Container(
                                       height: 228,
-                                      width: 430,
+                                      width: 400,
                                       alignment: Alignment.topCenter,
                                       child: Dismissible(
                                           background: Container(
@@ -66,8 +66,7 @@ class FavouriteCarsScreen extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   right: 30),
                                               alignment: Alignment.centerRight,
-                                              color: const Color.fromARGB(
-                                                  255, 135, 17, 8),
+                                              color: const Color.fromARGB(255, 146, 21, 12),
                                               margin: const EdgeInsets.only(
                                                   top: 9, bottom: 20),
                                               child: const Icon(
@@ -83,24 +82,21 @@ class FavouriteCarsScreen extends StatelessWidget {
                                           },
                                           child: Stack(children: [
                                             CarCard(
-                                                width: 400,
+                                                width: 380,
                                                 height: 200,
                                                 rightMargin: 0,
                                                 carId: carId),
-                                            Positioned(
+                                             Positioned(
                                               top: 20,
                                               right: 20,
                                               child: InkWell(
-                                                  child: favouritesList
-                                                          .contains(carId)
-                                                      ? (Icon(Icons.favorite))
-                                                      : Icon(Icons
-                                                          .favorite_border),
+                                                  child: const Icon(Icons.favorite,color: Color.fromARGB(255, 146, 21, 12)),
+                                                      
                                                   onTap: () {
                                                     UsersService()
                                                         .removeFromFavs(
                                                             userId, carId);
-                                                  }),
+                                            }),
                                             )
                                           ])));
                                 }).toList(),
