@@ -1,6 +1,8 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
+import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,6 +60,7 @@ class _MyAppState extends State<MyApp> {
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
             darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
+
         theme: lightTheme,
       ),
     );
