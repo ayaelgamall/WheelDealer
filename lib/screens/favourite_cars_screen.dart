@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../models/car.dart';
 
 List<dynamic> favouritesList = [];
-String userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
+String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
 class FavouriteCarsScreen extends StatefulWidget {
   const FavouriteCarsScreen({super.key});
@@ -93,10 +93,9 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
                                     background: Container(
                                         alignment: Alignment.centerRight,
                                         padding:
-                                            const EdgeInsets.only(right: 20),
-                                        color: Colors.red,
-                                        // ignore: prefer_const_constructors
-                                        child: Icon(
+                                            const EdgeInsets.only(right: 30),
+                                        color: Color.fromARGB(255, 135, 17, 8),
+                                        child: const Icon(
                                           Icons.delete,
                                           color: Colors.white,
                                         )),
