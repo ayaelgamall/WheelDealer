@@ -22,7 +22,7 @@ class CarCard extends StatelessWidget {
 
     return InkWell(
         onTap: () {
-          GoRouter.of(context).go('/mainPage/car');
+          GoRouter.of(context).go('/');
         },
         child: Card(
           margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),

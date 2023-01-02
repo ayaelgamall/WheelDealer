@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +9,14 @@ class SelectedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Hi"), actions: [
+        IconButton(
+          onPressed: () {
+            AuthenticationService().signOut();
+          },
+          icon: Icon(Icons.logout),
+        )
+      ]),
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

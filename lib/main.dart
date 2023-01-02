@@ -1,10 +1,13 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,9 +47,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/mainPage',
+    initialLocation: "/",
     routes: <RouteBase>[
       /// Application shell
+      GoRoute(
+          path: "/",
+          builder: (BuildContext context, GoRouterState state) {
+            return Wrapper();
+          }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
