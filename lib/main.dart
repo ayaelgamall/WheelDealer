@@ -1,8 +1,8 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
-import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
@@ -19,7 +19,6 @@ import 'firebase_options.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:bar2_banzeen/screens/car_screen.dart';
-import 'package:bar2_banzeen/screens/favourites_screen.dart';
 import 'package:bar2_banzeen/screens/messages_screen.dart';
 import 'package:bar2_banzeen/screens/notifications_screen.dart';
 import 'package:bar2_banzeen/screens/selected_tab_screen.dart';
@@ -55,6 +54,11 @@ class _MyAppState extends State<MyApp> {
           builder: (BuildContext context, GoRouterState state) {
             return Wrapper();
           }),
+      GoRoute(
+          path: "/chat",
+          builder: (BuildContext context, GoRouterState state) {
+            return MyWidget();
+          }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -62,6 +66,7 @@ class _MyAppState extends State<MyApp> {
         },
         routes: <RouteBase>[
           /// The first screen to display in the bottom navigation bar.
+
           GoRoute(
             path: '/mainPage',
             builder: (BuildContext context, GoRouterState state) {
@@ -70,6 +75,12 @@ class _MyAppState extends State<MyApp> {
             routes: <RouteBase>[
               // The details screen to display stacked on the inner Navigator.
               // This will cover MainScreen but not the application shell.
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
               GoRoute(
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
@@ -84,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/favourites',
             builder: (BuildContext context, GoRouterState state) {
-              return const Favourites();
+              return const FavouriteCarsScreen();
             },
             // routes: <RouteBase>[
             //   /// Same as "/a/details", but displayed on the root Navigator by
@@ -136,7 +147,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/profile',
             builder: (BuildContext context, GoRouterState state) {
-              return const MessagingScreen();
+              return const UserProfile();
             },
             // routes: <RouteBase>[
             //   // The details screen to display stacked on the inner Navigator.

@@ -7,14 +7,15 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(),
         body: Center(
-      child: Container(
-        child: TextButton(
-            onPressed: () {
-              context.go("/mainPage");
-            },
-            child: Text("Open")),
-      ),
-    ));
+          child: Container(
+            child: TextButton(
+                onPressed: () {
+                  context.go("/mainPage");
+                },
+                child: Text("Open")),
+          ),
+        ));
   }
 }

@@ -9,14 +9,6 @@ class SelectedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Hi"), actions: [
-        IconButton(
-          onPressed: () {
-            AuthenticationService().signOut();
-          },
-          icon: Icon(Icons.logout),
-        )
-      ]),
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -51,6 +43,26 @@ class SelectedTab extends StatelessWidget {
   }
 
   static int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).location;
+    if (location.startsWith('/mainPage')) {
+      return 0;
+    }
+    if (location.startsWith('/favourites')) {
+      return 1;
+    }
+    if (location.startsWith('/sellCar')) {
+      return 2;
+    }
+    if (location.startsWith('/notifications')) {
+      return 3;
+    }
+    if (location.startsWith('/profile')) {
+      return 4;
+    }
+    return 0;
+  }
+
+  static int _(BuildContext context) {
     final String location = GoRouterState.of(context).location;
     if (location.startsWith('/mainPage')) {
       return 0;
