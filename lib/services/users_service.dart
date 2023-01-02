@@ -62,18 +62,17 @@ class UsersService {
     });
   }
 
-  Future<void> editFavs(String uid, String car) async {
-    // String? profilePhotoLink = user.localPhoto != null
-    //     ? await StorageService().uploadUserPhoto(user.uid, user.localPhoto!)
-    //     : null;
-
+  Future<void> addToFavs(String uid, String car) async {
+    await _usersReference.doc(uid).update({
+      "favs": FieldValue.arrayUnion([car])
+    });
+  }
+    Future<void> removeFromFavs(String uid, String car) async {
     await _usersReference.doc(uid).update({
       "favs": FieldValue.arrayRemove([car])
     });
-    // await _usersReference.doc(uid).set({
-    //   "favs": favs,
-    // });
   }
+
 
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();

@@ -36,15 +36,11 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
     super.initState();
   }
 
-  // Future<void> updateFavsList(val) async {
-  //   setState(() {});
-  // }
-
-  void addToFavourites(Car c) {
-    setState(() async {
-      favouritesList.add(c.id!);
-      // await updateFavsList(favouritesList);
+  void addToFavourites(String c) async {
+    setState(() {
+      favouritesList.add(c);
     });
+    UsersService().addToFavs(userId, c);
   }
 
   Future<void> removeFromFavourites(String i) async {
@@ -52,7 +48,7 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
       favouritesList.remove(i);
     });
 
-    UsersService().editFavs(userId, i);
+    UsersService().removeFromFavs(userId, i);
   }
 
   @override
@@ -84,36 +80,56 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
                   } else {
                     return SizedBox(
                         height: 700,
-                        child: ListView(
-                          children: (favouritesList).map((carId) {
-                            return Container(
-                                height: 228,
-                                width: 430,
-                                alignment: Alignment.topCenter,
-                                child: Dismissible(
-                                    background: Container(
-                                        height: 160,
-                                        padding:
-                                            const EdgeInsets.only(right: 30),
-                                        alignment: Alignment.centerRight,
-                                        color: Color.fromARGB(255, 135, 17, 8),
-                                        margin:
-                                            EdgeInsets.only(top: 9, bottom: 20),
-                                        child: const Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        )),
-                                    key: Key(carId),
-                                    direction: DismissDirection.endToStart,
-                                    onDismissed: (dir) {
-                                      removeFromFavourites(carId);
-                                    },
-                                    child: CarCard(
-                                        width: 400,
-                                        height: 200,
-                                        rightMargin: 0,
-                                        carId: carId)));
-                          }).toList(),
+                        child: Container(
+                          child: ListView(
+                            children: (favouritesList).map((carId) {
+                              return Container(
+                                  height: 228,
+                                  width: 430,
+                                  alignment: Alignment.topCenter,
+                                  child: Dismissible(
+                                      background: Container(
+                                          height: 160,
+                                          padding:
+                                              const EdgeInsets.only(right: 30),
+                                          alignment: Alignment.centerRight,
+                                          color:
+                                              Color.fromARGB(255, 135, 17, 8),
+                                          margin: EdgeInsets.only(
+                                              top: 9, bottom: 20),
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                          )),
+                                      key: Key(carId),
+                                      direction: DismissDirection.endToStart,
+                                      onDismissed: (dir) {
+                                        removeFromFavourites(carId);
+                                      },
+                                      child: Stack(children: [
+                                        CarCard(
+                                            width: 400,
+                                            height: 200,
+                                            rightMargin: 0,
+                                            carId: carId),
+                                        Positioned(
+                                          top: 20,
+                                          right: 20,
+                                          child: InkWell(
+                                              child: favouritesList
+                                                      .contains(carId)
+                                                  ? (Icon(Icons.favorite))
+                                                  : Icon(Icons.favorite_border),
+                                              onTap: () {
+                                                favouritesList.contains(carId)
+                                                    ? removeFromFavourites(
+                                                        carId)
+                                                    : addToFavourites(carId);
+                                              }),
+                                        )
+                                      ])));
+                            }).toList(),
+                          ),
                         ));
                   }
                 }
