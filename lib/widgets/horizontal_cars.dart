@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../services/users_service.dart';
-List<dynamic> favouritesList = [];
+
 String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
-class HorizontalCars extends StatefulWidget {
+class HorizontalCars extends StatelessWidget {
   double height;
   double width;
   Query<Map<String, dynamic>> carsToShow;
@@ -17,42 +17,6 @@ class HorizontalCars extends StatefulWidget {
       required this.carsToShow});
 
   @override
-  State<HorizontalCars> createState() => _HorizontalCarsState();
-}
-
-class _HorizontalCarsState extends State<HorizontalCars> {
-   @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      Map<String, dynamic> map =
-          documentSnapshot.data() as Map<String, dynamic>;
-
-      setState(() {
-        favouritesList = map['favs'] as List<dynamic>;
-      });
-    });
-    super.initState();
-  }
-
-  void addToFavourites(String c) async {
-    setState(() {
-      favouritesList.add(c);
-    });
-    UsersService().addToFavs(userId, c);
-  }
-
-  Future<void> removeFromFavourites(String i) async {
-    setState(() {
-      favouritesList.remove(i);
-    });
-
-    UsersService().removeFromFavs(userId, i);
-  }
-  @override
   Widget build(BuildContext context) {
     final trendyCars = FirebaseFirestore.instance
         .collection('cars')
@@ -60,9 +24,9 @@ class _HorizontalCarsState extends State<HorizontalCars> {
         .limit(5);
 
     return Container(
-      height: widget.height,
+      height: height,
       child: FutureBuilder<QuerySnapshot>(
-          future: widget.carsToShow.get(),
+          future: carsToShow.get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               //TODOL: to be replaced by error check maybe?
@@ -75,24 +39,43 @@ class _HorizontalCarsState extends State<HorizontalCars> {
                   children: snapshot.data!.docs.map((doc) {
                     return Stack(children: [
                       CarCard(
-                        width: widget.width,
-                        height: widget.height,
+                        width: width,
+                        height: height,
                         rightMargin: 20,
                         carId: doc.id,
                       ),
                       Positioned(
-                        top: 20,
-                        right: 40,
-                        child: InkWell(
-                            child: favouritesList.contains(doc.id)
-                                ? (Icon(Icons.favorite))
-                                : Icon(Icons.favorite_border),
-                            onTap: () {
-                              favouritesList.contains(doc.id)
-                                  ? removeFromFavourites(doc.id)
-                                  : addToFavourites(doc.id);
-                            }),
-                      )
+                          top: 20,
+                          right: 20,
+                          child: StreamBuilder<DocumentSnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(userId)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData ||
+                                    snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                  return const InkWell(
+                                      child: Icon(Icons.favorite_border));
+                                } else {
+                                  Map<String, dynamic> map = snapshot.data!
+                                      .data() as Map<String, dynamic>;
+                                  var favouritesList =
+                                      map['favs'] as List<dynamic>;
+                                  return InkWell(
+                                      child: favouritesList.contains(doc.id)
+                                          ? (const Icon(Icons.favorite))
+                                          : const Icon(Icons.favorite_border),
+                                      onTap: () {
+                                        favouritesList.contains(doc.id)
+                                            ? UsersService()
+                                                .removeFromFavs(userId, doc.id)
+                                            : UsersService()
+                                                .addToFavs(userId, doc.id);
+                                      });
+                                }
+                              }))
                     ]);
                   }).toList());
             }

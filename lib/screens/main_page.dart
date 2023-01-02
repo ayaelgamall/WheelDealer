@@ -7,28 +7,11 @@ import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
 
-List<dynamic> favouritesList = [];
 String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
   static const routeName = '/mainPage';
-
-  // @override
-  void addToFavourites(String c) async {
-    // setState(() {
-    //   favouritesList.add(c);
-    // });
-    UsersService().addToFavs(userId, c);
-  }
-
-  Future<void> removeFromFavourites(String i) async {
-    // setState(() {
-    //   favouritesList.remove(i);
-    // });
-
-    UsersService().removeFromFavs(userId, i);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +98,7 @@ class MainPage extends StatelessWidget {
                                 if (!snapshot.hasData ||
                                     snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                  return InkWell(
+                                  return const InkWell(
                                       child: Icon(Icons.favorite_border));
                                 } else {
                                   Map<String, dynamic> map = snapshot.data!
@@ -128,8 +111,10 @@ class MainPage extends StatelessWidget {
                                           : const Icon(Icons.favorite_border),
                                       onTap: () {
                                         favouritesList.contains(doc.id)
-                                            ? removeFromFavourites(doc.id)
-                                            : addToFavourites(doc.id);
+                                            ? UsersService()
+                                                .removeFromFavs(userId, doc.id)
+                                            : UsersService()
+                                                .addToFavs(userId, doc.id);
                                       });
                                 }
                               }))

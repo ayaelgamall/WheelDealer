@@ -8,48 +8,11 @@ import '../models/car.dart';
 List<dynamic> favouritesList = [];
 String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
-class FavouriteCarsScreen extends StatefulWidget {
-  const FavouriteCarsScreen({super.key});
+class FavouriteCarsScreen extends StatelessWidget {
+  FavouriteCarsScreen({super.key});
 
   static const routeName = '/favourites';
-  @override
-  State<FavouriteCarsScreen> createState() => _FavouriteCarsScreenState();
-}
-
-class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
   int index = 0;
-
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      Map<String, dynamic> map =
-          documentSnapshot.data() as Map<String, dynamic>;
-
-      setState(() {
-        favouritesList = map['favs'] as List<dynamic>;
-      });
-    });
-    super.initState();
-  }
-
-  void addToFavourites(String c) async {
-    setState(() {
-      favouritesList.add(c);
-    });
-    UsersService().addToFavs(userId, c);
-  }
-
-  Future<void> removeFromFavourites(String i) async {
-    setState(() {
-      favouritesList.remove(i);
-    });
-
-    UsersService().removeFromFavs(userId, i);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,71 +32,83 @@ class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
             "Favourites",
           ),
         ),
-        body: Container(
-          margin: EdgeInsets.all(20),
-          child: ListView.builder(
-              itemCount: favouritesList.length,
-              itemBuilder: (BuildContext context, int index) {
-                {
-                  if (favouritesList.isEmpty) {
-                    return CircularProgressIndicator();
-                  } else {
-                    return SizedBox(
-                        height: 700,
-                        child: Container(
-                          child: ListView(
-                            children: (favouritesList).map((carId) {
-                              return Container(
-                                  height: 228,
-                                  width: 430,
-                                  alignment: Alignment.topCenter,
-                                  child: Dismissible(
-                                      background: Container(
-                                          height: 160,
-                                          padding:
-                                              const EdgeInsets.only(right: 30),
-                                          alignment: Alignment.centerRight,
-                                          color:
-                                              Color.fromARGB(255, 135, 17, 8),
-                                          margin: EdgeInsets.only(
-                                              top: 9, bottom: 20),
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
-                                          )),
-                                      key: Key(carId),
-                                      direction: DismissDirection.endToStart,
-                                      onDismissed: (dir) {
-                                        removeFromFavourites(carId);
-                                      },
-                                      child: Stack(children: [
-                                        CarCard(
-                                            width: 400,
-                                            height: 200,
-                                            rightMargin: 0,
-                                            carId: carId),
-                                        Positioned(
-                                          top: 20,
-                                          right: 20,
-                                          child: InkWell(
-                                              child: favouritesList
-                                                      .contains(carId)
-                                                  ? (Icon(Icons.favorite))
-                                                  : Icon(Icons.favorite_border),
-                                              onTap: () {
-                                                favouritesList.contains(carId)
-                                                    ? removeFromFavourites(
-                                                        carId)
-                                                    : addToFavourites(carId);
-                                              }),
-                                        )
-                                      ])));
-                            }).toList(),
-                          ),
-                        ));
-                  }
-                }
-              }),
-        ));
+        body: StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(userId)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return const InkWell(child: Icon(Icons.favorite_border));
+              } else {
+                Map<String, dynamic> map =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                var favouritesList = map['favs'] as List<dynamic>;
+                return ListView.builder(
+                    itemCount: favouritesList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      {
+                        if (favouritesList.isEmpty) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return SizedBox(
+                              height: 700,
+                              child: ListView(
+                                children: (favouritesList).map((carId) {
+                                  return Container(
+                                      height: 228,
+                                      width: 430,
+                                      alignment: Alignment.topCenter,
+                                      child: Dismissible(
+                                          background: Container(
+                                              height: 160,
+                                              padding: const EdgeInsets.only(
+                                                  right: 30),
+                                              alignment: Alignment.centerRight,
+                                              color: const Color.fromARGB(
+                                                  255, 135, 17, 8),
+                                              margin: const EdgeInsets.only(
+                                                  top: 9, bottom: 20),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                              )),
+                                          key: Key(carId),
+                                          direction:
+                                              DismissDirection.endToStart,
+                                          onDismissed: (dir) {
+                                            UsersService()
+                                                .removeFromFavs(userId, carId);
+                                          },
+                                          child: Stack(children: [
+                                            CarCard(
+                                                width: 400,
+                                                height: 200,
+                                                rightMargin: 0,
+                                                carId: carId),
+                                            Positioned(
+                                              top: 20,
+                                              right: 20,
+                                              child: InkWell(
+                                                  child: favouritesList
+                                                          .contains(carId)
+                                                      ? (Icon(Icons.favorite))
+                                                      : Icon(Icons
+                                                          .favorite_border),
+                                                  onTap: () {
+                                                    UsersService()
+                                                        .removeFromFavs(
+                                                            userId, carId);
+                                                  }),
+                                            )
+                                          ])));
+                                }).toList(),
+                              ));
+                        }
+                      }
+                    });
+              }
+            }));
   }
 }
