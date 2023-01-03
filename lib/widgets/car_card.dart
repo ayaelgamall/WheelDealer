@@ -32,7 +32,7 @@ class CarCard extends StatelessWidget {
               builder: (context, doc) {
                 if (!doc.hasData) {
                   //TODOL: to be replaced by error check maybe?
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
@@ -43,12 +43,12 @@ class CarCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(7),
                               topRight: Radius.circular(7),
                             ),
                             child: Image(
-                              image: AssetImage(
+                              image: const AssetImage(
                                   'assets/images/example.jpg'), // TODO read from db
                               height: 0.73 * height,
                               width: width,
@@ -63,13 +63,13 @@ class CarCard extends StatelessWidget {
                             children: [
                               Text(
                                 "${carData['brand']} ${carData['model']}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Row(
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.bolt,
                                     color: Color.fromARGB(255, 183, 150, 19),
@@ -101,7 +101,7 @@ class CarCard extends StatelessWidget {
                                     builder: (context, qs) {
                                       return Text(
                                         "At ${qs.hasData ? qs.data!.docs.first['value'] : carData['starting_price']} EGP",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color:

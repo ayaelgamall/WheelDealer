@@ -22,7 +22,7 @@ class SortCard extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
               elevation: 2,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15)),
@@ -95,7 +95,7 @@ class SortCard extends StatelessWidget {
                           ),
                         ),
                         ListTile(
-                          title: const Text("Closet deadline"),
+                          title: const Text("Closest deadline"),
                           trailing: Radio<String>(
                             fillColor: MaterialStateProperty.all(Colors.white),
                             value: Sort.deadline.name,
