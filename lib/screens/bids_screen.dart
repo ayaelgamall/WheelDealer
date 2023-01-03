@@ -149,247 +149,261 @@ class _BidsScreenState extends State<BidsScreen> {
                                     fit: BoxFit.fill),
                               ),
                             ),
-                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                                stream:
-                                    CarsService().fetchCarTopBids(widget.carId),
-                                builder: (context, bids) {
-                                  if (!bids.hasData) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                  return Container(
-                                    // width: 310,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 25),
-                                    height: 330,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF555555),
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 15),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 0.0),
-                                            child: Text(
-                                              "Top Bidders",
-                                              style: TextStyle(
-                                                  color: Color(0xFF15BBAF),
-                                                  fontSize: 21,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          ConstrainedBox(
-                                            constraints:
-                                                BoxConstraints(maxHeight: 200),
-                                            child: ListView.builder(
-                                              scrollDirection: Axis.vertical,
-                                              shrinkWrap: true,
-                                              itemBuilder:
-                                                  (itemContext, index) {
-                                                return FutureBuilder(
-                                                    future: UsersService()
-                                                        .fetchUser(bids
-                                                            .data!.docs[index]
-                                                            .data()['user']),
-                                                    builder: (context, user) {
-                                                      if (!user.hasData) {
-                                                        return Center(
-                                                            child:
-                                                                CircularProgressIndicator());
-                                                      }
-                                                      return Card(
-                                                        // decoration:
-                                                        //     BoxDecoration(
-                                                        //   border: Border(
-                                                        //     bottom: BorderSide(
-                                                        //         style: index ==
-                                                        //                 bids.data!.docs.length -
-                                                        //                     1
-                                                        //             ? BorderStyle
-                                                        //                 .none
-                                                        //             : BorderStyle
-                                                        //                 .solid,
-                                                        //         width: 3.0,
-                                                        //         color: Color(
-                                                        //             0xFF555555)),
-                                                        //   ),
-                                                        // ),
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          side: BorderSide(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.1),
-                                                          ),
-                                                        ),
-                                                        elevation: 10,
-                                                        child: ListTile(
-                                                          style: ListTileStyle
-                                                              .list,
-                                                          leading: Container(
-                                                            width: 40,
-                                                            height: 40,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              image: DecorationImage(
-                                                                  image: NetworkImage(
-                                                                      'https://googleflutter.com/sample_image.jpg'),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
-                                                          ),
-                                                          title: Text(
-                                                            user.data!
-                                                                .displayName,
-                                                            style: TextStyle(
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                            ),
-                                                          ),
-                                                          trailing: Text(
-                                                              "${bids.data!.docs[index]['value']} E£"
-                                                                  .toString()),
-                                                        ),
-                                                      );
-                                                    });
-                                              },
-                                              // itemCount: bids.data!.docs.length,
-                                              itemCount: 3,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 45,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Flexible(
-                                                  flex: 3,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            0.0),
-                                                    child: Card(
-                                                      // elevation: 10,
-                                                      child: TextField(
-                                                        // textAlign: TextAlign.center,
-                                                        inputFormatters: <
-                                                            TextInputFormatter>[
-                                                          FilteringTextInputFormatter
-                                                              .digitsOnly
-                                                        ],
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .number,
-                                                        controller:
-                                                            _textController,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          contentPadding:
-                                                              EdgeInsets.only(
-                                                                  top: 6,
-                                                                  left: 8),
-                                                          hintStyle: TextStyle(
-                                                              color: Color(
-                                                                      0xFFF5F5F5)
-                                                                  .withOpacity(
-                                                                      0.5)),
-                                                          hintText:
-                                                              "Place Your Bid",
-                                                          // border:
-                                                          //     OutlineInputBorder(
-                                                          //         borderSide:
-                                                          //             BorderSide(
-                                                          //           width:
-                                                          //               1,
-                                                          //           color:
-                                                          //               Color(
-                                                          //             0xFFF5F5F5,
-                                                          //           ),
-                                                          //         ),
-                                                          //         borderRadius:
-                                                          //             BorderRadius.all(Radius.circular(10))),
-                                                          // focusedBorder: OutlineInputBorder(
-                                                          //     borderSide: BorderSide(
-                                                          //         width:
-                                                          //             1,
-                                                          //         color: Color(
-                                                          //             0xFFF5F5F5)),
-                                                          //     borderRadius:
-                                                          //         BorderRadius.all(
-                                                          //             Radius.circular(10))),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide: BorderSide(
-                                                                width: 0.5,
-                                                                color: Color(
-                                                                        0xFFF5F5F5)
-                                                                    .withOpacity(
-                                                                        0.5)),
-                                                            // borderRadius: BorderRadius.all(
-                                                            //   Radius.circular(10),
-                                                            // ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                            Column(
+                              children: [
+                                //StreamBuilder to listen to the top 3 bids on this car.
+                                StreamBuilder<
+                                        QuerySnapshot<Map<String, dynamic>>>(
+                                    stream: CarsService()
+                                        .fetchCarTopBids(widget.carId),
+                                    builder: (context, bids) {
+                                      if (!bids.hasData) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                      return Container(
+                                        // width: 310,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 25),
+                                        height: 330,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF555555),
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 0.0),
+                                                child: Text(
+                                                  "Top Bidders",
+                                                  style: TextStyle(
+                                                      color: Color(0xFF15BBAF),
+                                                      fontSize: 21,
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                                 ),
-                                                Flexible(
-                                                  flex: 1,
-                                                  child: ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        shape: MaterialStateProperty
-                                                            .all<
-                                                                RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
+                                              ),
+                                              ListView.builder(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                itemBuilder:
+                                                    (itemContext, index) {
+                                                  return FutureBuilder(
+                                                      future: UsersService()
+                                                          .fetchUser(bids
+                                                              .data!.docs[index]
+                                                              .data()['user']),
+                                                      builder: (context, user) {
+                                                        if (!user.hasData) {
+                                                          return Center(
+                                                              child:
+                                                                  CircularProgressIndicator());
+                                                        }
+                                                        return Card(
+                                                          // decoration:
+                                                          //     BoxDecoration(
+                                                          //   border: Border(
+                                                          //     bottom: BorderSide(
+                                                          //         style: index ==
+                                                          //                 bids.data!.docs.length -
+                                                          //                     1
+                                                          //             ? BorderStyle
+                                                          //                 .none
+                                                          //             : BorderStyle
+                                                          //                 .solid,
+                                                          //         width: 3.0,
+                                                          //         color: Color(
+                                                          //             0xFF555555)),
+                                                          //   ),
+                                                          // ),
+                                                          shape:
+                                                              RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        5.0),
+                                                                        5),
+                                                            side: BorderSide(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.1),
+                                                            ),
+                                                          ),
+                                                          elevation: 10,
+                                                          child: ListTile(
+                                                            style: ListTileStyle
+                                                                .list,
+                                                            leading: Container(
+                                                              width: 40,
+                                                              height: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                image: DecorationImage(
+                                                                    image: NetworkImage(
+                                                                        'https://googleflutter.com/sample_image.jpg'),
+                                                                    fit: BoxFit
+                                                                        .fill),
+                                                              ),
+                                                            ),
+                                                            title: Text(
+                                                              user.data!
+                                                                  .displayName,
+                                                              style: TextStyle(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                            trailing: Text(
+                                                                "${bids.data!.docs[index]['value']} E£"
+                                                                    .toString()),
+                                                          ),
+                                                        );
+                                                      });
+                                                },
+                                                // itemCount: bids.data!.docs.length,
+                                                itemCount: 3,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 0.0),
+                                                child: SizedBox(
+                                                  height: 45,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Flexible(
+                                                        flex: 3,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(0.0),
+                                                          child: Card(
+                                                            // elevation: 10,
+                                                            child: TextField(
+                                                              // textAlign: TextAlign.center,
+                                                              inputFormatters: <
+                                                                  TextInputFormatter>[
+                                                                FilteringTextInputFormatter
+                                                                    .digitsOnly
+                                                              ],
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
+                                                              controller:
+                                                                  _textController,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                contentPadding:
+                                                                    EdgeInsets.only(
+                                                                        top: 6,
+                                                                        left:
+                                                                            8),
+                                                                hintStyle: TextStyle(
+                                                                    color: Color(
+                                                                            0xFFF5F5F5)
+                                                                        .withOpacity(
+                                                                            0.5)),
+                                                                hintText:
+                                                                    "Place Your Bid",
+                                                                // border:
+                                                                //     OutlineInputBorder(
+                                                                //         borderSide:
+                                                                //             BorderSide(
+                                                                //           width:
+                                                                //               1,
+                                                                //           color:
+                                                                //               Color(
+                                                                //             0xFFF5F5F5,
+                                                                //           ),
+                                                                //         ),
+                                                                //         borderRadius:
+                                                                //             BorderRadius.all(Radius.circular(10))),
+                                                                // focusedBorder: OutlineInputBorder(
+                                                                //     borderSide: BorderSide(
+                                                                //         width:
+                                                                //             1,
+                                                                //         color: Color(
+                                                                //             0xFFF5F5F5)),
+                                                                //     borderRadius:
+                                                                //         BorderRadius.all(
+                                                                //             Radius.circular(10))),
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      width:
+                                                                          0.5,
+                                                                      color: Color(
+                                                                              0xFFF5F5F5)
+                                                                          .withOpacity(
+                                                                              0.5)),
+                                                                  // borderRadius: BorderRadius.all(
+                                                                  //   Radius.circular(10),
+                                                                  // ),
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                        // elevation: MaterialStateProperty.all<double>(10.0),
                                                       ),
-                                                      onPressed: () async {
-                                                        submitBid(bids
-                                                            .data!
-                                                            .docs
-                                                            .first['value']);
-                                                      },
-                                                      child: Text(
-                                                        "Bid",
-                                                        style: TextStyle(
-                                                            fontSize: 16),
-                                                      )),
-                                                )
-                                              ],
-                                            ),
+                                                      Flexible(
+                                                        flex: 1,
+                                                        child: ElevatedButton(
+                                                            style: ButtonStyle(
+                                                              shape: MaterialStateProperty
+                                                                  .all<
+                                                                      RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5.0),
+                                                                ),
+                                                              ),
+                                                              // elevation: MaterialStateProperty.all<double>(10.0),
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              submitBid(bids
+                                                                      .data!
+                                                                      .docs
+                                                                      .first[
+                                                                  'value']);
+                                                            },
+                                                            child: Text(
+                                                              "Bid",
+                                                              style: TextStyle(
+                                                                  fontSize: 16),
+                                                            )),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }),
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
                           ],
                         ),
                         // child: Column(
