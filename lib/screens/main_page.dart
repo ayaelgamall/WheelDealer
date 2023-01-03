@@ -2,7 +2,9 @@ import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../services/authentication_service.dart';
 import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
@@ -20,14 +22,29 @@ class MainPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "BeebBeeb",
-            style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
+        appBar: AppBar(title: Text("Hi"), actions: [
+          IconButton(
+            onPressed: () {
+              AuthenticationService().signOut();
+              context.go("/");
+            },
+            icon: Icon(Icons.logout),
           ),
-        ),
+          IconButton(
+            onPressed: () {
+              context.push("/mainPage/messages");
+            },
+            icon: Icon(Icons.message),
+          )
+        ]),
+        // appBar: AppBar(
+        //   title: const Text(
+        //     "BeebBeeb",
+        //     style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
+        //   ),
+        // ),
         body: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
           child: FutureBuilder<QuerySnapshot>(
             future: cars.limit(5).get(),
             builder: (context, snapshot) {
