@@ -4,6 +4,7 @@ import 'package:bar2_banzeen/models/car.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
 import 'package:bar2_banzeen/widgets/photo_thumbnail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,28 +15,30 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../models/transmission.dart';
+import '../services/storage_service.dart';
 
 class SellCarScreen extends StatefulWidget {
-  const SellCarScreen({super.key});
+  String? carId;
 
+  SellCarScreen({super.key, this.carId});
   static const routeName = '/sell-car';
   @override
   State<SellCarScreen> createState() => _SellCarScreenState();
 }
 
 class _SellCarScreenState extends State<SellCarScreen> {
-  final List<XFile?> _photos = [];
-  final TextEditingController _brand = TextEditingController();
-  final TextEditingController _model = TextEditingController();
-  final TextEditingController _year = TextEditingController();
+  List<XFile?> _photos = [];
+  TextEditingController _brand = TextEditingController();
+  TextEditingController _model = TextEditingController();
+  TextEditingController _year = TextEditingController();
   String _transmission = Transmission.automatic.name;
-  final TextEditingController _engineCapacity = TextEditingController();
-  final TextEditingController _mileage = TextEditingController();
-  final TextEditingController _color = TextEditingController();
-  final TextEditingController _location = TextEditingController();
-  final TextEditingController _price = TextEditingController();
-  final TextEditingController _description = TextEditingController();
-  final TextEditingController _deadlineController = TextEditingController();
+  TextEditingController _engineCapacity = TextEditingController();
+  TextEditingController _mileage = TextEditingController();
+  TextEditingController _color = TextEditingController();
+  TextEditingController _location = TextEditingController();
+  TextEditingController _price = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  TextEditingController _deadlineController = TextEditingController();
   DateTime _deadline = DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
@@ -52,6 +55,37 @@ class _SellCarScreenState extends State<SellCarScreen> {
 
   @override
   void initState() {
+    Map<String, dynamic> map = {};
+    if (widget.carId != null) {
+      FirebaseFirestore.instance
+          .collection('cars')
+          .doc(widget.carId)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        map = documentSnapshot.data() as Map<String, dynamic>;
+
+        StorageService().downloadCarPhotos(map['photos']).then((xfiles) {
+          setState(() {
+            _brand = TextEditingController(text: map['brand']);
+            _color = TextEditingController(text: map['color']);
+            _deadlineController = TextEditingController(
+                text: DateFormat('yMMMd').format(map['deadline'].toDate()));
+            _engineCapacity =
+                TextEditingController(text: map['engine_capacity'].toString());
+            _location = TextEditingController(text: map['location']);
+            _model = TextEditingController(text: map['model'] as String);
+            _photos = xfiles;
+            _price =
+                TextEditingController(text: map['starting_price'].toString());
+            _transmission = map['transmission'].toString();
+            _year = TextEditingController(text: map['year'].toString());
+            _description = TextEditingController(text: map['description']);
+            _mileage = TextEditingController(text: map['mileage '].toString());
+          });
+        });
+      });
+    }
+
     super.initState();
   }
 
@@ -295,6 +329,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
                           "Audi",
                           "Fiat"
                         ],
+                        // selectedItem: ,
                         enabled: !_addingCar,
                         validator: (value) => value == null || value.isEmpty
                             ? "Model must not be empty"
