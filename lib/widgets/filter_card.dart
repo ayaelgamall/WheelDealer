@@ -47,109 +47,122 @@ class _FilterCardState extends State<FilterCard> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        child: const Text("Place a bid"),
+        child: const Text("Filter"),
         onPressed: () {
-          showDialog(
+          showModalBottomSheet(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15)),
+              ),
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  content: SizedBox(
-                    height: widget.height / 2.2,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        // mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Text("Filters"),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            width: 0.8 * widget.width,
-                            height: 0.06 * widget.height,
-                            child: DropdownSearch<String>(
-                              // TODO Create Items List
-                              items: const [
-                                "Mercedes",
-                                "Hyundai",
-                                "Toyota",
-                                "Renault",
-                                "BMW",
-                                "Audi",
-                                "Fiat"
-                              ],
-                              onChanged: (value) {
-                                _brand.text = value ?? "";
-                              },
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  hintText: "Brand",
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  prefixIcon: const Icon(Icons.search),
-                                  hintStyle: const TextStyle(fontSize: 12),
-                                ),
+                return SizedBox(
+                  height: widget.height / 2,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 5,
+                        ),
+                        const Text(
+                          "Filters",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: 0.8 * widget.width,
+                          height: 0.06 * widget.height,
+                          child: DropdownSearch<String>(
+                            // TODO Create Items List
+                            items: const [
+                              "Mercedes",
+                              "Hyundai",
+                              "Toyota",
+                              "Renault",
+                              "BMW",
+                              "Audi",
+                              "Fiat"
+                            ],
+                            onChanged: (value) {
+                              _brand.text = value ?? "";
+                            },
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                hintText: "Brand",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                prefixIcon: const Icon(Icons.search),
+                                hintStyle: const TextStyle(fontSize: 12),
                               ),
-                              popupProps: const PopupProps.menu(
-                                showSearchBox: true,
-                                searchFieldProps: TextFieldProps(
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 3, horizontal: 10),
-                                  ),
+                            ),
+                            popupProps: const PopupProps.menu(
+                              showSearchBox: true,
+                              searchFieldProps: TextFieldProps(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 10),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            width: 0.8 * widget.width,
-                            height: 0.06 * widget.height,
-                            child: DropdownSearch<String>(
-                              // TODO Create Items List
-                              items: const [
-                                "Mercedes",
-                                "Hyundai",
-                                "Toyota",
-                                "Renault",
-                                "BMW",
-                                "Audi",
-                                "Fiat"
-                              ],
-                              onChanged: (value) {
-                                _model.text = value ?? "";
-                              },
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  hintText: "Model",
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  prefixIcon: const Icon(Icons.search),
-                                  hintStyle: const TextStyle(fontSize: 12),
-                                ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: 0.8 * widget.width,
+                          height: 0.06 * widget.height,
+                          child: DropdownSearch<String>(
+                            // TODO Create Items List
+                            items: const [
+                              "Mercedes",
+                              "Hyundai",
+                              "Toyota",
+                              "Renault",
+                              "BMW",
+                              "Audi",
+                              "Fiat"
+                            ],
+                            onChanged: (value) {
+                              _model.text = value ?? "";
+                            },
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                hintText: "Model",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                prefixIcon: const Icon(Icons.search),
+                                hintStyle: const TextStyle(fontSize: 12),
                               ),
-                              popupProps: const PopupProps.menu(
-                                showSearchBox: true,
-                                searchFieldProps: TextFieldProps(
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 3, horizontal: 10),
-                                  ),
+                            ),
+                            popupProps: const PopupProps.menu(
+                              showSearchBox: true,
+                              searchFieldProps: TextFieldProps(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 10),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: 0.8 * widget.width,
+                          child: Row(
                             children: [
                               SizedBox(
-                                width: 0.3 * widget.width,
+                                width: 0.38 * widget.width,
                                 height: 0.06 * widget.height,
                                 child: TextFormField(
                                   controller: _year,
@@ -180,8 +193,9 @@ class _FilterCardState extends State<FilterCard> {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 0.04 * widget.width),
                               SizedBox(
-                                width: 0.3 * widget.width,
+                                width: 0.38 * widget.width,
                                 height: 0.06 * widget.height,
                                 child: TextFormField(
                                   controller: _location,
@@ -197,14 +211,17 @@ class _FilterCardState extends State<FilterCard> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: 0.8 * widget.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               SizedBox(
-                                width: 0.3 * widget.width,
+                                width: 0.38 * widget.width,
                                 height: 0.06 * widget.height,
                                 child: TextFormField(
                                   controller: _priceMin,
@@ -219,11 +236,13 @@ class _FilterCardState extends State<FilterCard> {
                                     hintText: "Min price",
                                     hintStyle: const TextStyle(fontSize: 12),
                                     suffixText: "LE",
+                                    suffixStyle: const TextStyle(fontSize: 12),
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 0.04 * widget.width),
                               SizedBox(
-                                width: 0.3 * widget.width,
+                                width: 0.38 * widget.width,
                                 height: 0.06 * widget.height,
                                 child: TextFormField(
                                   controller: _priceMax,
@@ -237,25 +256,25 @@ class _FilterCardState extends State<FilterCard> {
                                             BorderRadius.circular(15)),
                                     hintText: "Max price",
                                     hintStyle: const TextStyle(fontSize: 12),
+                                    suffixStyle: const TextStyle(fontSize: 12),
                                     suffixText: "LE",
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          ElevatedButton(
-                            child: const Text("Apply"),
-                            onPressed: () {
-                              // if (_formKey.currentState.validate()) {
-                              //   _formKey.currentState.save();
-                              // }
-                            },
-                          )
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          child: const Text("Apply"),
+                          onPressed: () {},
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
                     ),
                   ),
                 );
