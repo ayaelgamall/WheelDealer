@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/explore_page.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -53,6 +54,11 @@ class _MyAppState extends State<MyApp> {
           path: "/",
           builder: (BuildContext context, GoRouterState state) {
             return Wrapper();
+          }),
+      GoRoute(
+          path: "/explore",
+          builder: (BuildContext context, GoRouterState state) {
+            return ExplorePage();
           }),
       GoRoute(
           path: "/chat",

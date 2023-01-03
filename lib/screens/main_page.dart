@@ -1,5 +1,5 @@
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
-import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
+import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -64,7 +64,7 @@ class MainPage extends StatelessWidget {
                           ViewMoreText(),
                         ],
                       ),
-                      HorizontalCars(
+                      ScrollableCars(
                         width: 0.73 * width,
                         height: 0.4 * height,
                         carsToShow: cars
@@ -79,7 +79,7 @@ class MainPage extends StatelessWidget {
                           ViewMoreText()
                         ],
                       ),
-                      HorizontalCars(
+                      ScrollableCars(
                         width: 0.73 * width,
                         height: 0.4 * height,
                         carsToShow: cars
