@@ -35,8 +35,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     appTheme.addListener(() {
       //👈 this is to notify the app that the theme has changed
-      setState(
-          () {}); //👈 this is to force a rerender so that the changes are carried out
+      setState(() {}); //👈 this is to force a rerender so that the changes are carried out
     });
   }
 
@@ -52,10 +51,8 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         onGenerateRoute: AppRouter().generateRoute,
         initialRoute: Wrapper.routeName,
-        themeMode: appTheme
-            .themeMode, //👈 this is the themeMode defined in the AppTheme class
-        darkTheme:
-            darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
+        themeMode: appTheme.themeMode, //👈 this is the themeMode defined in the AppTheme class
+        darkTheme: darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
         theme: lightTheme,
       ),
     );

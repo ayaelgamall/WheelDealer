@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import '../models/car.dart';
 
 class CarsService {
-  final CollectionReference _carsReference =
-      FirebaseFirestore.instance.collection("cars");
+  final CollectionReference _carsReference = FirebaseFirestore.instance.collection("cars");
 
   Future<void> addCar(Car car) async {
     DocumentReference carDocument = await _carsReference.add({
@@ -22,9 +21,7 @@ class CarsService {
       "location": car.location,
       "starting_price": car.startingPrice,
       "description": car.description,
-      "deadline": Timestamp.fromDate(car.deadline
-          .add(const Duration(days: 1))
-          .subtract(const Duration(seconds: 1))),
+      "deadline": Timestamp.fromDate(car.deadline.add(const Duration(days: 1)).subtract(const Duration(seconds: 1))),
       "seller_id": car.sellerId,
       "sold": false,
       "creation_time": Timestamp.fromDate(DateTime.now()),
@@ -32,16 +29,13 @@ class CarsService {
     });
 
     String carId = carDocument.id;
-    List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
-        (localPhoto) async =>
-            await StorageService().uploadCarPhoto(carId, localPhoto!)));
+    List<String> uploadedPhotos =
+        await Future.wait(car.localPhotos!.map((localPhoto) async => await StorageService().uploadCarPhoto(carId, localPhoto!)));
     await _carsReference.doc(carId).update({"photos": uploadedPhotos});
   }
 
   Future<Car> fetchCar(String carId) async {
-    DocumentSnapshot<Map<String, dynamic>> carDoc = await _carsReference
-        .doc(carId)
-        .get() as DocumentSnapshot<Map<String, dynamic>>;
+    DocumentSnapshot<Map<String, dynamic>> carDoc = await _carsReference.doc(carId).get() as DocumentSnapshot<Map<String, dynamic>>;
     Car car = Car(
         bidsCount: carDoc.data()?['bids_count'],
         brand: carDoc.data()?['brand'],
@@ -54,60 +48,40 @@ class CarsService {
         sold: carDoc.data()?['sold'],
         startingPrice: carDoc.data()?['starting_price'],
         transmission: carDoc.data()?['transmission'],
-        year: carDoc.data()?['year'].toString() ??
-            "No Specified Year, check method fetchCar in car_service",
+        year: carDoc.data()?['year'].toString() ?? "No Specified Year, check method fetchCar in car_service",
         photos: carDoc.data()?['photos'].cast<String>());
     return car;
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchCarTopBids(String carId) {
-    return _carsReference
-        .doc(carId)
-        .collection("bids")
-        .orderBy("value", descending: true)
-        .limit(3)
-        .snapshots();
+    return _carsReference.doc(carId).collection("bids").orderBy("value", descending: true).limit(3).snapshots();
   }
 
-  Future<String?> submitBid(
-      String userId, String carId, String bidValue) async {
-    QuerySnapshot<Map<String, dynamic>> bidsDocs = await _carsReference
-        .doc(carId)
-        .collection("bids")
-        .where('user', isEqualTo: userId)
-        .get();
-
-    DocumentReference<Map<String, dynamic>>? bidDoc;
-    if (bidsDocs.docs.isNotEmpty) {
-      try {
-        await _carsReference
-            .doc(carId)
-            .collection("bids")
-            .doc(bidsDocs.docs[0].id)
-            .update({"user": userId, "value": int.parse(bidValue)});
-      } catch (e) {
-        return "Placing the bid failed!";
+  Future<String?> submitBid(String userId, String carId, int bidValue) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> carBidsDocs = await _carsReference.doc(carId).collection("bids").where('user', isEqualTo: userId).get();
+      QuerySnapshot<Map<String, dynamic>> userBidsDocs =
+          await FirebaseFirestore.instance.collection("users").doc(userId).collection("bids").where('car', isEqualTo: carId).get();
+      final batch = FirebaseFirestore.instance.batch();
+      if (carBidsDocs.docs.isNotEmpty && userBidsDocs.docs.isNotEmpty) {
+        print("bid already exist, just updating");
+        DocumentReference<Map<String, dynamic>> bidCarDocRef = _carsReference.doc(carId).collection("bids").doc(carBidsDocs.docs[0].id);
+        DocumentReference<Map<String, dynamic>> bidUserDocRef =
+            FirebaseFirestore.instance.collection("users").doc(userId).collection("bids").doc(userBidsDocs.docs[0].id);
+        batch.update(bidCarDocRef, {"user": userId, "value": bidValue});
+        batch.update(bidUserDocRef, {"car": carId, "value": bidValue});
+      } else {
+        print("new bid! just wait");
+        DocumentReference<Map<String, dynamic>> carBidsColl = _carsReference.doc(carId).collection("bids").doc();
+        DocumentReference<Map<String, dynamic>> userBidsColl = FirebaseFirestore.instance.collection("users").doc(userId).collection("bids").doc();
+        batch.set(carBidsColl, {"user": userId, "value": bidValue});
+        batch.set(userBidsColl, {"car": carId, "value": bidValue});
       }
-    } else {
-      await _carsReference
-          .doc(carId)
-          .collection("bids")
-          .add({"user": userId, "value": int.parse(bidValue)});
+      print(userId);
+      print(carId);
+      await batch.commit();
+    } catch (e) {
+      return "Sorry! Placing the bid failed.";
     }
-
-    //   .then((response) {
-    // if (response.docs.isNotEmpty) {
-    //   _carsReference
-    //       .doc(carId)
-    //       .collection("bids")
-    //       .doc(response.docs[0].id)
-    //       .set({"user": userId, "value": int.parse(bidValue)});
-    // } else {
-    //   _carsReference
-    //       .doc(carId)
-    //       .collection("bids")
-    //       .add({"user": userId, "value": int.parse(bidValue)});
-    // }
-    // });
   }
 }
