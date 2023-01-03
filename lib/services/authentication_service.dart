@@ -99,7 +99,7 @@ class AuthenticationService {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  User? geCurrentUser() {
+  User? getCurrentUser() {
     return _auth.currentUser;
   }
 }

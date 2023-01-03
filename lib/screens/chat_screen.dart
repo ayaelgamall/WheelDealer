@@ -36,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    thisUserId = AuthenticationService().geCurrentUser()!.uid;
+    thisUserId = AuthenticationService().getCurrentUser()!.uid;
     NotificationsService().registerNotifications();
     super.initState();
   }

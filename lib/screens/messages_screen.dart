@@ -24,16 +24,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
     return Scaffold(
         backgroundColor: Color(0xFF29292A),
         appBar: AppBar(
-          title: Text('Messages'),
-          leading: IconButton(
-              onPressed: (() {
-                Navigator.of(context).pop();
-              }),
-              icon: Icon(Icons.arrow_back_ios_new_outlined)),
-          actions: [
-            SettingsWidget(),
-          ],
-        ),
+            // title: Text('Messages'),
+            // leading: IconButton(
+            //     onPressed: (() {
+            //       Navigator.of(context).pop();
+            //     }),
+            //     icon: Icon(Icons.arrow_back_ios_new_outlined)),
+            // actions: [
+            //   SettingsWidget(),
+            // ],
+            ),
         body: isIntialized
             ? Column(
                 children: [

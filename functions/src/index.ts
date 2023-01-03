@@ -26,7 +26,7 @@ exports.sendChatNotifications = functions.firestore
 
             const payload = {
               notification: {
-                title: `New Message From: ${userFrom.data()?.display_name}`,
+                title: `💬 ${userFrom.data()?.display_name}`,
                 body: content,
                 sound: "default",
               },
@@ -39,5 +39,57 @@ exports.sendChatNotifications = functions.firestore
                   console.log("Notification Sent successfully");
                   console.log(response);
                 });
+          });
+    });
+
+exports.sendBidNotifications = functions.firestore
+    .document("cars/{carId}/bids/{bidId}")
+    .onCreate(async (snapshot, context) => {
+      console.log(snapshot.data());
+
+      const carId = context.params.carId;
+      const car = await admin
+          .firestore().collection("cars").doc(carId).get();
+
+      const sellerId = car.data()?.seller;
+      const seller = await admin
+          .firestore().collection("users").doc(sellerId).get();
+      const sellerFcmToken = seller.data()?.fcm_token;
+      console.log(seller);
+
+      const bidderId = snapshot.data().user;
+      const bidder = await admin
+          .firestore().collection("users").doc(bidderId).get();
+      console.log(bidder);
+
+      const sellerNotificationPayload = {
+        notification: {
+          title: "💰 New Bid!",
+          body: `${bidder.data()?.display_name} 
+            has placed a new bid of value ${snapshot.data().value} 
+            on your listing`,
+          sound: "default",
+        },
+      };
+
+      admin.messaging()
+          .sendToDevice(sellerFcmToken, sellerNotificationPayload)
+          .then((_) => {
+            console.log("Notification sent successfully to seller");
+          });
+
+      const biddersNotificationPayload = {
+        notification: {
+          title: "💵 New Winning Bid",
+          body: `${bidder.data()?.display_name} has outbid you for 
+          the listing ${car.data()?.brand} ${car.data()?.model}`,
+          sound: "default",
+        },
+      };
+
+      admin.messaging()
+          .sendToTopic(`car-${carId}`, biddersNotificationPayload)
+          .then((_) => {
+            console.log("Notification sent successfully to bidders");
           });
     });
