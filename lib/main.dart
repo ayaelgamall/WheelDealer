@@ -8,6 +8,7 @@ import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,13 +51,13 @@ class _MyAppState extends State<MyApp> {
     initialLocation: "/",
     routes: <RouteBase>[
       /// Application shell
+      // GoRoute(
+      //     path: "/",
+      //     builder: (BuildContext context, GoRouterState state) {
+      //       return Wrapper();
+      //     }),
       GoRoute(
           path: "/",
-          builder: (BuildContext context, GoRouterState state) {
-            return Wrapper();
-          }),
-      GoRoute(
-          path: "/explore",
           builder: (BuildContext context, GoRouterState state) {
             return ExplorePage();
           }),

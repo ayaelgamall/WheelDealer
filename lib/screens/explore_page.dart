@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,16 +23,8 @@ class _ExplorePageState extends State<ExplorePage> {
 
     return Scaffold(
 
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearchDelegate());
-            },
-          )
-        ],
-      ),
+
+      appBar:CustomAppBar(),
       body: ExploreContent(),
     );
   }
