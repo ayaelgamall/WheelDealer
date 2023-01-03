@@ -2,15 +2,16 @@ import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../services/authentication_service.dart';
 import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
 
-String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -18,6 +19,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     final cars = FirebaseFirestore.instance.collection('cars');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

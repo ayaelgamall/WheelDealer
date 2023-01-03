@@ -1,12 +1,14 @@
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/car.dart';
 
 List<dynamic> favouritesList = [];
-String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
+
 
 class FavouriteCarsScreen extends StatelessWidget {
   FavouriteCarsScreen({super.key});
@@ -16,7 +18,8 @@ class FavouriteCarsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseFirestore.instance.collection('users');
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -66,7 +69,8 @@ class FavouriteCarsScreen extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   right: 30),
                                               alignment: Alignment.centerRight,
-                                              color: const Color.fromARGB(255, 146, 21, 12),
+                                              color: const Color.fromARGB(
+                                                  255, 146, 21, 12),
                                               margin: const EdgeInsets.only(
                                                   top: 9, bottom: 20),
                                               child: const Icon(
@@ -86,17 +90,19 @@ class FavouriteCarsScreen extends StatelessWidget {
                                                 height: 200,
                                                 rightMargin: 0,
                                                 carId: carId),
-                                             Positioned(
+                                            Positioned(
                                               top: 20,
                                               right: 20,
                                               child: InkWell(
-                                                  child: const Icon(Icons.favorite,color: Color.fromARGB(255, 146, 21, 12)),
-                                                      
+                                                  child: const Icon(
+                                                      Icons.favorite,
+                                                      color: Color.fromARGB(
+                                                          255, 146, 21, 12)),
                                                   onTap: () {
                                                     UsersService()
                                                         .removeFromFavs(
                                                             userId, carId);
-                                            }),
+                                                  }),
                                             )
                                           ])));
                                 }).toList(),

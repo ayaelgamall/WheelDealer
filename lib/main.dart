@@ -57,14 +57,6 @@ class _MyAppState extends State<MyApp> {
           builder: (BuildContext context, GoRouterState state) {
             return Wrapper();
           }),
-      // GoRoute(
-      //   path: '/explore',
-      //   builder: (BuildContext context, GoRouterState state) {
-      //     return const ExplorePage();
-      //     // return showSearch(context: context, delegate: CustomSearchDelegate());
-      //
-      //   },
-      // ),
       GoRoute(
           path: "/chat",
           builder: (BuildContext context, GoRouterState state) {
@@ -114,7 +106,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/favourites',
             builder: (BuildContext context, GoRouterState state) {
-              return  FavouriteCarsScreen();
+              return FavouriteCarsScreen();
             },
             // routes: <RouteBase>[
             //   /// Same as "/a/details", but displayed on the root Navigator by
