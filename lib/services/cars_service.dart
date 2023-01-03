@@ -1,6 +1,8 @@
 import 'package:bar2_banzeen/models/car.dart';
 import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../models/car.dart';
 
@@ -65,5 +67,47 @@ class CarsService {
         .orderBy("value", descending: true)
         .limit(3)
         .snapshots();
+  }
+
+  Future<String?> submitBid(
+      String userId, String carId, String bidValue) async {
+    QuerySnapshot<Map<String, dynamic>> bidsDocs = await _carsReference
+        .doc(carId)
+        .collection("bids")
+        .where('user', isEqualTo: userId)
+        .get();
+
+    DocumentReference<Map<String, dynamic>>? bidDoc;
+    if (bidsDocs.docs.isNotEmpty) {
+      try {
+        await _carsReference
+            .doc(carId)
+            .collection("bids")
+            .doc(bidsDocs.docs[0].id)
+            .update({"user": userId, "value": int.parse(bidValue)});
+      } catch (e) {
+        return "Placing the bid failed!";
+      }
+    } else {
+      await _carsReference
+          .doc(carId)
+          .collection("bids")
+          .add({"user": userId, "value": int.parse(bidValue)});
+    }
+
+    //   .then((response) {
+    // if (response.docs.isNotEmpty) {
+    //   _carsReference
+    //       .doc(carId)
+    //       .collection("bids")
+    //       .doc(response.docs[0].id)
+    //       .set({"user": userId, "value": int.parse(bidValue)});
+    // } else {
+    //   _carsReference
+    //       .doc(carId)
+    //       .collection("bids")
+    //       .add({"user": userId, "value": int.parse(bidValue)});
+    // }
+    // });
   }
 }

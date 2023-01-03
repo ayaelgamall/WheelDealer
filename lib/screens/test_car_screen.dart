@@ -24,16 +24,20 @@ class _TestCarScreenState extends State<TestCarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(),
         body: Stack(
           children: [
             // First child --> all your code goes here
-            ElevatedButton(
-                onPressed: () {
-                  showBidsScreenFunc(true);
-                },
-                child: Text("Place your bid")),
-            // Second child --> just call my widget and pass the function
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                  onPressed: () {
+                    showBidsScreenFunc(true);
+                  },
+                  child: Text("Place your bid")),
+            ),
+            // Second child --> just call my widget and
             if (showBidsScreen) BidsScreen(showBidsScreenFunc)
           ],
         ));
