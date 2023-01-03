@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,21 +23,22 @@ class MainPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
-        appBar: AppBar(title: Text("Hi"), actions: [
-          IconButton(
-            onPressed: () {
-              AuthenticationService().signOut();
-              context.go("/");
-            },
-            icon: Icon(Icons.logout),
-          ),
-          IconButton(
-            onPressed: () {
-              context.push("/mainPage/messages");
-            },
-            icon: Icon(Icons.message),
-          )
-        ]),
+        appBar:CustomAppBar(),
+        // AppBar(title: Text("Hi"), actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       AuthenticationService().signOut();
+        //       context.go("/");
+        //     },
+        //     icon: Icon(Icons.logout),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {
+        //       context.push("/mainPage/messages");
+        //     },
+        //     icon: Icon(Icons.message),
+        //   )
+        // ]),
         // appBar: AppBar(
         //   title: const Text(
         //     "BeebBeeb",
@@ -55,7 +57,7 @@ class MainPage extends StatelessWidget {
               } else {
                 return ListView(children: [
                   Column(
-                    children: [
+                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,6 +98,9 @@ class MainPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                  //     ,align: Axis.vertical,rightMargin: 0,)
+
                   ...snapshot.data!.docs.map((doc) {
                     return Stack(children: [
                       CarCard(

@@ -6,6 +6,7 @@ import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';
@@ -51,16 +52,19 @@ class _MyAppState extends State<MyApp> {
     initialLocation: "/",
     routes: <RouteBase>[
       /// Application shell
-      // GoRoute(
-      //     path: "/",
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       return Wrapper();
-      //     }),
       GoRoute(
           path: "/",
           builder: (BuildContext context, GoRouterState state) {
-            return ExplorePage();
+            return Wrapper();
           }),
+      // GoRoute(
+      //   path: '/explore',
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     return const ExplorePage();
+      //     // return showSearch(context: context, delegate: CustomSearchDelegate());
+      //
+      //   },
+      // ),
       GoRoute(
           path: "/chat",
           builder: (BuildContext context, GoRouterState state) {
@@ -92,6 +96,14 @@ class _MyAppState extends State<MyApp> {
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
                   return const CarInfo();
+                },
+              ),
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+
                 },
               ),
             ],

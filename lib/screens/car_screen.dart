@@ -8,8 +8,7 @@ class CarInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Hi all")),
+    return  Center(child: Text("Hi all"),
     );
   }
 }
