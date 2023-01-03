@@ -2,6 +2,7 @@
 
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/complete_profile_screen.dart';
+import 'package:bar2_banzeen/screens/explore_page.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
@@ -20,6 +21,7 @@ class AppRouter {
       // LoginScreen.routeName: (context) => const LoginScreen(),
       // SignupScreen.routeName: (context) => const SignupScreen(),
       MainPage.routeName: (context) => const MainPage(),
+      ExplorePage.routeName: (context) => const ExplorePage(),
       EditProfile.routeName: (context) => const EditProfile(),
       UserProfile.routeName: (context) => const UserProfile(),
       MessagingScreen.routeName: (context) => const MessagingScreen(),
