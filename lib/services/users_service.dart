@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,7 +10,7 @@ class UsersService {
   final CollectionReference _usersReference =
       FirebaseFirestore.instance.collection("users");
 
-  Future<void> delteUserBid(String carID, String userID) async {
+  Future<void> deleteUserBid(String carID, String userID) async {
     await _usersReference
         .doc(userID)
         .collection("bids")
@@ -26,7 +27,7 @@ class UsersService {
     });
   }
 
-  Future<void> delteUserPost(String carID, String userID) async {
+  Future<void> deleteUserPost(String carID, String userID) async {
     await _usersReference
         .doc(userID)
         .collection("bids")
@@ -77,5 +78,10 @@ class UsersService {
 
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();
+  }
+
+  Future<void> updateUserToken(String token) async {
+    String userId = AuthenticationService().getCurrentUser()!.uid;
+    await _usersReference.doc(userId).update({"fcm_token": token});
   }
 }
