@@ -284,7 +284,7 @@ class _BidsScreenState extends State<BidsScreen> {
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceBetween,
+                                                            .spaceEvenly,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .center,
@@ -296,6 +296,12 @@ class _BidsScreenState extends State<BidsScreen> {
                                                               const EdgeInsets
                                                                   .all(0.0),
                                                           child: Card(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 4,
+                                                                    bottom: 4,
+                                                                    right: 4,
+                                                                    left: 0),
                                                             // elevation: 10,
                                                             child: TextField(
                                                               // textAlign: TextAlign.center,
