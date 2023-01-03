@@ -50,6 +50,7 @@ dependencies:
   grouped_list: ^4.2.0
   google_sign_in: ^5.4.2
   flutter_facebook_auth: ^5.0.7
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
