@@ -64,7 +64,6 @@ class _SellCarScreenState extends State<SellCarScreen> {
           .then((DocumentSnapshot documentSnapshot) {
         map = documentSnapshot.data() as Map<String, dynamic>;
 
-        StorageService().downloadCarPhotos(map['photos']).then((xfiles) {
           setState(() {
             _brand = TextEditingController(text: map['brand']);
             _color = TextEditingController(text: map['color']);
@@ -74,14 +73,14 @@ class _SellCarScreenState extends State<SellCarScreen> {
                 TextEditingController(text: map['engine_capacity'].toString());
             _location = TextEditingController(text: map['location']);
             _model = TextEditingController(text: map['model'] as String);
-            _photos = xfiles;
+            // _photos = xfiles;
             _price =
                 TextEditingController(text: map['starting_price'].toString());
             _transmission = map['transmission'].toString();
             _year = TextEditingController(text: map['year'].toString());
             _description = TextEditingController(text: map['description']);
             _mileage = TextEditingController(text: map['mileage '].toString());
-          });
+          
         });
       });
     }
