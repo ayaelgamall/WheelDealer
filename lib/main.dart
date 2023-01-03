@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/favourites',
             builder: (BuildContext context, GoRouterState state) {
-              return const FavouriteCarsScreen();
+              return FavouriteCarsScreen();
             },
             // routes: <RouteBase>[
             //   /// Same as "/a/details", but displayed on the root Navigator by

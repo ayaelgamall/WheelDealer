@@ -59,6 +59,7 @@ class UsersService {
       "phone_number": user.phoneNumber,
       "profile_photo": profilePhotoLink,
       "posted_cars": [],
+      "favs": [],
     });
   }
 
@@ -67,12 +68,12 @@ class UsersService {
       "favs": FieldValue.arrayUnion([car])
     });
   }
-    Future<void> removeFromFavs(String uid, String car) async {
+
+  Future<void> removeFromFavs(String uid, String car) async {
     await _usersReference.doc(uid).update({
       "favs": FieldValue.arrayRemove([car])
     });
   }
-
 
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();
