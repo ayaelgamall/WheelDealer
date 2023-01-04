@@ -11,7 +11,6 @@ import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
 
-
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
   static const routeName = '/mainPage';
@@ -24,6 +23,7 @@ class MainPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     int count = 5;
+
     return Scaffold(
         appBar: AppBar(title: Text("Hi"), actions: [
           IconButton(
@@ -35,7 +35,7 @@ class MainPage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              context.push("/mainPage/messages");
+              context.go("/mainPage/messages");
             },
             icon: Icon(Icons.message),
           )
@@ -71,6 +71,8 @@ class MainPage extends StatelessWidget {
                         width: 0.73 * width,
                         height: 0.4 * height,
                         carsToShow: cars
+                            .where('sold', isNotEqualTo: true)
+                            .orderBy('sold')
                             .orderBy("bids_count", descending: true)
                             .limit(5),
                       ),
