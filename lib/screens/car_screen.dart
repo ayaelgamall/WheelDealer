@@ -4,6 +4,7 @@ import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,10 +12,12 @@ import 'package:page_indicator/page_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../models/car.dart';
+import '../services/cars_service.dart';
 
 class CarPage extends StatefulWidget {
   Car car;
-  CarPage({Key? key, required this.car}) : super(key: key);
+  int? topBid;
+  CarPage({Key? key, required this.car, this.topBid}) : super(key: key);
   static const routeName = '/car';
 
   @override
@@ -31,44 +34,45 @@ class _CarPageState extends State<CarPage> {
     // final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
     // final Car car = arguments['car'];
     Car car = widget.car;
-    print(car.toString());
-    // Car car = Car(
-    //     id: "",
-    //     bidsCount: 0,
-    //     brand: "Porsche",
-    //     color: "Python Green",
-    //     deadline: DateTime.utc(2023, 1, 12),
-    //     engineCapacity: 2981,
-    //     location: "New Cairo",
-    //     model: "911 Speedster",
-    //     photos: [
-    //       'assets/images/example.jpg',
-    //       'assets/images/w400_BMW-G29-LCI-Z4-Roadster-22.jpg'
-    //     ],
-    //     creationTime: DateTime.now(),
-    //     sellerId: 'IO02k93eAgdOM1jWV7XW',
-    //     sold: false,
-    //     startingPrice: 2300000,
-    //     transmission: "Automatic",
-    //     year: "2019",
-    //     description:
-    //         'Hi, this is the description about the car. I don’t know  what to write, but this is the description with a lot and a lot of details',
-    // mileage: 80000);
-
-    // List userInfo = getUserFromId(car.sellerId);
-    // String userPhoto = userInfo[0] ?? defaultPhoto;
-    // String userName = userInfo[1];
-
+    // final topBid = car.bidsCount > 0 ? CarsService().carTopBid(car.id) : null;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    int getHighestPrice() {
+    int? getHighestPrice() {
       //todo getPrice
-      return car.startingPrice;
+      return this.widget.topBid;
     }
 
     return Scaffold(
       appBar: AppBar(),
+      // floatingActionButton: Container(
+      //   width: width,
+      //   height: 0.1 * height,
+      //   child: SizedBox(
+      //     width: 80,
+      //     height: 30,
+      //     child: ElevatedButton.icon(
+      //       icon: const Padding(
+      //         padding: EdgeInsets.only(left: .0),
+      //         child: Icon(Icons.add),
+      //       ),
+      //       style: ButtonStyle(
+      //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      //           RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.circular(7),
+      //           ),
+      //         ),
+      //       ),
+      //       onPressed: () {},
+      //       label: const Padding(
+      //         padding: EdgeInsets.symmetric(vertical: 10),
+      //         child: Text(
+      //           'Place a bid',
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: Stack(
         children: [
           Positioned(
@@ -89,7 +93,7 @@ class _CarPageState extends State<CarPage> {
                   children: List.generate(
                     car.photos!.length,
                     (index) => Image(
-                      image: AssetImage(car.photos![index]),
+                      image: NetworkImage(car.photos![index]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -107,22 +111,183 @@ class _CarPageState extends State<CarPage> {
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20))),
                   child: Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding: const EdgeInsets.only(
+                        top: 30.0, left: 30, right: 30, bottom: 50),
                     child: SingleChildScrollView(
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MainHeading(text: "${car.brand} ${car.model}"),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
                             children: [
-                              Text(car.year),
-                              Text(
-                                '${NumberFormat('#,##,000').format(getHighestPrice())} \$',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MainHeading(
+                                      text:
+                                          "${car.brand} ${car.model}, ${car.year}"),
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     Text(car.year),
+                                  //     // Text(
+                                  //     //   '${NumberFormat('#,##,000').format(getHighestPrice())} EGP',
+                                  //     //   style: const TextStyle(
+                                  //     //       fontWeight: FontWeight.bold,
+                                  //     //       fontSize: 18),
+                                  //     // ),
+                                  //   ],
+                                  // ),
+                                  // Text(car.year),
+                                  // Row(
+                                  //   children: const [
+                                  //     Icon(
+                                  //       Icons.bolt,
+                                  //       color:
+                                  //           Color.fromARGB(255, 183, 150, 19),
+                                  //       size: 16,
+                                  //     ),
+                                  //     Text(
+                                  //       "Top bid",
+                                  //       style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // SizedBox(
+                                  //   width: 80,
+                                  //   height: 30,
+                                  //   child: ElevatedButton.icon(
+                                  //     icon: const Padding(
+                                  //       padding: EdgeInsets.only(left: .0),
+                                  //       child: Icon(
+                                  //         Icons.add,
+                                  //         size: 10,
+                                  //       ),
+                                  //     ),
+                                  //     style: ButtonStyle(
+                                  //       shape: MaterialStateProperty.all<
+                                  //           RoundedRectangleBorder>(
+                                  //         RoundedRectangleBorder(
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(7),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     onPressed: () {},
+                                  //     label: const Padding(
+                                  //       padding: EdgeInsets.symmetric(
+                                  //           vertical: 10, horizontal: 3),
+                                  //       child: Text(
+                                  //         'bid',
+                                  //         style: TextStyle(fontSize: 10),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Text(car.year),
+                              //     // Text(
+                              //     //   '${NumberFormat('#,##,000').format(getHighestPrice())} EGP',
+                              //     //   style: const TextStyle(
+                              //     //       fontWeight: FontWeight.bold,
+                              //     //       fontSize: 18),
+                              //     // ),
+                              //   ],
+                              // ),
+                              SizedBox(height: 15),
+                              // Row(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: const [
+                              //     Icon(
+                              //       Icons.bolt,
+                              //       color: Color.fromARGB(255, 183, 150, 19),
+                              //       size: 16,
+                              //     ),
+                              //     Text(
+                              //       "Top bid",
+                              //       style: TextStyle(
+                              //         fontSize: 12,
+                              //         fontWeight: FontWeight.bold,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${NumberFormat('#,##,000').format(getHighestPrice())} EGP',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Theme.of(context).hoverColor,
+                                    ),
+                                  ),
+                                  // Row(
+                                  //   children: const [
+                                  //     Icon(
+                                  //       Icons.bolt,
+                                  //       color:
+                                  //           Color.fromARGB(255, 183, 150, 19),
+                                  //       size: 16,
+                                  //     ),
+                                  //     Text(
+                                  //       "Top bid",
+                                  //       style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  SizedBox(
+                                    width: 75,
+                                    height: 30,
+                                    child: ElevatedButton.icon(
+                                      icon: const Padding(
+                                        padding: EdgeInsets.only(left: .0),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 14,
+                                        ),
+                                      ),
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () {},
+                                      label: const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 3, horizontal: 2),
+                                        child: Text(
+                                          'bid',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -141,10 +306,14 @@ class _CarPageState extends State<CarPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                doc.data!["profile_photo"]),
-                                          ),
+                                          doc.data!["profile_photo"] != null
+                                              ? CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                      doc.data![
+                                                          "profile_photo"]))
+                                              : CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'lib/assets/images/icons/userIcon.png')),
                                           const SizedBox(
                                             width: 10,
                                           ),
@@ -312,31 +481,8 @@ class _CarPageState extends State<CarPage> {
                             softWrap: true,
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 50,
                           ),
-                          Center(
-                            child: ElevatedButton.icon(
-                              icon: const Padding(
-                                padding: EdgeInsets.only(left: .0),
-                                child: Icon(Icons.add),
-                              ),
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () {},
-                              label: const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  'Place a bid',
-                                ),
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     ),

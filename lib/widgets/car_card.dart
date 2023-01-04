@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/cars_service.dart';
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class CarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final car = FirebaseFirestore.instance.collection('cars').doc(carId);
-
+    int? bid = 0;
     return FutureBuilder<DocumentSnapshot>(
         future: car.get(),
         builder: (context, doc) {
@@ -34,37 +35,33 @@ class CarCard extends StatelessWidget {
             Map<String, dynamic> carData =
                 doc.data!.data() as Map<String, dynamic>;
             final topBid = carData['bids_count'] > 0
-                ? car
-                    .collection("bids")
-                    .orderBy("value", descending: true)
-                    .limit(1)
+                ? CarsService().carTopBid(carId)
                 : null;
+            bid = carData['starting_price'];
             return GestureDetector(
                 onTap: () {
                   Car car = Car(
-                    id: doc.data!.id,
-                    bidsCount: carData['bids_count'],
-                    brand: carData['brand'],
-                    color: carData['color'],
-                    deadline: carData['deadline']!.toDate(),
-                    description: carData['description'],
-                    engineCapacity: carData['engine_capacity'],
-                    location: carData['location'],
-                    model: carData['model'],
-                    photos: carData['photos'] is Iterable
-                        ? List.from(carData['photos'])
-                        : null,
-                    creationTime: carData['creation_time']!.toDate(),
-                    sellerId: carData['seller_id'],
-                    sold: carData['sold'],
-                    startingPrice: carData['starting_price'],
-                    transmission: carData['transmission'],
-                    year: '${carData['year']}',
-                  );
-                  GoRouter.of(context).go(
-                    '/mainPage/car',
-                    extra: car,
-                  );
+                      id: doc.data!.id,
+                      bidsCount: carData['bids_count'],
+                      brand: carData['brand'],
+                      color: carData['color'],
+                      deadline: carData['deadline']!.toDate(),
+                      description: carData['description'],
+                      engineCapacity: carData['engine_capacity'],
+                      location: carData['location'],
+                      model: carData['model'],
+                      photos: carData['photos'] is Iterable
+                          ? List.from(carData['photos'])
+                          : null,
+                      creationTime: carData['creation_time']!.toDate(),
+                      sellerId: carData['seller_id'],
+                      sold: carData['sold'],
+                      startingPrice: carData['starting_price'],
+                      transmission: carData['transmission'],
+                      year: '${carData['year']}',
+                      mileage: carData['mileage']);
+                  GoRouter.of(context)
+                      .go('/mainPage/car', extra: {'car': car, 'bid': bid});
                 },
                 child: Card(
                     margin: EdgeInsets.only(
@@ -144,6 +141,7 @@ class CarCard extends StatelessWidget {
                                       : FutureBuilder<QuerySnapshot>(
                                           future: topBid.get(),
                                           builder: (context, qs) {
+                                            bid = qs.data?.docs.first['value'];
                                             return Text(
                                               "At ${qs.data?.docs.first['value']} EGP",
                                               style: const TextStyle(

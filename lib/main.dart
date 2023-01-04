@@ -86,10 +86,11 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
-                  Car car = state.extra as Car;
-                  return CarPage(
-                    car: car,
-                  );
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  Car car = extra['car'] as Car;
+                  int? value = extra['bid'] as int?;
+                  return CarPage(car: car, topBid: value);
                 },
               ),
             ],
