@@ -50,7 +50,7 @@ class Car {
       brand: data?['brand'],
       color: data?['color'],
       deadline: data?['deadline'],
-      description: data?['deadline'],
+      description: data?['description'],
       engineCapacity: data?['engine_capacity'],
       location: data?['location'],
       model: data?['model'],
@@ -71,7 +71,7 @@ class Car {
       if (brand != null) "brand": brand,
       if (color != null) "color": color,
       if (deadline != null) "deadline": deadline,
-      if (description != null) "regions": description,
+      if (description != null) "description": description,
       if (engineCapacity != null) "engine_capacity": engineCapacity,
       if (location != null) "location": location,
       if (model != null) "model": model,
@@ -83,5 +83,10 @@ class Car {
       if (transmission != null) "transmission": transmission,
       if (year != null) "year": year,
     };
+  }
+
+  @override
+  String toString() {
+    return '{brand: ${brand}, model: ${model}, color:${color}, year:${year}, sartprice:${startingPrice}, creation_time:${creationTime}, mileage:${mileage}, cap:${engineCapacity}, bids:${bidsCount}, desc:${description}, year:${year}, deadline:${deadline}, photos:${photos}, }';
   }
 }

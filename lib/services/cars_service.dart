@@ -69,4 +69,12 @@ class CarsService {
   Future<void> setCarSold(String? carID) async {
     await _carsReference.doc(carID).update({"sold": true});
   }
+
+  Query carTopBid(String? carId) {
+    return _carsReference
+        .doc(carId)
+        .collection('bids')
+        .orderBy('value', descending: true)
+        .limit(1);
+  }
 }

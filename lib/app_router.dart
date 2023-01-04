@@ -1,6 +1,10 @@
 // import 'dart:js';
 
+
+import 'package:bar2_banzeen/screens/car_screen.dart';
+
 import 'package:bar2_banzeen/screens/chat_screen.dart';
+
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/complete_profile_screen.dart';
 import 'package:bar2_banzeen/screens/messages_screen.dart';
@@ -27,6 +31,7 @@ class AppRouter {
 
       CompleteProfileScreen.routeName: (context) =>
           const CompleteProfileScreen(),
+      // CarPage.routeName: ((context) => const CarPage())
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const Wrapper();
