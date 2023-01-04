@@ -8,24 +8,30 @@ import 'package:intl/intl.dart';
 import '../services/storage_service.dart';
 import '../widgets/sellCarForm.dart';
 
-class SellCarScreen extends StatelessWidget {
+class SellCarScreen extends StatefulWidget {
   String? carId;
 
   SellCarScreen({super.key, this.carId});
   static const routeName = '/sell-car';
 
   @override
+  State<SellCarScreen> createState() => _SellCarScreenState();
+}
+
+class _SellCarScreenState extends State<SellCarScreen> {
+  @override
   Widget build(BuildContext context) {
     // User user = Provider.of<User>(context);
-    if (carId != null) {
+    if (widget.carId != null) {
 
       return FutureBuilder<Map<String,dynamic>>(
-          future: getCar(carId),
+          future: getCar(widget.carId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('car has data');
+              // print('car has data');
               Map<String, dynamic> map =
                   snapshot.data!['doc'].data() as Map<String, dynamic>;
+              print(map['photos'].toString()+"photos in map of car");
               print(snapshot.data!['photos'].toString()+"photos snapshot");
               return SellCarForm(
                   car: FormData(
@@ -47,8 +53,8 @@ class SellCarScreen extends StatelessWidget {
                           TextEditingController(text: map['description']),
                       mileage: TextEditingController(
                           text: map['mileage'].toString()),
-                      id: carId!,
-                      photos: snapshot.data!['photos']), carId: carId,);
+                      id: widget.carId!,
+                      photos: snapshot.data!['photos']), carId: widget.carId,);
             } else {
               //no such car
               return Container();
@@ -78,19 +84,24 @@ class SellCarScreen extends StatelessWidget {
     DocumentSnapshot ref =
         await FirebaseFirestore.instance.collection('cars').doc(carId!).get();
     Map<String, dynamic> map = ref.data() as Map<String, dynamic>;
+    print(map.toString()+" map");
+
     List<XFile?> photos = await getCarPhotos(carId, map['photos']);
-    return {"doc":ref,"photos":photos};
+    
+    print({'doc':ref,'photos':photos});
+    return {'doc':ref,'photos':photos};
   }
 
   Future<List<XFile?>> getCarPhotos(String? carId, List<dynamic> list) async {
     List<XFile?> xfiles = [];
+
     StorageService().downloadCarPhotos(carId!, list).then((files) async {
-      print('finished str serv');
-      // print(files);
+     // print('finished str serv');
+      print(files.toString()+" files");
       for (File file in files) {
         xfiles.add(XFile(file.path));
       }
-      // print(xfiles);
+      print(xfiles.toString()+"xfiles");
     });
 
     return xfiles;

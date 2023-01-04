@@ -20,11 +20,12 @@ final _formKey = GlobalKey<FormState>();
 int _descriptionLength = 0;
 
 String _photosError = "";
+List<XFile?> photos = [];
 
 bool _photosLoading = false;
 bool _enableSubmit = false;
 bool _addingCar = false;
-final ImagePicker picker = ImagePicker();
+ImagePicker picker = ImagePicker();
 
 class SellCarForm extends StatefulWidget {
   String? carId;
@@ -37,6 +38,13 @@ class SellCarForm extends StatefulWidget {
 
 class _SellCarFormState extends State<SellCarForm> {
   String? carId;
+  @override
+  void initState() {
+    setState(() {
+      widget.car.photos.addAll(photos.take(10 - photos.length));
+    });
+    super.initState();
+  }
 
   void dispose() {
     widget.car.brand.dispose();
@@ -60,12 +68,12 @@ class _SellCarFormState extends State<SellCarForm> {
     });
   }
 
-  Future getImages() async {
+  Future getImages(open) async {
     try {
       setState(() {
         _photosLoading = true;
       });
-      List<XFile?> photos = await picker.pickMultiImage();
+      if (open) photos = await picker.pickMultiImage();
 
       setState(() {
         _photosLoading = false;
@@ -136,6 +144,10 @@ class _SellCarFormState extends State<SellCarForm> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getImages(false);
+      updateSubmitEnable();
+    });
     return Scaffold(
         appBar: AppBar(
           title: const Text("Sell Your Car"),
@@ -158,7 +170,7 @@ class _SellCarFormState extends State<SellCarForm> {
                         InkWell(
                           onTap: !_addingCar
                               ? () {
-                                  getImages();
+                                  getImages(true);
                                 }
                               : null,
                           child: Container(
@@ -260,6 +272,8 @@ class _SellCarFormState extends State<SellCarForm> {
                               prefixIcon: Icon(Icons.search),
                             ),
                           ),
+                          selectedItem: widget.car.brand.text,
+
                           popupProps: const PopupProps.menu(
                             showSearchBox: true,
                             searchFieldProps: TextFieldProps(
@@ -284,7 +298,7 @@ class _SellCarFormState extends State<SellCarForm> {
                             "Audi",
                             "Fiat"
                           ],
-                          // selectedItem: ,
+                          selectedItem: widget.car.model.text,
                           enabled: !_addingCar,
                           validator: (value) => value == null || value.isEmpty
                               ? "Model must not be empty"
