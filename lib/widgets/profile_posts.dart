@@ -23,12 +23,12 @@ class ProfilePosts extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: carsToShow == null
-          ? Text("No bids yet")
+          ? const Text("No bids yet")
           : Column(
               children: carsToShow!.reversed.map((carID) {
               return ProfileCarCard(
                 width: 0.8 * width,
-                height: 0.4 * height,
+                height: 0.5 * height,
                 rightMargin: 0,
                 carId: carID,
                 cardType: 0,

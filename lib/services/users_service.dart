@@ -42,11 +42,8 @@ class UsersService {
     });
   }
 
-  Future<void> getUser(String userID) async {
-    // (_usersReference.doc().data!.data()!["posted_cars"])
-    //               : (userData.collection("bids"));
-    _usersReference.doc(userID);
-    final String defaultPhoto = "";
+  Future<DocumentSnapshot> getUser(String userID) async {
+    return _usersReference.doc(userID).get();
   }
 
   Future<void> addUser(UserModel user) async {
@@ -83,5 +80,9 @@ class UsersService {
   Future<void> updateUserToken(String token) async {
     String userId = AuthenticationService().getCurrentUser()!.uid;
     await _usersReference.doc(userId).update({"fcm_token": token});
+  }
+
+  CollectionReference getUserBids(String uid) {
+    return _usersReference.doc(uid).collection('bids');
   }
 }

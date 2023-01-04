@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -149,16 +150,14 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, GoRouterState state) {
               return const UserProfile();
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'editProfile',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const EditProfile();
+                },
+              ),
+            ],
           ),
         ],
       ),

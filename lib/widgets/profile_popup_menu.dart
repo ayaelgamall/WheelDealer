@@ -1,15 +1,15 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePopUpMenu extends StatelessWidget {
   BuildContext ctx;
   String carID;
   ProfilePopUpMenu({super.key, required this.carID, required this.ctx});
-
+  User? user = AuthenticationService().getCurrentUser();
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -20,13 +20,12 @@ class ProfilePopUpMenu extends StatelessWidget {
           value: 1,
           // row with 2 children
           child: Row(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Icon(Icons.edit),
-              const SizedBox(
+            children: const [
+              Icon(Icons.edit),
+              SizedBox(
                 width: 10,
               ),
-              const Text("Edit post")
+              Text("Edit post")
             ],
           ),
         ),
@@ -64,12 +63,11 @@ class ProfilePopUpMenu extends StatelessWidget {
       onSelected: (value) {
         if (value == 1) {
         } else if (value == 2) {
-          CarsService()
-              .setCarSold(carID)
-              .then((value) => ScaffoldMessenger.of(context)
-                  .showSnackBar(createSnackBar("Marked as sold!", true)))
-              .catchError((err) => ScaffoldMessenger.of(context)
-                  .showSnackBar(createSnackBar("Action failed!", false)));
+          CarsService().setCarSold(carID);
+          // .then((value) => ScaffoldMessenger.of(context)
+          //     .showSnackBar(createSnackBar("Marked as sold!", true)))
+          // .catchError((err) => ScaffoldMessenger.of(context)
+          //     .showSnackBar(createSnackBar("Action failed!", false)));
         } else {
           showAlertDialog(context, carID);
         }
@@ -82,7 +80,7 @@ class ProfilePopUpMenu extends StatelessWidget {
     Widget cancelButton = TextButton(
       child: const Text("Cancel"),
       onPressed: () {
-        Navigator.of(ctx).pop();
+        context.pop();
       },
     );
     Widget deleteButton = TextButton(
@@ -97,8 +95,7 @@ class ProfilePopUpMenu extends StatelessWidget {
             success = false;
           });
           await UsersService()
-              //TODO replace with user id
-              .deleteUserPost(carID, "fBDHfJIyBo908ecQdoaI")
+              .deleteUserPost(carID, user!.uid)
               .then((value) {})
               .catchError((error) {
             success = false;

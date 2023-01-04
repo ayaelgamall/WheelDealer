@@ -51,6 +51,8 @@ dependencies:
   flutter_facebook_auth: ^5.0.7
   firebase_messaging: ^14.2.1
   shimmer: ^2.0.0
+  http: ^0.13.5
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:
