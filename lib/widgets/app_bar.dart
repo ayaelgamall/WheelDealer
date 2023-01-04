@@ -1,4 +1,4 @@
-import 'package:bar2_banzeen/widgets/search_bar.dart';
+import 'package:bar2_banzeen/widgets/search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,7 +37,7 @@ class _CustomAppBarState extends State<CustomAppBar>{
           onPressed: () {
             // showSearch(context: context, delegate: CustomSearchDelegate());
             // showSearch(context: context, delegate: CustomSearchDelegate());
-            context.push('/mainPage/explore');
+            context.go('/mainPage/explore');
           },
         ),  IconButton(
         onPressed: () {

@@ -57,7 +57,8 @@ ThemeData darkTheme = ThemeData(
   primaryTextTheme: Typography().white,
   textTheme:  TextTheme(
     bodyLarge: const TextStyle(color: Color(0xff00ABB3)),
-    bodyMedium: const TextStyle(color: Color(0xff3C4048)),
+    // bodyMedium: const TextStyle(color: Color(0xff3C4048)),
+    bodyMedium:  const TextStyle(color: Colors.white),
     headlineSmall:  const TextStyle(color: Colors.white),
     labelMedium:  const TextStyle(color: Colors.white),
   ),
@@ -78,7 +79,7 @@ ThemeData darkTheme = ThemeData(
   // primaryIconTheme: ,
   iconTheme: const IconThemeData(color: Colors.white),
   inputDecorationTheme: const InputDecorationTheme(
-    enabledBorder: OutlineInputBorder(
+    border: OutlineInputBorder(
       borderSide: BorderSide(color: Color(0xffF3EFE0)),
     ),
     focusedBorder: OutlineInputBorder(

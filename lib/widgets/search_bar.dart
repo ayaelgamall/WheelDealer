@@ -1,81 +1,46 @@
-import 'package:bar2_banzeen/screens/explore_page.dart';
+import 'package:bar2_banzeen/widgets/search_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import 'explore_Page_Content.dart';
+import '../screens/messages_screen.dart';
+import '../services/authentication_service.dart';
 
-class CustomSearchDelegate extends SearchDelegate {
+class SearchBar extends StatefulWidget implements PreferredSizeWidget {
+  SearchBar({ Key? key}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
 
-// Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
-
-// first overwrite to
-// clear the search text
   @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          if(query.isEmpty){
-            close(context, null);
-          }else {
-            query = '';
-          }
+  final Size preferredSize; // default is 56.0
+
+  @override
+  _SearchBarState createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar>{
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: TextField(
+
+        decoration: InputDecoration(
+          // contentPadding: EdgeInsets.all(13),
+          isDense: true,
+          hintText: 'Search',
+          border: OutlineInputBorder(
+            // borderSide: BorderSide(width: 3),
+            borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+        ),
+        onTap: (){
+          print("done");
         },
-        icon: Icon(Icons.clear),
       ),
-    ];
-  }
+      // backgroundColor: Colors.white,
 
-// second overwrite to pop out of search menu
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: Icon(Icons.arrow_back),
-    );
-  }
 
-// third overwrite to show query result
-  @override
-  Widget buildResults(BuildContext context)
-  {
-    return ExploreContent();
-
-  }
-
-// last overwrite to show the
-// querying process at the runtime
-  @override
-  Widget buildSuggestions(BuildContext context) {
-
-    List<String> matchQuery = searchTerms.where((searchResult) {
-      final result = searchResult.toLowerCase();
-      final input = query.toLowerCase();
-      return result.contains(input);
-    }).toList();
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-          onTap: (){
-            query =result;
-            showResults(context);
-          },
-        );
-      },
     );
   }
 }
