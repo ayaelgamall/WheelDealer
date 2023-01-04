@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import '../models/transmission.dart';
 import '../services/storage_service.dart';
 import '../widgets/sellCarForm.dart';
 

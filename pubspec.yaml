@@ -83,7 +83,6 @@ flutter:
     - lib/assets/images/icons/
     - lib/assets/images/backgrounds/
     - assets/images/
-    - assets/json/cars.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
