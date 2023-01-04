@@ -55,8 +55,8 @@ class CarCard extends StatelessWidget {
                               topRight: Radius.circular(7),
                             ),
                             child: Image(
-                              image: AssetImage(
-                                  'assets/images/example.jpg'), // TODO read from db
+                              image: NetworkImage(
+                                  carData['photos'][0]), // TODO read from db
                               height: 0.73 * height,
                               width: width,
                               fit: BoxFit.cover,

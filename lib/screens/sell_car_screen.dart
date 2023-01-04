@@ -1,6 +1,15 @@
 import 'dart:io';
 import 'package:bar2_banzeen/models/formData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+import 'package:bar2_banzeen/models/car.dart';
+import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/services/cars_service.dart';
+import 'package:bar2_banzeen/services/notifications_service.dart';
+import 'package:bar2_banzeen/widgets/photo_thumbnail.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,6 +28,40 @@ class SellCarScreen extends StatefulWidget {
 }
 
 class _SellCarScreenState extends State<SellCarScreen> {
+
+  final List<XFile?> _photos = [];
+  final TextEditingController _brand = TextEditingController();
+  final TextEditingController _model = TextEditingController();
+  final TextEditingController _year = TextEditingController();
+  String _transmission = Transmission.automatic.name;
+  final TextEditingController _engineCapacity = TextEditingController();
+  final TextEditingController _mileage = TextEditingController();
+  final TextEditingController _color = TextEditingController();
+  final TextEditingController _location = TextEditingController();
+  final TextEditingController _price = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+  final TextEditingController _deadlineController = TextEditingController();
+  DateTime _deadline = DateTime.now();
+
+  final _formKey = GlobalKey<FormState>();
+
+  int _descriptionLength = 0;
+
+  String _photosError = "";
+
+  bool _photosLoading = false;
+  bool _enableSubmit = false;
+  bool _addingCar = false;
+
+  final ImagePicker picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationsService().registerNotifications();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // User user = Provider.of<User>(context);

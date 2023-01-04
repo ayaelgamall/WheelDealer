@@ -29,10 +29,10 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFFEAEAEA),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
   textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Color(0xff3C4048)),
-      bodyLarge: TextStyle(color: Color(0xff00ABB3))
-      // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
-      ),
+    bodyMedium: TextStyle(color: Color(0xff3C4048)),
+    bodyLarge: TextStyle(color: Color(0xff00ABB3)),
+    // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
+  ),
   primaryColor: const Color(0xffB2B2B2),
   // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xffcccccc),
@@ -57,7 +57,7 @@ ThemeData darkTheme = ThemeData(
   primaryTextTheme: Typography().white,
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Color(0xff00ABB3)),
-    bodyMedium: TextStyle(color: Color(0xff3C4048)),
+    bodyMedium: TextStyle(color: Colors.white),
   ),
   hintColor: const Color(0xAFF3EFE0),
 

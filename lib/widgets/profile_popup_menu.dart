@@ -98,7 +98,7 @@ class ProfilePopUpMenu extends StatelessWidget {
           });
           await UsersService()
               //TODO replace with user id
-              .delteUserPost(carID, "fBDHfJIyBo908ecQdoaI")
+              .deleteUserPost(carID, "fBDHfJIyBo908ecQdoaI")
               .then((value) {})
               .catchError((error) {
             success = false;
