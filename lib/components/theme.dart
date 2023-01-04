@@ -57,7 +57,7 @@ ThemeData darkTheme = ThemeData(
   primaryTextTheme: Typography().white,
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Color(0xff00ABB3)),
-    bodyMedium: TextStyle(color: Color(0xff3C4048)),
+    bodyMedium: TextStyle(color: Colors.white),
   ),
   hintColor: const Color(0xAFF3EFE0),
 
