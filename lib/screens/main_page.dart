@@ -39,7 +39,8 @@ class _MainPageState extends State<MainPage> {
           ),
           IconButton(
             onPressed: () {
-              context.push("/mainPage/messages");
+              context.go("/mainPage/messages");
+              // context.push("/messages");
             },
             icon: Icon(Icons.message),
           )
