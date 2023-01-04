@@ -21,7 +21,10 @@ class StorageService {
     final carDirectory = _storageRef.child("images/cars/$carId/");
     carDirectory.delete();
 
-    await FirebaseStorage.instance.ref("images/cars/$carId/").listAll().then((value) {
+    await FirebaseStorage.instance
+        .ref("images/cars/$carId/")
+        .listAll()
+        .then((value) {
       value.items.forEach((element) {
         FirebaseStorage.instance.ref(element.fullPath).delete();
       });
@@ -33,17 +36,17 @@ class StorageService {
     List<String> strings = List<String>.from(linksD);
     List<File> files = [];
     int ctr = 0;
+    final directory = await getTemporaryDirectory();
     for (String link in strings) {
       final response = await http.get(Uri.parse(link));
 
-      final directory = await getTemporaryDirectory();
-      print(directory.path);
+      //  print(directory.path);
       final file = File(join(directory.path, "$carId$ctr.jpg"));
 
       file.writeAsBytesSync(response.bodyBytes);
       files.add((file));
       ctr++;
-      print(files);
+      //  print(files);
     }
     return files;
   }
