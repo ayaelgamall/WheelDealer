@@ -36,15 +36,18 @@ class ScrollableCars extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
+              List<QueryDocumentSnapshot> docs = snapshot.data!.docs;
+              return
+
+                ListView.builder(
+                itemCount: docs.length,
 
                   scrollDirection: align,
                   itemBuilder: (BuildContext context, int index) {
                     // if (index > snapshot.data!.docs.length - 1) {
                     //   snapshot = fetchMoreSnapshot();
                     // }
-                    DocumentSnapshot doc = snapshot.data!.docs[index];
+                    DocumentSnapshot doc = docs[index];
 
                   return Stack(children: [
                     CarCard(
