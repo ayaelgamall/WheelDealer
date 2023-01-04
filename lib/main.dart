@@ -1,6 +1,7 @@
 import 'package:bar2_banzeen/components/theme.dart';
 import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
           path: "/",
           builder: (BuildContext context, GoRouterState state) {
-            return Wrapper();
+            return const Wrapper();
           }),
       GoRoute(
           path: "/chat/:userId/:chatId",
@@ -62,6 +63,12 @@ class _MyAppState extends State<MyApp> {
             return ChatScreen(
                 toUserId: state.params['userId']!,
                 chatId: state.params['chatId']!);
+          }),
+      GoRoute(
+          path: "/editProfile",
+          builder: (BuildContext context, GoRouterState state) {
+            // return MyWidget();
+            return const EditProfile();
           }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -172,6 +179,7 @@ class _MyAppState extends State<MyApp> {
   //tabs for bottom nav
   bool _initialized = false;
   bool _error = false;
+
   void initializeFirebase() async {
     try {
       await Firebase.initializeApp();
@@ -185,8 +193,23 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  // void getCurrentAppTheme() async {
+  //   themeChangeProvider.darkTheme =
+  //       await themeChangeProvider.darkThemePreference.getTheme();
+  // }
+
   // This widget is the root of your application.
   @override
+  // void initState() {
+  //   super.initState();
+  //   // getCurrentAppTheme();
+
+  //   // appTheme.addListener(() {
+  //   //   //👈 this is to notify the app that the theme has changed
+  //   //   setState(
+  //   //       () {}); //👈 this is to force a rerender so that the changes are carried out
+  //   // });
+  // }
   void initState() {
     super.initState();
     appTheme.addListener(() {
@@ -204,9 +227,22 @@ class _MyAppState extends State<MyApp> {
           create: (_) => AuthenticationService().onAuthStateChanged,
           initialData: null,
         ),
+        // ChangeNotifierProvider(
+        //   create: (_) {
+        //     return theme;
+        //   },
+        // )
       ],
       child: MaterialApp.router(
         routerConfig: router,
+        // themeMode:
+        //     themeChangeProvider.darkTheme ? ThemeMode.dark : ThemeMode.light,
+
+        // // themeMode: appTheme
+        // //     .themeMode, //👈 this is the themeMode defined in the AppTheme class
+        // darkTheme:
+        //     darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
+        // theme: theme.darkTheme ? darkTheme : lightTheme,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
