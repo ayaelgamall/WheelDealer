@@ -15,7 +15,7 @@ class MessagingScreen extends StatefulWidget {
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
-  bool isIntialized = false;
+  bool isIntialized = true;
   bool isError = false;
   String thisUserId = "IKON6R95EWKMNeQbDemX";
 
