@@ -35,7 +35,7 @@ class CarsService {
   }
 
   Future<void> editCar(Car car, String carId) async {
-    await _carsReference.doc(carId).set({
+    await _carsReference.doc(carId).update({
       "brand": car.brand,
       "model": car.model,
       "year": int.parse(car.year),
