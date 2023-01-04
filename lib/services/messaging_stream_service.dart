@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessagingStreamService {
-  String thisUserId = "IKON6R95EWKMNeQbDemX";
-
-  Stream<QuerySnapshot> getChats() {
+  Stream<QuerySnapshot> getChats(String userId) {
     return FirebaseFirestore.instance
         .collection("chats")
-        .where('users', arrayContainsAny: [thisUserId]).snapshots();
+        .where('users', arrayContainsAny: [userId]).snapshots();
   }
 
   Stream<QuerySnapshot> getLastMessages(String chatId) {
