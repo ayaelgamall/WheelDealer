@@ -24,6 +24,7 @@ class _CardTimerState extends State<CardTimer> {
     final seconds = dateDiff.inSeconds - 1;
     if (seconds <= 0) {
       setState(() {
+        dateDiff = Duration(days: 0, minutes: 0, seconds: 0, hours: 0);
         bidEnded = true;
       });
     } else {

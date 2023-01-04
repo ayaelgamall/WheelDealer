@@ -72,7 +72,8 @@ class UsersService {
 
   Stream<DocumentSnapshot> isUserProfileComplete(String userId) {
     return _usersReference.doc(userId).snapshots();
-  
+  }
+
   Future<DocumentSnapshot> getUser(String userID) {
     return _usersReference.doc(userID).get();
   }

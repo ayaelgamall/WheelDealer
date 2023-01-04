@@ -24,6 +24,8 @@ import 'package:bar2_banzeen/screens/notifications_screen.dart';
 import 'package:bar2_banzeen/screens/selected_tab_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
 
+import 'models/car.dart';
+
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -84,7 +86,10 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const CarInfo();
+                  Car car = state.extra as Car;
+                  return CarPage(
+                    car: car,
+                  );
                 },
               ),
             ],

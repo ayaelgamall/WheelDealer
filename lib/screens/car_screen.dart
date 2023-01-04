@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 import '../models/car.dart';
 
 class CarPage extends StatefulWidget {
-  const CarPage({Key? key}) : super(key: key);
+  Car car;
+  CarPage({Key? key, required this.car}) : super(key: key);
   static const routeName = '/car';
 
   @override
@@ -29,28 +30,31 @@ class _CarPageState extends State<CarPage> {
     final PageController _pageController = PageController();
     // final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
     // final Car car = arguments['car'];
-    Car car = Car(
-        id: "",
-        bidsCount: 0,
-        brand: "Porsche",
-        color: "Python Green",
-        deadline: DateTime.utc(2023, 1, 12),
-        engineCapacity: 2981,
-        location: "New Cairo",
-        model: "911 Speedster",
-        photos: [
-          'assets/images/example.jpg',
-          'assets/images/w400_BMW-G29-LCI-Z4-Roadster-22.jpg'
-        ],
-        creationTime: DateTime.now(),
-        sellerId: 'IO02k93eAgdOM1jWV7XW',
-        sold: false,
-        startingPrice: 2300000,
-        transmission: "Automatic",
-        year: "2019",
-        description:
-            'Hi, this is the description about the car. I don’t know  what to write, but this is the description with a lot and a lot of details',
-        mileage: 80000);
+    Car car = widget.car;
+    print(car.toString());
+    // Car car = Car(
+    //     id: "",
+    //     bidsCount: 0,
+    //     brand: "Porsche",
+    //     color: "Python Green",
+    //     deadline: DateTime.utc(2023, 1, 12),
+    //     engineCapacity: 2981,
+    //     location: "New Cairo",
+    //     model: "911 Speedster",
+    //     photos: [
+    //       'assets/images/example.jpg',
+    //       'assets/images/w400_BMW-G29-LCI-Z4-Roadster-22.jpg'
+    //     ],
+    //     creationTime: DateTime.now(),
+    //     sellerId: 'IO02k93eAgdOM1jWV7XW',
+    //     sold: false,
+    //     startingPrice: 2300000,
+    //     transmission: "Automatic",
+    //     year: "2019",
+    //     description:
+    //         'Hi, this is the description about the car. I don’t know  what to write, but this is the description with a lot and a lot of details',
+    // mileage: 80000);
+
     // List userInfo = getUserFromId(car.sellerId);
     // String userPhoto = userInfo[0] ?? defaultPhoto;
     // String userName = userInfo[1];

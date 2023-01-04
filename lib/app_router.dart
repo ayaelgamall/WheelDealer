@@ -28,7 +28,7 @@ class AppRouter {
       ChatScreen.routeName: (context) => const ChatScreen(),
       CompleteProfileScreen.routeName: (context) =>
           const CompleteProfileScreen(),
-      CarPage.routeName: ((context) => const CarPage())
+      // CarPage.routeName: ((context) => const CarPage())
     };
     WidgetBuilder builder =
         routes[settings.name] ?? (context) => const Wrapper();
