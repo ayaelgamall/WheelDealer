@@ -119,7 +119,8 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/sellCar',
             builder: (BuildContext context, GoRouterState state) {
-              return const SellCarScreen();
+              return SellCarScreen(); //TODO REMOVE DUMMY
+              // return  SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",); //TODO REMOVE DUMMY
             },
             // routes: <RouteBase>[
             //   // The details screen to display stacked on the inner Navigator.

@@ -49,8 +49,10 @@ dependencies:
   grouped_list: ^4.2.0
   google_sign_in: ^5.4.2
   flutter_facebook_auth: ^5.0.7
+  path_provider: ^2.0.11
   firebase_messaging: ^14.2.1
   shimmer: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +82,7 @@ flutter:
     - lib/assets/images/icons/
     - lib/assets/images/backgrounds/
     - assets/images/
+    - assets/json/cars.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

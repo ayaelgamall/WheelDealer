@@ -15,7 +15,14 @@ class AppRouter {
       MainPage.routeName: (context) => const MainPage(),
       EditProfile.routeName: (context) => const EditProfile(),
       UserProfile.routeName: (context) => const UserProfile(),
+
+      MessagingScreen.routeName: (context) => const MessagingScreen(),
+            SellCarScreen.routeName: (context) => SellCarScreen(), //TODO REMOVE DUMMY
+      // SellCarScreen.routeName: (context) => SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",), //TODO REMOVE DUMMY
+      ChatScreen.routeName: (context) => const ChatScreen(),
+
       SellCarScreen.routeName: (context) => const SellCarScreen(),
+
       CompleteProfileScreen.routeName: (context) =>
           const CompleteProfileScreen(),
     };
