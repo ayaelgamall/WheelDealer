@@ -15,9 +15,6 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   DarkThemePreference preference = DarkThemePreference();
 
-
-
-
   @override
   Widget build(BuildContext context) {
     // final themeChange = Provider.of<AppTheme>(context);
@@ -25,7 +22,6 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
-
       ),
       body: Column(
         children: [
@@ -33,7 +29,7 @@ class _SettingsState extends State<Settings> {
             leading: Icon(Icons.account_circle_outlined),
             title: Text("Edit profle"),
             onTap: () {
-              context.push('/editProfile');
+              // context.push('/editProfile');
             },
           ),
           SwitchListTile(

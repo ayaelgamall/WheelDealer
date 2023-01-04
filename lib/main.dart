@@ -65,12 +65,12 @@ class _MyAppState extends State<MyApp> {
                 toUserId: state.params['userId']!,
                 chatId: state.params['chatId']!);
           }),
-      GoRoute(
-          path: "/editProfile",
-          builder: (BuildContext context, GoRouterState state) {
-            // return MyWidget();
-            return const EditProfile();
-          }),
+      // GoRoute(
+      //     path: "/editProfile",
+      //     builder: (BuildContext context, GoRouterState state) {
+      //       // return MyWidget();
+      //       return const EditProfile();
+      //     }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -216,8 +216,9 @@ class _MyAppState extends State<MyApp> {
   void initialThemeMode() async {
     appTheme.isDarkTheme = await preference.getTheme();
   }
+
   @override
-  initState()   {
+  initState() {
     super.initState();
     appTheme.addListener(() {
       initialThemeMode();
