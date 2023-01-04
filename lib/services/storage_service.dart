@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class StorageService {
   final _storageRef = FirebaseStorage.instance.ref();
@@ -14,15 +17,23 @@ class StorageService {
     return downloadLink;
   }
 
-  Future<List<XFile>> downloadCarPhotos(List<dynamic> links_d) async {
-    List<String> links_s = List<String>.from(links_d);
-    List<XFile> results = [];
-    for (String link in links_s as List<String>) {
-      NetworkImage file = NetworkImage(link);
-      XFile result = XFile(file.url);
-      results.add(result);
+  Future<List<File>> downloadCarPhotos(String carId,List<dynamic> linksD) async {
+    List<String> strings = List<String>.from(linksD);
+    List<File> files = [];
+    int ctr=0;
+    for (String link in strings) {
+      final response = await http.get(Uri.parse(link));
+
+      final directory = await getTemporaryDirectory();
+      print(directory.path);
+      final file = File(join(directory.path, "$carId$ctr.jpg"));
+
+      file.writeAsBytesSync(response.bodyBytes);
+      files.add((file));
+      ctr++;
+      print(files);
     }
-    return results;
+    return files;
   }
 
   Future<String> uploadUserPhoto(String userID, XFile img) async {
