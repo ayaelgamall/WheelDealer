@@ -56,12 +56,12 @@ class _MyAppState extends State<MyApp> {
             return Wrapper();
           }),
       GoRoute(
-          path: "/chat/:toUserIdParam/:chatId",
+          path: "/chat/:userId/:chatId",
           builder: (BuildContext context, GoRouterState state) {
             // return MyWidget();
             return ChatScreen(
-                toUserIdParam: state.params['userId'],
-                chatIdParam: state.params['chatId']);
+                toUserId: state.params['userId']!,
+                chatId: state.params['chatId']!);
           }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

@@ -12,23 +12,22 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, String? toUserIdParam, String? chatIdParam});
+  String toUserId;
+  String chatId;
+  ChatScreen({super.key, required this.toUserId, required this.chatId});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  //TODO
-  late String chatId;
   late String thisUserId;
-  late String? toUserId;
   TextEditingController textController = TextEditingController();
 
   Stream<QuerySnapshot> messages() {
     return FirebaseFirestore.instance
         .collection("chats")
-        .doc(chatId)
+        .doc(widget.chatId)
         .collection("messages")
         .orderBy("time")
         .snapshots();
@@ -43,8 +42,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    chatId = GoRouterState.of(context).params['chatId'] ?? "chatIddd";
-    toUserId = GoRouterState.of(context).params['toUserId'] ?? "toUserIddd";
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 35,
@@ -54,15 +51,16 @@ class _ChatScreenState extends State<ChatScreen> {
               }),
               icon: Icon(Icons.arrow_back_ios_new_outlined)),
           title: FutureBuilder(
-            future:
-                SendingMessagesService().fetchOtherUserId(chatId, thisUserId),
+            future: SendingMessagesService()
+                .fetchOtherUserId(widget.chatId, thisUserId),
             builder: (context, otherUserId) {
               if (!otherUserId.hasData) {
                 return CircularProgressIndicator();
               }
-              toUserId = otherUserId.data;
+              widget.toUserId = otherUserId.data!;
               return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  stream: MessagingStreamService().getUser(toUserId.toString()),
+                  stream: MessagingStreamService()
+                      .getUser(widget.toUserId.toString()),
                   builder: (context, user) {
                     if (!user.hasData) {
                       return CircularProgressIndicator();
@@ -203,10 +201,11 @@ class _ChatScreenState extends State<ChatScreen> {
                             if (textController.text.isEmpty) return;
                             Message msg = Message(
                                 from: thisUserId,
-                                to: toUserId.toString(),
+                                to: widget.toUserId.toString(),
                                 text: textController.text,
                                 time: Timestamp.now());
-                            SendingMessagesService().sendMessage(msg, chatId);
+                            SendingMessagesService()
+                                .sendMessage(msg, widget.chatId);
                             textController.clear();
                           },
                         ),
@@ -230,10 +229,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         if (msgText.isEmpty) return;
                         Message msg = Message(
                             from: thisUserId,
-                            to: toUserId.toString(),
+                            to: widget.toUserId.toString(),
                             text: msgText,
                             time: Timestamp.now());
-                        SendingMessagesService().sendMessage(msg, chatId);
+                        SendingMessagesService()
+                            .sendMessage(msg, widget.chatId);
                         textController.clear();
                       },
                     ),
