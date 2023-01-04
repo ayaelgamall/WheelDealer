@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
@@ -24,6 +25,8 @@ import 'package:bar2_banzeen/screens/messages_screen.dart';
 import 'package:bar2_banzeen/screens/notifications_screen.dart';
 import 'package:bar2_banzeen/screens/selected_tab_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
+
+import 'models/car.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -56,9 +59,12 @@ class _MyAppState extends State<MyApp> {
             return Wrapper();
           }),
       GoRoute(
-          path: "/chat",
+          path: "/chat/:userId/:chatId",
           builder: (BuildContext context, GoRouterState state) {
-            return MyWidget();
+            // return MyWidget();
+            return ChatScreen(
+                toUserId: state.params['userId']!,
+                chatId: state.params['chatId']!);
           }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -85,7 +91,11 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const CarInfo();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  Car car = extra['car'] as Car;
+                  int? value = extra['bid'] as int?;
+                  return CarPage(car: car, topBid: value);
                 },
               ),
             ],
@@ -116,7 +126,8 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/sellCar',
             builder: (BuildContext context, GoRouterState state) {
-              return const SellCarScreen();
+              return SellCarScreen(); //TODO REMOVE DUMMY
+              // return  SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",); //TODO REMOVE DUMMY
             },
             // routes: <RouteBase>[
             //   // The details screen to display stacked on the inner Navigator.
