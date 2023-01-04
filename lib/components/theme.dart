@@ -117,9 +117,9 @@ ThemeData darkTheme = ThemeData(
 //   }
 // }
 class AppTheme with ChangeNotifier {
-  DarkThemePreference preference = DarkThemePreference();
-  bool isDarkTheme =
-      false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
+
+
+  bool isDarkTheme =false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
 
   ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 

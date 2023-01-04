@@ -14,16 +14,9 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   DarkThemePreference preference = DarkThemePreference();
-  @override
-  void initialThemeMode() async {
-    appTheme.isDarkTheme = await preference.getTheme();
-  }
 
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initialThemeMode();
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +25,7 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
+
       ),
       body: Column(
         children: [
@@ -49,7 +43,7 @@ class _SettingsState extends State<Settings> {
               onChanged: (value) {
                 setState(() {
                   appTheme.toggleTheme();
-                  preference.setDarkTheme(value);
+                  preference.setDarkTheme(appTheme.isDarkTheme);
                 });
               })
         ],

@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/prefrences/DarkThemePrefrence.dart';
 import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
@@ -210,9 +211,17 @@ class _MyAppState extends State<MyApp> {
   //   //       () {}); //👈 this is to force a rerender so that the changes are carried out
   //   // });
   // }
-  void initState() {
+  DarkThemePreference preference = DarkThemePreference();
+  @override
+  void initialThemeMode() async {
+    appTheme.isDarkTheme = await preference.getTheme();
+  }
+  @override
+  initState()   {
     super.initState();
     appTheme.addListener(() {
+      initialThemeMode();
+
       //👈 this is to notify the app that the theme has changed
       setState(
           () {}); //👈 this is to force a rerender so that the changes are carried out
