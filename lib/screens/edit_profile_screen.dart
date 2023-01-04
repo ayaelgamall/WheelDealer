@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:provider/provider.dart';
 
 import '../services/storage_service.dart';
 
@@ -35,9 +36,10 @@ class _EditProfileState extends State<EditProfile> {
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
-  var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
   @override
   void initState() {
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -51,7 +53,7 @@ class _EditProfileState extends State<EditProfile> {
         _usernameTextController = TextEditingController(text: map['username']);
         _nameTextController = TextEditingController(text: map['display_name']);
         _phoneTextController = TextEditingController(text: map['phone_number']);
-        //     userPhotoLink = map['profile_photo'];
+        userPhotoLink = map['profile_photo'];
       });
     });
     super.initState();
@@ -68,6 +70,8 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         _photosLoading = true;
       });
+      final curretUser = Provider.of<User?>(context);
+      String userId = curretUser!.uid;
       XFile? photo = await picker.pickImage(source: ImageSource.gallery);
       String link = await StorageService().uploadUserPhoto(userId, photo!);
       setState(() {
@@ -149,6 +153,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Update Profile"),
@@ -169,42 +175,39 @@ class _EditProfileState extends State<EditProfile> {
                   Expanded(
                       child: SingleChildScrollView(
                           child: Container(
-                              width: 300,
+                              width: 340,
                               height: 900,
                               child: Column(children: [
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
-                                    width: 120,
-                                    child: Container(
-                                        width: 120.0,
-                                        height: 120.0,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    userPhotoLink))))),
-                                Container(
-                                    child: Container(
-                                  width: 460,
-                                  child: Row(children: [
-                                    const SizedBox(width: 165, height: 20),
-                                    Container(
-                                        width: 30,
-                                        height: 30,
-                                        child: InkWell(
-                                            child: const Icon(Icons.camera_alt,
-                                                size: 20),
-                                            onTap: () => getImage())),
-                                  ]),
-                                )),
+                                    width: 150,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                            height: 130,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                        userPhotoLink)))),
+                                        Positioned(
+                                          bottom: 4,
+                                          right: 20,
+                                          child: InkWell(
+                                              child: Icon(Icons.camera_alt),
+                                              onTap: () => getImage()),
+                                        )
+                                      ],
+                                    )),
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
-                                    width: 400,
+                                    width: 420,
                                     height: 700,
                                     child: Column(
                                         mainAxisAlignment:
@@ -224,7 +227,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(5),
-                                                        width: 250,
+                                                        width: 290,
                                                         height: 45,
                                                         child: TextFormField(
                                                           controller:
@@ -233,7 +236,6 @@ class _EditProfileState extends State<EditProfile> {
                                                               const InputDecoration(
                                                             border:
                                                                 UnderlineInputBorder(), // TODO make this line override theme
-                                                            // hintText: "My current name"
                                                           ),
                                                         ))
                                                   ])),
@@ -241,7 +243,7 @@ class _EditProfileState extends State<EditProfile> {
                                             height: 20,
                                           ),
                                           Container(
-                                              width: 460,
+                                              width: 400,
                                               child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -254,7 +256,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(5),
-                                                        width: 250,
+                                                        width: 290,
                                                         height: 45,
                                                         child: TextFormField(
                                                           controller:
@@ -278,7 +280,6 @@ class _EditProfileState extends State<EditProfile> {
                                                               const InputDecoration(
                                                             border:
                                                                 UnderlineInputBorder(), // TODO make this line override theme
-                                                            // hintText: "Mycurrent@email.com",
                                                           ),
                                                         ))
                                                   ])),
@@ -286,13 +287,13 @@ class _EditProfileState extends State<EditProfile> {
                                             height: 20,
                                           ),
                                           Container(
-                                              width: 460,
+                                              width: 400,
                                               child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Container(
-                                                        width: 30,
+                                                        width: 25,
                                                         child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
@@ -307,7 +308,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(5),
-                                                        width: 250,
+                                                        width: 290,
                                                         height: 45,
                                                         child: TextFormField(
                                                           controller:
@@ -316,7 +317,6 @@ class _EditProfileState extends State<EditProfile> {
                                                               const InputDecoration(
                                                             border:
                                                                 UnderlineInputBorder(), // TODO make this line override theme
-                                                            // hintText: "username"
                                                           ),
                                                         ))
                                                   ])),
@@ -324,7 +324,7 @@ class _EditProfileState extends State<EditProfile> {
                                             height: 20,
                                           ),
                                           Container(
-                                              width: 300,
+                                              width: 400,
                                               child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -337,7 +337,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(5),
-                                                        width: 250,
+                                                        width: 290,
                                                         height: 45,
                                                         child: TextFormField(
                                                           controller:
@@ -351,7 +351,6 @@ class _EditProfileState extends State<EditProfile> {
                                                               const InputDecoration(
                                                             border:
                                                                 UnderlineInputBorder(), // TODO make this line override theme
-                                                            // hintText: "+201234567890",
                                                           ),
                                                         ))
                                                   ])),

@@ -1,6 +1,7 @@
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CarCard extends StatelessWidget {
   double height;
@@ -18,11 +19,11 @@ class CarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final car = FirebaseFirestore.instance.collection('cars').doc(carId);
-    final topBid =
-        car.collection("bids").orderBy("value", descending: true).limit(1);
 
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          GoRouter.of(context).go('/mainPage/car');
+        },
         child: Card(
           margin: EdgeInsets.only(top: 10, right: rightMargin, bottom: 20),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
@@ -38,6 +39,12 @@ class CarCard extends StatelessWidget {
                 } else {
                   Map<String, dynamic> carData =
                       doc.data!.data() as Map<String, dynamic>;
+                  final topBid = carData['bids_count'] > 0
+                      ? car
+                          .collection("bids")
+                          .orderBy("value", descending: true)
+                          .limit(1)
+                      : null;
                   return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,19 +103,29 @@ class CarCard extends StatelessWidget {
                               children: [
                                 CardTimer(
                                     deadline: carData['deadline']!.toDate()),
-                                FutureBuilder<QuerySnapshot>(
-                                    future: topBid.get(),
-                                    builder: (context, qs) {
-                                      return Text(
-                                        "At ${qs.hasData ? qs.data!.docs.first['value'] : carData['starting_price']} EGP",
+                                topBid == null
+                                    ? Text(
+                                        "At ${carData['starting_price']} EGP",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 183, 150, 19),
                                         ),
-                                      );
-                                    })
+                                      )
+                                    : FutureBuilder<QuerySnapshot>(
+                                        future: topBid.get(),
+                                        builder: (context, qs) {
+                                          return Text(
+                                            "At ${qs.data?.docs.first['value']} EGP",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 183, 150, 19),
+                                            ),
+                                          );
+                                        })
                               ],
                             ))
                       ]);

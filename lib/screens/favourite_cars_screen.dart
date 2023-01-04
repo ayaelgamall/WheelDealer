@@ -1,103 +1,116 @@
+import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/car.dart';
 
-List<String> favouritesList = [];
-var userId = "FpAj5S40vpYCcGsGFowxqyVXelm2"; //TODO change userID
+List<dynamic> favouritesList = [];
 
-class FavouriteCarsScreen extends StatefulWidget {
-  const FavouriteCarsScreen({super.key});
+
+class FavouriteCarsScreen extends StatelessWidget {
+  FavouriteCarsScreen({super.key});
 
   static const routeName = '/favourites';
-  @override
-  State<FavouriteCarsScreen> createState() => _FavouriteCarsScreenState();
-}
-
-class _FavouriteCarsScreenState extends State<FavouriteCarsScreen> {
   int index = 0;
 
   @override
-  void initState() {
-    setState(() {
-      // .get()
-      //   .then((DocumentSnapshot documentSnapshot) {
-      // Map<String, String> map =
-      //     documentSnapshot.data() as Map<String, String>;
-      // favouritesList = map['favs'] as List<String>;
-      // });
-    });
-    super.initState();
-  }
-
-  // Future<void> updateFavsList(val) async {
-  //   setState(() {});
-  // }
-
-  void addToFavourites(Car c) {
-    setState(() async {
-      favouritesList.add(c.id!);
-      // await updateFavsList(favouritesList);
-    });
-  }
-
-  void removeFromFavourites(int i) {
-    setState(() async {
-      favouritesList.remove(favouritesList[i]);
-      // await updateFavsList(favouritesList);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final user = FirebaseFirestore.instance.collection('users');
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      Map<String, dynamic> map =
+          documentSnapshot.data() as Map<String, dynamic>;
+      favouritesList = map['favs'] as List<dynamic>;
+    });
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "BeebBeeb",
-            style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
+            "Favourites",
           ),
         ),
-        body: Container(
-          margin: EdgeInsets.all(20),
-          child: FutureBuilder<DocumentSnapshot>(
-            future: user.doc(userId).get(),
+        body: StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(userId)
+                .snapshots(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+              if (!snapshot.hasData ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return const InkWell(child: Icon(Icons.favorite_border));
               } else {
-                return SizedBox(
-                    height: 700,
-                    child: ListView(
-                      children: (snapshot.data?.get('favs') as List<dynamic>)
-                          .map((mapEntry) {
-                        return Container(
-                            height: 230,
-                            width: 430,
-                            child: ListTile(
-                                title: CarCard(
-                                    width: 400,
-                                    height: 200,
-                                    rightMargin: 0,
-                                    carId: mapEntry)));
-                      }).toList(),
-                    ));
-
-                // ListView(children:(snapshot.data() as Map<String, String>){
-
-                //     return CarCard(
-                //         width: 300,
-                //         height: 200,
-                //         rightMargin: 0,
-                //         carId: f.id);
-                //   }).toList()
-                // ]);
+                Map<String, dynamic> map =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                var favouritesList = map['favs'] as List<dynamic>;
+                return ListView.builder(
+                    itemCount: favouritesList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      {
+                        if (favouritesList.isEmpty) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return SizedBox(
+                              height: 700,
+                              child: ListView(
+                                children: (favouritesList).map((carId) {
+                                  return Container(
+                                      height: 228,
+                                      width: 400,
+                                      alignment: Alignment.topCenter,
+                                      child: Dismissible(
+                                          background: Container(
+                                              height: 160,
+                                              padding: const EdgeInsets.only(
+                                                  right: 30),
+                                              alignment: Alignment.centerRight,
+                                              color: const Color.fromARGB(
+                                                  255, 146, 21, 12),
+                                              margin: const EdgeInsets.only(
+                                                  top: 9, bottom: 20),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                              )),
+                                          key: Key(carId),
+                                          direction:
+                                              DismissDirection.endToStart,
+                                          onDismissed: (dir) {
+                                            UsersService()
+                                                .removeFromFavs(userId, carId);
+                                          },
+                                          child: Stack(children: [
+                                            CarCard(
+                                                width: 380,
+                                                height: 200,
+                                                rightMargin: 0,
+                                                carId: carId),
+                                            Positioned(
+                                              top: 20,
+                                              right: 20,
+                                              child: InkWell(
+                                                  child: const Icon(
+                                                      Icons.favorite,
+                                                      color: Color.fromARGB(
+                                                          255, 146, 21, 12)),
+                                                  onTap: () {
+                                                    UsersService()
+                                                        .removeFromFavs(
+                                                            userId, carId);
+                                                  }),
+                                            )
+                                          ])));
+                                }).toList(),
+                              ));
+                        }
+                      }
+                    });
               }
-            },
-          ),
-        ));
+            }));
   }
 }

@@ -49,7 +49,10 @@ class _CardTimerState extends State<CardTimer> {
     var remMin = strDigits(dateDiff.inMinutes.remainder(60));
     var remSec = strDigits(dateDiff.inSeconds.remainder(60));
 
-    return Text(bidEnded ? "Bid ended" : "${remDays}D:${remHours}H:${remMin}M:${remSec}S",
+    return Text(
+        bidEnded
+            ? "Bid ended"
+            : "${remDays}D:${remHours}H:${remMin}M:${remSec}S",
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
