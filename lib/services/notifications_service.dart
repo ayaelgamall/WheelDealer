@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationsService {
@@ -11,5 +12,13 @@ class NotificationsService {
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
       UsersService().updateUserToken(newToken);
     });
+  }
+
+  Stream<QuerySnapshot> getUserNotifications(String uid) {
+    final CollectionReference notifications = FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("notifications");
+    return notifications.snapshots();
   }
 }
