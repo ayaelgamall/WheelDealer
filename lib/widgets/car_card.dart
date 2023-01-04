@@ -3,6 +3,7 @@ import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../models/car.dart';
 
@@ -130,7 +131,8 @@ class CarCard extends StatelessWidget {
                                       deadline: carData['deadline']!.toDate()),
                                   topBid == null
                                       ? Text(
-                                          "At ${carData['starting_price']} EGP",
+                                    '${NumberFormat('###,000').format(carData['starting_price'])} EGP'
+                                          ,
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -143,7 +145,8 @@ class CarCard extends StatelessWidget {
                                           builder: (context, qs) {
                                             bid = qs.data?.docs.first['value'];
                                             return Text(
-                                              "At ${qs.data?.docs.first['value']} EGP",
+                                              '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP'
+                                              ,
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
