@@ -116,6 +116,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
         _photosLoading = true;
       });
       List<XFile> photos = await picker.pickMultiImage();
+     
       setState(() {
         _photosLoading = false;
         _photos.addAll(photos.take(10 - _photos.length));
@@ -148,7 +149,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
     return xfiles;
   }
 
-  SnackBar successSnackBar() {
+  SnackBar successSnackBar(bool add) {
     return SnackBar(
       content: Row(
         children: [
@@ -161,11 +162,17 @@ class _SellCarScreenState extends State<SellCarScreen> {
           ),
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 300),
-            child: const Text(
-              "Car Added Successfully",
-              maxLines: 2,
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
+            child: add
+                ? const Text(
+                    "Car Added Successfully",
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  )
+                : Text(
+                    "Car Edited Successfully",
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
           ),
         ],
       ),
@@ -636,14 +643,23 @@ class _SellCarScreenState extends State<SellCarScreen> {
                               year: _year.text,
                               description: _description.text,
                               mileage: int.parse(_mileage.text));
-
-                          await CarsService().addCar(car);
-                          setState(() {
-                            _addingCar = false;
-                            clearForm();
-                          });
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(successSnackBar());
+                          if (widget.carId == null) {
+                            await CarsService().addCar(car);
+                            setState(() {
+                              _addingCar = false;
+                              clearForm();
+                            });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(successSnackBar(true));
+                          } else {
+                            await CarsService().editCar(car, widget.carId!);
+                            setState(() {
+                              _addingCar = false;
+                              clearForm();
+                            });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(successSnackBar(false));
+                          }
                         }
                       : null,
                   child: _addingCar

@@ -17,10 +17,22 @@ class StorageService {
     return downloadLink;
   }
 
-  Future<List<File>> downloadCarPhotos(String carId,List<dynamic> linksD) async {
+  Future<void> clearCarPhotos(String carId) async {
+    final carDirectory = _storageRef.child("images/cars/$carId/");
+    carDirectory.delete();
+
+    await FirebaseStorage.instance.ref("images/cars/$carId/").listAll().then((value) {
+      value.items.forEach((element) {
+        FirebaseStorage.instance.ref(element.fullPath).delete();
+      });
+    });
+  }
+
+  Future<List<File>> downloadCarPhotos(
+      String carId, List<dynamic> linksD) async {
     List<String> strings = List<String>.from(linksD);
     List<File> files = [];
-    int ctr=0;
+    int ctr = 0;
     for (String link in strings) {
       final response = await http.get(Uri.parse(link));
 
