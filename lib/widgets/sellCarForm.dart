@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../models/formData.dart';
 import '../models/transmission.dart';
@@ -143,6 +145,9 @@ class _SellCarFormState extends State<SellCarForm> {
 
   @override
   Widget build(BuildContext context) {
+    final curretUser = Provider.of<User?>(context);
+
+    String userId = curretUser!.uid;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Sell Your Car"),
@@ -279,7 +284,9 @@ class _SellCarFormState extends State<SellCarForm> {
                           // TODO Create Items List
                           items:
                               BrandAndModel().getModels(widget.car.brand.text),
-                          selectedItem: BrandAndModel().getModels(widget.car.brand.text).first,
+                          selectedItem: BrandAndModel()
+                              .getModels(widget.car.brand.text)
+                              .first,
                           enabled: !_addingCar,
                           validator: (value) => value == null || value.isEmpty
                               ? "Model must not be empty"
@@ -572,7 +579,7 @@ class _SellCarFormState extends State<SellCarForm> {
                                 model: widget.car.model.text,
                                 localPhotos: widget.car.photos,
                                 creationTime: DateTime.now(),
-                                sellerId: ' user.uid',
+                                sellerId: userId,
                                 sold: false,
                                 startingPrice: int.parse(widget.car.price.text),
                                 transmission: widget.car.transmission,
