@@ -79,7 +79,7 @@ ThemeData darkTheme = ThemeData(
   // primaryIconTheme: ,
   iconTheme: const IconThemeData(color: Colors.white),
   inputDecorationTheme: const InputDecorationTheme(
-    border: OutlineInputBorder(
+    enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Color(0xffF3EFE0)),
     ),
     focusedBorder: OutlineInputBorder(
