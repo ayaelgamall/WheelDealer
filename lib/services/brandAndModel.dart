@@ -9,15 +9,12 @@ class BrandAndModel {
   List<String> getModels(String? brand) {
     if (brand == "") return [""];
     Map<String, dynamic> map = jsonDecode(rawJson);
-    print("brand." + brand! + ".");
-    print("map[brand] " + map[brand].toString());
 
     return (map[brand] as List).map((item) => item as String).toList();
   }
 
   List<String> getBrands() {
     Map<String, dynamic> map = jsonDecode(rawJson);
-    print(map.keys);
 
     return List<String>.from(map.keys);
   }

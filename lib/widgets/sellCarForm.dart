@@ -279,7 +279,7 @@ class _SellCarFormState extends State<SellCarForm> {
                           // TODO Create Items List
                           items:
                               BrandAndModel().getModels(widget.car.brand.text),
-                          selectedItem: widget.car.model.text,
+                          selectedItem: BrandAndModel().getModels(widget.car.brand.text).first,
                           enabled: !_addingCar,
                           validator: (value) => value == null || value.isEmpty
                               ? "Model must not be empty"
@@ -580,7 +580,6 @@ class _SellCarFormState extends State<SellCarForm> {
                                 description: widget.car.description.text,
                                 mileage: int.parse(widget.car.mileage.text));
                             if (widget.carId == null) {
-                              print("will enter add car");
                               await CarsService().addCar(car);
                               setState(() {
                                 _addingCar = false;
@@ -589,7 +588,6 @@ class _SellCarFormState extends State<SellCarForm> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(successSnackBar(true));
                             } else {
-                              print("will enter edit car");
                               await CarsService().editCar(car, widget.carId!);
                               setState(() {
                                 _addingCar = false;
