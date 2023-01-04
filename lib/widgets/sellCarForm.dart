@@ -41,7 +41,7 @@ class _SellCarFormState extends State<SellCarForm> {
   @override
   void initState() {
     setState(() {
-      widget.car.photos.addAll(photos.take(10 - photos.length));
+      // widget.car.photos.addAll(photos.take(10 - photos.length).toList());
     });
     super.initState();
   }
