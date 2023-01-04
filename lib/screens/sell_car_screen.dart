@@ -27,11 +27,9 @@ class _SellCarScreenState extends State<SellCarScreen> {
           future: getCar(widget.carId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              // print('car has data');
               Map<String, dynamic> map =
                   snapshot.data!['doc'].data() as Map<String, dynamic>;
-              // print(map['photos'].toString() + "photos in map of car");
-              // print(snapshot.data!['photos'].toString() + "photos snapshot");
+             
               return SellCarForm(
                 car: FormData(
                     brand: TextEditingController(text: map['brand']),
@@ -87,11 +85,9 @@ class _SellCarScreenState extends State<SellCarScreen> {
     DocumentSnapshot ref =
         await FirebaseFirestore.instance.collection('cars').doc(carId!).get();
     Map<String, dynamic> map = ref.data() as Map<String, dynamic>;
-    // print(map.toString() + " map");
 
     List<XFile?> photos = await getCarPhotos(carId, map['photos']);
 
-    // print({'doc': ref, 'photos': photos});
     return {'doc': ref, 'photos': photos};
   }
 
