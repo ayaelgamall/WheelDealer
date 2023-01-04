@@ -65,14 +65,14 @@ class _SellCarScreenState extends State<SellCarScreen> {
       return SellCarForm(
         car: FormData(
             year: TextEditingController(),
-            brand: TextEditingController(),
+            brand: TextEditingController(text:"Mercedes-Benz"),
             color: TextEditingController(),
             deadlineController: TextEditingController(),
             description: TextEditingController(),
             engineCapacity: TextEditingController(),
             location: TextEditingController(),
             mileage: TextEditingController(),
-            model: TextEditingController(),
+            model: TextEditingController(text:"Mercedes-AMG CLS"),
             photos: [],
             price: TextEditingController(),
             transmission: 'automatic'), carId: null,

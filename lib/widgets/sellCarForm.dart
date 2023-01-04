@@ -6,6 +6,7 @@ import '../models/transmission.dart';
 import 'dart:io';
 
 import 'package:bar2_banzeen/models/car.dart';
+import 'package:bar2_banzeen/services/brandAndModel.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
 import 'package:bar2_banzeen/widgets/photo_thumbnail.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -40,9 +41,6 @@ class _SellCarFormState extends State<SellCarForm> {
   String? carId;
   @override
   void initState() {
-    setState(() {
-      widget.car.photos.addAll(photos.take(10 - photos.length));
-    });
     super.initState();
   }
 
@@ -68,12 +66,12 @@ class _SellCarFormState extends State<SellCarForm> {
     });
   }
 
-  Future getImages(open) async {
+  Future getImages() async {
     try {
       setState(() {
         _photosLoading = true;
       });
-      if (open) photos = await picker.pickMultiImage();
+      photos = await picker.pickMultiImage();
 
       setState(() {
         _photosLoading = false;
@@ -91,6 +89,7 @@ class _SellCarFormState extends State<SellCarForm> {
   void deleteImage(XFile? img) {
     setState(() {
       widget.car.photos.remove(img);
+      photos.remove(img);
     });
   }
 
@@ -144,10 +143,6 @@ class _SellCarFormState extends State<SellCarForm> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      getImages(false);
-      updateSubmitEnable();
-    });
     return Scaffold(
         appBar: AppBar(
           title: const Text("Sell Your Car"),
@@ -170,7 +165,7 @@ class _SellCarFormState extends State<SellCarForm> {
                         InkWell(
                           onTap: !_addingCar
                               ? () {
-                                  getImages(true);
+                                  getImages();
                                 }
                               : null,
                           child: Container(
@@ -249,15 +244,8 @@ class _SellCarFormState extends State<SellCarForm> {
                           ),
                         DropdownSearch<String>(
                           // TODO Create Items List
-                          items: const [
-                            "Mercedes",
-                            "Hyundai",
-                            "Toyota",
-                            "Renault",
-                            "BMW",
-                            "Audi",
-                            "Fiat"
-                          ],
+                          items: BrandAndModel().getBrands(),
+
                           enabled: !_addingCar,
                           validator: (value) => value == null || value.isEmpty
                               ? "Brand must not be empty"
@@ -289,15 +277,8 @@ class _SellCarFormState extends State<SellCarForm> {
                         ),
                         DropdownSearch<String>(
                           // TODO Create Items List
-                          items: const [
-                            "Mercedes",
-                            "Hyundai",
-                            "Toyota",
-                            "Renault",
-                            "BMW",
-                            "Audi",
-                            "Fiat"
-                          ],
+                          items:
+                              BrandAndModel().getModels(widget.car.brand.text),
                           selectedItem: widget.car.model.text,
                           enabled: !_addingCar,
                           validator: (value) => value == null || value.isEmpty
