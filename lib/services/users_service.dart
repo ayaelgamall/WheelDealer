@@ -42,7 +42,6 @@ class UsersService {
       print(err);
     });
   }
-
   Future<void> addUser(UserModel user) async {
     String? profilePhotoLink = user.localPhoto != null
         ? await StorageService().uploadUserPhoto(user.uid, user.localPhoto!)
@@ -81,5 +80,21 @@ class UsersService {
   Future<void> updateUserToken(String token) async {
     String userId = AuthenticationService().getCurrentUser()!.uid;
     await _usersReference.doc(userId).update({"fcm_token": token});
+  }
+
+  Future<UserModel> fetchUser(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await _usersReference
+        .doc(userId)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+
+    UserModel user = UserModel(
+      uid: userId,
+      email: userDoc.data()?['email'],
+      displayName: userDoc.data()?['display_name'],
+      username: userDoc.data()?['username'],
+      phoneNumber: userDoc.data()?['phone_number'],
+      profilePhotoLink: userDoc.data()?['profile_photo'],
+    );
+    return user;
   }
 }

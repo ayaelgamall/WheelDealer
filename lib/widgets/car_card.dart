@@ -79,13 +79,13 @@ class CarCard extends StatelessWidget {
                                 topLeft: Radius.circular(7),
                                 topRight: Radius.circular(7),
                               ),
-                              child: Image(
-                                image: const AssetImage(
-                                    'assets/images/example.jpg'), // TODO read from db
-                                height: 0.73 * height,
-                                width: width,
-                                fit: BoxFit.cover,
-                              )),
+                            child: Image(
+                              image: NetworkImage(
+                                  carData['photos'][0]), // TODO read from db
+                              height: 0.73 * height,
+                              width: width,
+                              fit: BoxFit.cover,
+                            )),
                           Container(
                             width: width,
                             padding: const EdgeInsets.only(

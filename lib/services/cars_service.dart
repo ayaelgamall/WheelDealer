@@ -34,6 +34,34 @@ class CarsService {
     await _carsReference.doc(carId).update({"photos": uploadedPhotos});
   }
 
+  Future<void> editCar(Car car, String carId) async {
+    await _carsReference.doc(carId).update({
+      "brand": car.brand,
+      "model": car.model,
+      "year": int.parse(car.year),
+      "transmission": car.transmission,
+      "engine_capacity": car.engineCapacity,
+      "mileage": car.mileage,
+      "color": car.color,
+      "location": car.location,
+      "starting_price": car.startingPrice,
+      "description": car.description,
+      "deadline": Timestamp.fromDate(car.deadline
+          .add(const Duration(days: 1))
+          .subtract(const Duration(seconds: 1))),
+      "seller_id": car.sellerId,
+    });
+
+     StorageService().clearCarPhotos(carId);
+
+    List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
+        (localPhoto) async =>
+            await StorageService().uploadCarPhoto(carId, localPhoto!)));
+
+    await _carsReference.doc(carId).update({"photos": uploadedPhotos});
+    print("done editing");
+  }
+
   Future<void> deleteCar(String carID) async {
     _carsReference.doc(carID).delete();
   }

@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
@@ -57,9 +58,12 @@ class _MyAppState extends State<MyApp> {
             return Wrapper();
           }),
       GoRoute(
-          path: "/chat",
+          path: "/chat/:userId/:chatId",
           builder: (BuildContext context, GoRouterState state) {
-            return MyWidget();
+            // return MyWidget();
+            return ChatScreen(
+                toUserId: state.params['userId']!,
+                chatId: state.params['chatId']!);
           }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -121,7 +125,8 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/sellCar',
             builder: (BuildContext context, GoRouterState state) {
-              return const SellCarScreen();
+              return SellCarScreen(); //TODO REMOVE DUMMY
+              // return  SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",); //TODO REMOVE DUMMY
             },
             // routes: <RouteBase>[
             //   // The details screen to display stacked on the inner Navigator.

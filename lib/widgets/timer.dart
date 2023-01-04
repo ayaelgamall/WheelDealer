@@ -38,6 +38,8 @@ class _CardTimerState extends State<CardTimer> {
   void initState() {
     // TODO: implement initState
     dateDiff = widget.deadline.difference(DateTime.now());
+    final zeroDuration = Duration(days: 0, seconds: 0, minutes: 0);
+    dateDiff = zeroDuration;
     startTimer();
     super.initState();
   }

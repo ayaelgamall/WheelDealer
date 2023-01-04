@@ -86,7 +86,9 @@ class _UserProfileState extends State<UserProfile> {
                             style: ButtonStyle(
                                 minimumSize: MaterialStateProperty.all(
                                     const Size(120, 30))),
-                            onPressed: () {},
+                            onPressed: () {
+                              //TODO Route to edit profile
+                            },
                             child: const Text("Edit profile"),
                           ),
                           const SizedBox(
