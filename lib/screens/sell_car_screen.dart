@@ -64,27 +64,26 @@ class _SellCarScreenState extends State<SellCarScreen> {
           .then((DocumentSnapshot documentSnapshot) {
         map = documentSnapshot.data() as Map<String, dynamic>;
 
-          setState(() {
-            _brand = TextEditingController(text: map['brand']);
-            _color = TextEditingController(text: map['color']);
-            _deadlineController = TextEditingController(
-                text: DateFormat('yMMMd').format(map['deadline'].toDate()));
-            _engineCapacity =
-                TextEditingController(text: map['engine_capacity'].toString());
-            _location = TextEditingController(text: map['location']);
-            _model = TextEditingController(text: map['model'] as String);
-            // _photos = xfiles;
-            _price =
-                TextEditingController(text: map['starting_price'].toString());
-            _transmission = map['transmission'].toString();
-            _year = TextEditingController(text: map['year'].toString());
-            _description = TextEditingController(text: map['description']);
-            _mileage = TextEditingController(text: map['mileage '].toString());
-          
+        setState(() {
+          _brand = TextEditingController(text: map['brand']);
+          _color = TextEditingController(text: map['color']);
+          _deadlineController = TextEditingController(
+              text: DateFormat('yMMMd').format(map['deadline'].toDate()));
+          _engineCapacity =
+              TextEditingController(text: map['engine_capacity'].toString());
+          _location = TextEditingController(text: map['location']);
+          _model = TextEditingController(text: map['model'] as String);
+          _price =
+              TextEditingController(text: map['starting_price'].toString());
+          _transmission = map['transmission'].toString();
+          _year = TextEditingController(text: map['year'].toString());
+          _description = TextEditingController(text: map['description']);
+          _mileage = TextEditingController(text: map['mileage '].toString());
+          _photos = getCarPhotos(widget.carId!, map['photos']);
+          print(_photos);
         });
       });
     }
-
     super.initState();
   }
 
@@ -101,6 +100,14 @@ class _SellCarScreenState extends State<SellCarScreen> {
     _description.dispose();
     _deadlineController.dispose();
     super.dispose();
+  }
+
+  void updateSubmitEnable() {
+    setState(() {
+      _enableSubmit = _formKey.currentState != null &&
+          _formKey.currentState!.validate() &&
+          _photos.isNotEmpty;
+    });
   }
 
   Future getImages() async {
@@ -128,12 +135,17 @@ class _SellCarScreenState extends State<SellCarScreen> {
     });
   }
 
-  void updateSubmitEnable() {
-    setState(() {
-      _enableSubmit = _formKey.currentState != null &&
-          _formKey.currentState!.validate() &&
-          _photos.isNotEmpty;
+  List<XFile?> getCarPhotos(String carId, List<dynamic> list) {
+    List<XFile?> xfiles = [];
+    StorageService().downloadCarPhotos(carId, list).then((files) async {
+      print('finished str serv');
+      for (File file in files) {
+        xfiles.add(XFile(file.path));
+      }
+      print(xfiles);
     });
+
+    return xfiles;
   }
 
   SnackBar successSnackBar() {
