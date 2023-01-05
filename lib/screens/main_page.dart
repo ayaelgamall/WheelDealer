@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../services/authentication_service.dart';
 import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
@@ -23,23 +23,22 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
     String userId = curretUser!.uid;
     final cars = FirebaseFirestore.instance.collection('cars');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    int count = 5;
     return Scaffold(
         drawer: AppDrawer(
           location: 'mainPage',
         ),
-        appBar: AppBar(title: Text("Main"), actions: [
+        appBar: AppBar(title: const Text("Main"), actions: [
           IconButton(
             onPressed: () {
               context.go("/mainPage/messages");
               // context.push("/messages");
             },
-            icon: Icon(Icons.message),
+            icon: const Icon(Icons.message),
           )
         ]),
         // appBar: AppBar(
@@ -49,7 +48,7 @@ class _MainPageState extends State<MainPage> {
         //   ),
         // ),
         body: Container(
-          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: RefreshIndicator(
             onRefresh: () {
               return Future(() {
@@ -72,7 +71,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "Trending"),
-                            ViewMoreText(),
+                            const ViewMoreText(),
                           ],
                         ),
                         HorizontalCars(
@@ -89,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "What's new"),
-                            ViewMoreText()
+                            const ViewMoreText()
                           ],
                         ),
                         HorizontalCars(
@@ -106,7 +105,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "All cars"),
-                            ViewMoreText()
+                            const ViewMoreText()
                           ],
                         ),
                       ],
@@ -114,10 +113,12 @@ class _MainPageState extends State<MainPage> {
                     ...snapshot.data!.docs.map((doc) {
                       return Stack(children: [
                         CarCard(
-                            width: 0.89 * width,
-                            height: 0.4 * height,
-                            rightMargin: 0,
-                            carId: doc.id),
+                          width: 0.89 * width,
+                          height: 0.4 * height,
+                          rightMargin: 0,
+                          carId: doc.id,
+                          location: 'mainPage',
+                        ),
                         Positioned(
                             top: 20,
                             right: 20,

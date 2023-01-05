@@ -24,7 +24,7 @@ class AppDrawer extends StatelessWidget {
           builder: ((context, user) {
             if (!user.hasData ||
                 user.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(child: const CircularProgressIndicator());
             } else {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,9 +71,8 @@ class AppDrawer extends StatelessWidget {
         leading: const Icon(Icons.logout_outlined),
         title: Text('Logout'),
         onTap: () {
+          context.go('/');
           AuthenticationService().signOut();
-
-          context.go('/wrapper');
         },
       ),
     ]));

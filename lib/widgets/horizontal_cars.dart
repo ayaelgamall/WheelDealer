@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/users_service.dart';
-
 
 class HorizontalCars extends StatelessWidget {
   double height;
@@ -19,7 +19,7 @@ class HorizontalCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
     String userId = curretUser!.uid;
     final trendyCars = FirebaseFirestore.instance
         .collection('cars')
@@ -42,11 +42,11 @@ class HorizontalCars extends StatelessWidget {
                   children: snapshot.data!.docs.map((doc) {
                     return Stack(children: [
                       CarCard(
-                        width: width,
-                        height: height,
-                        rightMargin: 20,
-                        carId: doc.id,
-                      ),
+                          width: width,
+                          height: height,
+                          rightMargin: 20,
+                          carId: doc.id,
+                          location: 'mainPage'),
                       Positioned(
                           top: 20,
                           right: 30,
@@ -60,8 +60,9 @@ class HorizontalCars extends StatelessWidget {
                                     snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                   return const InkWell(
-                                      child: Icon(Icons.favorite_border,
-                                          ));
+                                      child: Icon(
+                                    Icons.favorite_border,
+                                  ));
                                 } else {
                                   Map<String, dynamic> map = snapshot.data!
                                       .data() as Map<String, dynamic>;
@@ -70,9 +71,11 @@ class HorizontalCars extends StatelessWidget {
                                   return InkWell(
                                       child: favouritesList.contains(doc.id)
                                           ? (const Icon(Icons.favorite,
-                                          color: Color.fromARGB(255, 146, 21, 12)))
-                                          : const Icon(Icons.favorite_border,
-                                         ),
+                                              color: Color.fromARGB(
+                                                  255, 146, 21, 12)))
+                                          : const Icon(
+                                              Icons.favorite_border,
+                                            ),
                                       onTap: () {
                                         favouritesList.contains(doc.id)
                                             ? UsersService()
