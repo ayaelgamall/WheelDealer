@@ -3,12 +3,13 @@ import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../models/car.dart';
+import '../widgets/drawer.dart';
 
 List<dynamic> favouritesList = [];
-
 
 class FavouriteCarsScreen extends StatelessWidget {
   FavouriteCarsScreen({super.key});
@@ -30,10 +31,22 @@ class FavouriteCarsScreen extends StatelessWidget {
       favouritesList = map['favs'] as List<dynamic>;
     });
     return Scaffold(
+        drawer: AppDrawer(
+          location: 'favourites',
+        ),
         appBar: AppBar(
           title: const Text(
             "Favourites",
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.go("/favourites/messages");
+                // context.push("/messages");
+              },
+              icon: Icon(Icons.message),
+            )
+          ],
         ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance

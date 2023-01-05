@@ -3,9 +3,9 @@
 import 'package:bar2_banzeen/app_router.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:bar2_banzeen/widgets/settings_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../services/authentication_service.dart';
@@ -35,11 +35,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFF29292A),
+        drawer: AppDrawer(
+          location: 'messages',
+        ),
         appBar: AppBar(
           title: Text('Messages'),
           leading: IconButton(
               onPressed: (() {
-                context.go('/mainPage');
+                context.pop();
               }),
               icon: Icon(Icons.arrow_back_ios_new_outlined)),
           // actions: [

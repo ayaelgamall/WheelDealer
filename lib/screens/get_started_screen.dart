@@ -1,4 +1,6 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});
@@ -77,7 +79,10 @@ class GetStarted extends StatelessWidget {
                 "Get Started",
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),
               ),
-              onPressed: () {},
+              onPressed: () {
+                AuthenticationService().signOut();
+                context.go('/wrapper');
+              },
             ),
           ))
     ]);

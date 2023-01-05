@@ -4,14 +4,16 @@ import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
+import 'package:bar2_banzeen/screens/get_started_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
+import 'package:bar2_banzeen/screens/settings_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -56,6 +58,11 @@ class _MyAppState extends State<MyApp> {
       /// Application shell
       GoRoute(
           path: "/",
+          builder: (BuildContext context, GoRouterState state) {
+            return const GetStarted();
+          }),
+      GoRoute(
+          path: "/wrapper",
           builder: (BuildContext context, GoRouterState state) {
             return const Wrapper();
           }),
@@ -105,6 +112,25 @@ class _MyAppState extends State<MyApp> {
                   return CarPage(car: car, topBid: value);
                 },
               ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
             ],
           ),
 
@@ -115,18 +141,27 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, GoRouterState state) {
               return FavouriteCarsScreen();
             },
-            // routes: <RouteBase>[
-            //   /// Same as "/a/details", but displayed on the root Navigator by
-            //   /// specifying [parentNavigatorKey]. This will cover both screen B
-            //   /// and the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     parentNavigatorKey: _rootNavigatorKey,
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'B');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+            ],
           ),
 
           /// The Sell Car screen to display in the bottom navigation bar.
@@ -136,32 +171,54 @@ class _MyAppState extends State<MyApp> {
               return SellCarScreen(); //TODO REMOVE DUMMY
               // return  SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",); //TODO REMOVE DUMMY
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+            ],
           ),
           GoRoute(
             path: '/notifications',
             builder: (BuildContext context, GoRouterState state) {
               return const Notifications();
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/profile',
@@ -175,6 +232,25 @@ class _MyAppState extends State<MyApp> {
                   return const EditProfile();
                 },
               ),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
             ],
           ),
         ],

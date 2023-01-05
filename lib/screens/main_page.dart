@@ -30,14 +30,10 @@ class _MainPageState extends State<MainPage> {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
-        appBar: AppBar(title: Text("Explore"), actions: [
-          IconButton(
-            onPressed: () {
-              AuthenticationService().signOut();
-              context.go("/");
-            },
-            icon: Icon(Icons.logout),
-          ),
+        drawer: AppDrawer(
+          location: 'mainPage',
+        ),
+        appBar: AppBar(title: Text("Main"), actions: [
           IconButton(
             onPressed: () {
               context.go("/mainPage/messages");

@@ -42,10 +42,10 @@ class _WrapperState extends State<Wrapper> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.exists) {
-              // return const SelectedTab(
-              //   child: MainPage(),
-              // );
-              return Settings();
+              return const SelectedTab(
+                child: MainPage(),
+              );
+              // return Settings();
             } else {
               return const CompleteProfileScreen();
             }
