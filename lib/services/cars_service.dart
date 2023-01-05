@@ -123,9 +123,15 @@ class CarsService {
           .collection("bids")
           .where('car', isEqualTo: carId)
           .get();
+
+      DocumentReference<Map<String, dynamic>> carDocRef =
+          await FirebaseFirestore.instance.collection("cars").doc(carId);
+
+      DocumentSnapshot<Map<String, dynamic>> carDoc =
+          await FirebaseFirestore.instance.collection("cars").doc(carId).get();
+
       final batch = FirebaseFirestore.instance.batch();
       if (carBidsDocs.docs.isNotEmpty && userBidsDocs.docs.isNotEmpty) {
-        print("bid already exist, just updating");
         DocumentReference<Map<String, dynamic>> bidCarDocRef = _carsReference
             .doc(carId)
             .collection("bids")
@@ -136,10 +142,10 @@ class CarsService {
                 .doc(userId)
                 .collection("bids")
                 .doc(userBidsDocs.docs[0].id);
+
         batch.update(bidCarDocRef, {"user": userId, "value": bidValue});
         batch.update(bidUserDocRef, {"car": carId, "value": bidValue});
       } else {
-        print("new bid! just wait");
         DocumentReference<Map<String, dynamic>> carBidsColl =
             _carsReference.doc(carId).collection("bids").doc();
         DocumentReference<Map<String, dynamic>> userBidsColl = FirebaseFirestore
@@ -150,7 +156,10 @@ class CarsService {
             .doc();
         batch.set(carBidsColl, {"user": userId, "value": bidValue});
         batch.set(userBidsColl, {"car": carId, "value": bidValue});
+        batch.update(
+            carDocRef, {"bids_count": carDoc.data()?['bids_count'] + 1});
       }
+
       await batch.commit();
     } catch (e) {
       return "Sorry! Placing the bid failed.";
