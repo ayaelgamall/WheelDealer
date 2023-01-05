@@ -5,6 +5,7 @@ import 'package:bar2_banzeen/widgets/profile_posts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class UserProfile extends StatefulWidget {
@@ -28,22 +29,23 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<User?>(context);
-    final userData = FirebaseFirestore.instance
-        .collection('users')
-        .doc("fBDHfJIyBo908ecQdoaI");
+    final userData = AuthenticationService().getCurrentUser();
+    // FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc("fBDHfJIyBo908ecQdoaI");
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: Drawer(),//todo change
         appBar: CustomAppBar(),
-        body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-          future: userData.get(),
+        body: FutureBuilder<DocumentSnapshot>(
+          future: UsersService().getUser(userData!.uid),
           builder: ((context, user) {
             if (user.hasData) {
               final carsToShow = _selectedTab1[0]
-                  ? (user.data!.data()!["posted_cars"])
-                  : (userData.collection("bids"));
+                  ? (user.data!.get('posted_cars'))
+                  : (UsersService().getUserBids(userData.uid));
               return ListView(children: [
                 Container(
                   height: 0.4 * height,
@@ -62,22 +64,27 @@ class _UserProfileState extends State<UserProfile> {
                         child: ProfileAvatar(
                           width: 0.45 * width,
                           height: 0.2 * height,
+                          photoURL: user.data!.get('profile_photo') != null &&
+                                  (user.data!.get('profile_photo') as String)
+                                      .isNotEmpty
+                              ? user.data!.get('profile_photo')
+                              : 'https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397',
                         ),
                       ),
                       const SizedBox(
                         height: 7,
                       ),
-                      const Text(
-                        "Gego Elbadrawy",
-                        style: TextStyle(
+                      Text(
+                        user.data!.get('display_name'),
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
-                      const Text("@Gego",
-                          style:
-                              TextStyle(fontSize: 14, color: Colors.white54)),
+                      Text("@${user.data!.get('username')}",
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white54)),
                       const SizedBox(
                         height: 4,
                       ),
@@ -89,9 +96,9 @@ class _UserProfileState extends State<UserProfile> {
                                 minimumSize: MaterialStateProperty.all(
                                     const Size(120, 30))),
                             onPressed: () {
-                              //TODO Route to edit profile
+                              context.go('/profile/editProfile');
                             },
-                            child: const Text("Edit profile"),
+                            child: const Text("Edit Profile"),
                           ),
                           const SizedBox(
                             width: 20,
@@ -118,7 +125,6 @@ class _UserProfileState extends State<UserProfile> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ToggleButtons(
-                      children: [_tabsNames[0]],
                       isSelected: _selectedTab1,
                       direction: Axis.horizontal,
                       onPressed: (int index) {
@@ -132,6 +138,7 @@ class _UserProfileState extends State<UserProfile> {
                         minHeight: 30.0,
                         minWidth: 120.0,
                       ),
+                      children: [_tabsNames[0]],
                     ),
                     ToggleButtons(
                       isSelected: _selectedTab2,
@@ -164,7 +171,9 @@ class _UserProfileState extends State<UserProfile> {
                         ctx: context),
               ]);
             } else {
-              return Text("No user");
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }),
         ));
