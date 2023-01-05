@@ -1,7 +1,7 @@
 import 'package:bar2_banzeen/screens/explore_page.dart';
 import 'package:flutter/material.dart';
 
-import 'explore_Page_Content.dart';
+// import 'explore_Page_Content.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
 
@@ -50,7 +50,8 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context)
   {
-    return ExploreContent();
+    return Container();
+    // return ExploreContent();
 
   }
 

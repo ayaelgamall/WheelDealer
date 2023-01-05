@@ -7,7 +7,6 @@ import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
-import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';

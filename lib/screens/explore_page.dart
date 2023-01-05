@@ -1,5 +1,4 @@
 import 'package:bar2_banzeen/widgets/app_bar.dart';
-import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/search_delegate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,10 +20,7 @@ class _ExplorePageState extends State<ExplorePage> {
   static const historyLength = 5;
 
 // The "raw" history that we don't access from the UI, prefilled with values
-  List<String> _searchHistory = ['fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',];
+  List<String> _searchHistory = [];
 // The filtered & ordered history that's accessed from the UI
   late List<String> filteredSearchHistory;
 
@@ -100,14 +96,16 @@ class _ExplorePageState extends State<ExplorePage> {
                 borderRadius: BorderRadius.all(Radius.circular(10))
             ),
             suffixIcon: IconButton(
-              icon: Icon(Icons.clear_outlined),
+              icon: const Icon(Icons.clear_outlined),
               onPressed: () {
                 setState(() {
-                  // if(controller.text=='') {
-                  //   controller.dispose();
-                  // } else {
+                  if(controller.text=='') {
+                    FocusScope.of(context).unfocus();
+                    // searching=false;
+                  } else {
+                    filteredSearchHistory = filterSearchTerms(filter: '');
                     controller.clear();
-                  // }
+                  }
                 });
               },
             ),
@@ -187,7 +185,7 @@ class _ExplorePageState extends State<ExplorePage> {
               ],
             ),
           ),
-          if (searching) Card(
+          if (searching &&  FocusScope.of(context).hasFocus) Card(
             // height: ,
             // color: Colors.brown,
             child: ListView.builder(
@@ -201,10 +199,13 @@ class _ExplorePageState extends State<ExplorePage> {
                     title: Text(filteredSearchHistory[index]),
                     onTap: (){
                       setState(() {
+                        FocusScope.of(context).unfocus();
                         selectedTerm = filteredSearchHistory[index];
                         addSearchTerm(filteredSearchHistory[index] );
                         searching=false;
                         controller.clear();
+                        FocusScope.of(context).unfocus();
+
 
 
                       });
