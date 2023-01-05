@@ -63,26 +63,26 @@ class _MainPageState extends State<MainPage> {
             },
             child: FutureBuilder<QuerySnapshot>(
               future: cars.where('sold', isNotEqualTo: true).limit(5).get(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return ListView(children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            MainHeading(text: "Trending"),
-                            ViewMoreText(),
-                          ],
-                        ),
-                        ScrollableCars(
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView(children: [
+                  Column(
+                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainHeading(text: "Trending"),
+                          ViewMoreText(),
+                        ],
+                      ),
+                      ScrollableCars(
                           width: 0.73 * width,
-                          height: 0.37 * height,
+                          height: 0.4 * height,
                           carsToShow: cars
                               .where('sold', isNotEqualTo: true)
                               .orderBy('sold')
@@ -101,10 +101,14 @@ class _MainPageState extends State<MainPage> {
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
-                              .where('sold', isNotEqualTo: true)
-                              .orderBy('sold')
-                              .orderBy("creation_time", descending: true)
-                              .limit(5),
+                              // .where('sold', isNotEqualTo: true)
+                            .orderBy("creation_time", descending: true)
+                            .limit(5),
+                      ),
+
+                  // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                  //     ,align: Axis.vertical,rightMargin: 0,)
+    ]
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,8 +118,8 @@ class _MainPageState extends State<MainPage> {
                             ViewMoreText()
                           ],
                         ),
-                      ],
-                    ),
+
+
                     ...snapshot.data!.docs.map((doc) {
                       return Stack(children: [
                         CarCard(

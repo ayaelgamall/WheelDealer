@@ -71,7 +71,7 @@ ThemeData darkTheme = ThemeData(
     bodyMedium:  const TextStyle(color: Colors.white),
     headlineSmall:  const TextStyle(color: Colors.white),
     labelMedium:  const TextStyle(color: Colors.white),
-    titleLarge: TextStyle(color: Color.fromARGB(255, 128, 103, 4)),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 128, 103, 4))),
 
   ),
   hintColor: const Color(0xAFF3EFE0),

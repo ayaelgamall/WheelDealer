@@ -31,17 +31,18 @@ class _CustomAppBarState extends State<CustomAppBar>{
 
 
       actions: [
-        if(widget.isSearch)IconButton(
+        if(widget.isSearch)
+
+        IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            // showSearch(context: context, delegate: CustomSearchDelegate());
-            // showSearch(context: context, delegate: CustomSearchDelegate());
+
             context.go('/mainPage/explore');
           },
         ),
         if(widget.isSearch)IconButton(
         onPressed: () {
-          context.push("/mainPage/messages");
+          context.go("/mainPage/messages");
         },
         icon: const ImageIcon(
             AssetImage(
