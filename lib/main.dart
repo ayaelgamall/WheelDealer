@@ -103,17 +103,20 @@ class _MyAppState extends State<MyApp> {
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
                   Map<String, Object?> extra =
-                  state.extra as Map<String, Object?>;
-                  String sort = extra['sort']  as String;
-                  bool desc = extra['desc'] as bool ;
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
                   return
-                    // sort!=null && desc!=null?
-                   ExplorePage(sortBy: sort,desc: desc);
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
                   // :sort!=null ?
                   // ExplorePage(sortBy: sort):
                   //  ExplorePage();
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
-
                 },
               ),
             ],
