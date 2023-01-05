@@ -34,6 +34,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         backgroundColor: Color(0xFF29292A),
         drawer: AppDrawer(
           location: 'messages',
@@ -51,42 +52,42 @@ class _MessagingScreenState extends State<MessagingScreen> {
         ),
         body: Column(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xFF29292A),
-                border: Border(
-                  bottom: BorderSide(width: 0.5, color: Color(0xFF8B8B8B)),
-                ),
-              ),
-              child: Center(
-                  // child: Container(
-                  //   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  //   child: TextField(
-                  //     style: TextStyle(color: Colors.white),
-                  //     textAlign: TextAlign.center,
-                  //     decoration: InputDecoration(
-                  //       contentPadding: EdgeInsets.only(top: 2, bottom: 2),
-                  //       hintStyle: TextStyle(
-                  //         color: Color(0xFFF5F5F5),
-                  //         height: 0.002,
-                  //       ),
-                  //       // prefixIcon: Icon(
-                  //       //   Icons.search,
-                  //       //   color: Color(0xFFF5F5F5),
-                  //       // ),
-                  //       hintText: 'Search Direct Messages',
-                  //       border: OutlineInputBorder(
-                  //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
-                  //       focusedBorder: OutlineInputBorder(
-                  //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
-                  //       enabledBorder: OutlineInputBorder(
-                  //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
-                  //     ),
-                  //     onSubmitted: (text) {},
-                  //   ),
-                  // ),
-                  ),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: Theme.of(context).backgroundColor,
+            //     border: Border(
+            //       bottom: BorderSide(width: 0.5, color: Color(0xFF8B8B8B)),
+            //     ),
+            //   ),
+            //   child: Center(
+            //       // child: Container(
+            //       //   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            //       //   child: TextField(
+            //       //     style: TextStyle(color: Colors.white),
+            //       //     textAlign: TextAlign.center,
+            //       //     decoration: InputDecoration(
+            //       //       contentPadding: EdgeInsets.only(top: 2, bottom: 2),
+            //       //       hintStyle: TextStyle(
+            //       //         color: Color(0xFFF5F5F5),
+            //       //         height: 0.002,
+            //       //       ),
+            //       //       // prefixIcon: Icon(
+            //       //       //   Icons.search,
+            //       //       //   color: Color(0xFFF5F5F5),
+            //       //       // ),
+            //       //       hintText: 'Search Direct Messages',
+            //       //       border: OutlineInputBorder(
+            //       //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
+            //       //       focusedBorder: OutlineInputBorder(
+            //       //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
+            //       //       enabledBorder: OutlineInputBorder(
+            //       //           borderSide: BorderSide(width: 1, color: Color(0xFFF5F5F5)), borderRadius: BorderRadius.all(Radius.circular(90))),
+            //       //     ),
+            //       //     onSubmitted: (text) {},
+            //       //   ),
+            //       // ),
+            //       ),
+            // ),
             StreamBuilder<QuerySnapshot>(
               stream: MessagingStreamService().getChats(thisUserId),
               builder: (context, chats) {
@@ -144,7 +145,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                         child: ListTile(
                                           textColor: Colors.white,
                                           style: ListTileStyle.list,
-                                          tileColor: Color(0xFF29292A),
+                                          tileColor:
+                                              Theme.of(context).backgroundColor,
                                           shape: Border(
                                             top: BorderSide(
                                                 width: 0.5,
@@ -173,7 +175,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                                   fit: BoxFit.fill),
                                             ),
                                           ),
-                                          title: Text(user.data!.displayName),
+                                          title: Text(
+                                            user.data!.displayName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
                                           subtitle: Text(
                                             messages.data!.docs.first['from'] ==
                                                     thisUserId
@@ -181,8 +188,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                                 : messages
                                                     .data!.docs.first['text'],
                                             overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Color(0XDEFFFFFF)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
                                           ),
                                           trailing: Text(
                                               DateFormat(MessagingStreamService()

@@ -165,7 +165,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(msg['text']),
+                                    Text(
+                                      msg['text'],
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 2.0, bottom: 0),

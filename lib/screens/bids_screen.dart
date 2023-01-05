@@ -108,14 +108,15 @@ class _BidsScreenState extends State<BidsScreen> {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: Colors.black.withOpacity(0.7),
+              color: Theme.of(context).backgroundColor.withOpacity(0.7),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
-                    onPressed: () {
-                      widget.showBidsScreen(false);
-                    },
-                    icon: Icon(Icons.close_rounded)),
+                  onPressed: () {
+                    widget.showBidsScreen(false);
+                  },
+                  icon: Icon(Icons.close_rounded),
+                ),
               ),
             ),
             onTap: () {
@@ -170,7 +171,8 @@ class _BidsScreenState extends State<BidsScreen> {
                                         EdgeInsets.symmetric(horizontal: 25),
                                     height: 330,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF555555),
+                                      color: Theme.of(context).backgroundColor,
+                                      // color: Color(0xFF555555),
                                       borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
                                           bottomRight: Radius.circular(10)),
