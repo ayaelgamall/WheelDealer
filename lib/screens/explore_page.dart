@@ -30,7 +30,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   var prefs;
 
-  late List<String> filteredSearchHistory;
+  List<String> filteredSearchHistory = [];
 
   String selectedTerm = '';
   final controller = TextEditingController();
@@ -84,16 +84,26 @@ class _ExplorePageState extends State<ExplorePage> {
     super.dispose();
   }
 
+  bool prefix(String p, String s) {
+    int i = 0;
+    int j = 0;
+    while (p[i] == s[j]) {
+      i++;
+      j++;
+    }
+    return i != 0;
+  }
+
   Future<List<String>>? prefixes(String q) async {
     List<String> res = [];
     List<String>? carNames = await CarsService().allCars();
 
     for (String s in carNames) {
-      if (s.startsWith(q)) {
+      if (prefix(q, s)) {
         res.add(s);
       }
     }
-    print("pref "+res.toString());
+    print("pref " + res.toString());
 
     return res;
   }
