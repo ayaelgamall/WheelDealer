@@ -72,6 +72,8 @@ class AppDrawer extends StatelessWidget {
         title: Text('Logout'),
         onTap: () {
           AuthenticationService().signOut();
+
+          context.go('/wrapper');
         },
       ),
     ]));
