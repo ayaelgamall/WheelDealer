@@ -84,6 +84,20 @@ class _ExplorePageState extends State<ExplorePage> {
     super.dispose();
   }
 
+  Future<List<String>>? prefixes(String q) async {
+    List<String> res = [];
+    List<String>? carNames = await CarsService().allCars();
+
+    for (String s in carNames) {
+      if (s.startsWith(q)) {
+        res.add(s);
+      }
+    }
+    print("pref "+res.toString());
+
+    return res;
+  }
+
   List<String> getNamesFromQuery(List<QueryDocumentSnapshot>? q) {
     List<String> brands = [];
     print("q len = " + q!.length.toString()); //todo rem print
@@ -222,7 +236,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           ? cars.orderBy(widget.sortBy, descending: widget.desc)
                           : cars
                               .where('brand', isEqualTo: selectedTerm)
-                              .orderBy('brand')
+                              .orderBy('model')
                               .orderBy(widget.sortBy,
                                   descending: widget.desc) //todo not working
                       // carsToShow:cars.orderBy('bids_count', descending: true)
@@ -241,14 +255,14 @@ class _ExplorePageState extends State<ExplorePage> {
             Card(
                 // height: ,
                 // color: Colors.brown,
-                child: FutureBuilder<QuerySnapshot>(
-                    future: CarsService().queryCars2(widget._query).get(),
-                    builder: (context, qs) {
-                      filteredSearchHistory = getNamesFromQuery(qs.data?.docs);
+                child: FutureBuilder<List<String>>(
+                    future: prefixes(widget._query),
+                    builder: (context, matchingPrefix) {
+                      filteredSearchHistory = matchingPrefix.data!;
 
                       return ListView.builder(
                           shrinkWrap: true,
-                          itemCount: filteredSearchHistory.length,
+                          itemCount: filteredSearchHistory!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
                               leading: Icon(Icons.history),

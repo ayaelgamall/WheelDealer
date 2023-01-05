@@ -79,17 +79,42 @@ class CarsService {
   }
 
   Query queryCars1(String term) {
-    print("term= "+term); //todo rem print
+    print("term= " + term); //todo rem print
     return _carsReference.orderBy('brand').startAt([term]).endAt([term + '~']);
 
     // return _carsReference.orderBy('brand').startAt([term]).endAt([term + '\uf8ff']);
   }
 
   Query queryCars2(String term) {
-        print("term= "+term); //todo rem print
+    print("term= " + term); //todo rem print
 
     // return _carsReference.orderBy('brand').startAt([term]).endAt([term + '~']);
 
-    return _carsReference.orderBy('brand').startAt([term]).endAt([term + '\uf8ff']);
+    return _carsReference
+        .orderBy('brand')
+        .startAt([term]).endAt([term + '\uf8ff']);
   }
+
+  Future<List<String>> allCars() async {
+    List allData = [];
+    List<String> res = [];
+
+    await _carsReference.get().then((querySnapshot) =>
+        {allData = querySnapshot.docs.map((doc) => doc.data()).toList()});
+
+    for (dynamic data in allData) {
+      Map<String, dynamic> map = data as Map<String, dynamic>;
+      res.add(map['brand'].toString());
+      res.add(map['model'].toString());
+    }
+    print("all models and brands on db "+res.toString());
+    return res;
+  }
+  Future<QuerySnapshot<Object?>>allCarsColl() async {
+
+    QuerySnapshot<Object?>  res ;
+
+   res= await _carsReference.get();
+  return res;
+}
 }
