@@ -1,6 +1,5 @@
 // import 'dart:js';
 
-
 import 'package:bar2_banzeen/screens/car_screen.dart';
 
 import 'package:bar2_banzeen/screens/chat_screen.dart';
@@ -24,7 +23,7 @@ class AppRouter {
     var routes = <String, WidgetBuilder>{
       Wrapper.routeName: (context) => const Wrapper(),
       MainPage.routeName: (context) => const MainPage(),
-      ExplorePage.routeName: (context) => const ExplorePage(),
+      ExplorePage.routeName: (context) => ExplorePage(),
       EditProfile.routeName: (context) => const EditProfile(),
       UserProfile.routeName: (context) => const UserProfile(),
 
