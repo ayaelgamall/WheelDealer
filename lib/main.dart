@@ -102,7 +102,16 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                  state.extra as Map<String, Object?>;
+                  String sort = extra['sort']  as String;
+                  bool desc = extra['desc'] as bool ;
+                  return
+                    // sort!=null && desc!=null?
+                   ExplorePage(sortBy: sort,desc: desc);
+                  // :sort!=null ?
+                  // ExplorePage(sortBy: sort):
+                  //  ExplorePage();
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
 
                 },

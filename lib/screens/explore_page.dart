@@ -3,13 +3,18 @@ import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/search_delegate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/scrollable_cars.dart';
 import '../widgets/search_delegate.dart';
 
 class ExplorePage extends StatefulWidget {
-  const ExplorePage({Key? key}) : super(key: key);
+  String sortBy ;
+  bool desc ;
+
+  ExplorePage({Key? key,this.desc=true,this.sortBy='bids-count'}) : super(key: key);
   static const routeName = '/explore';
+
 
 
   @override
@@ -17,15 +22,17 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  static const historyLength = 5;
+
+  static const historyLength = 20;
 
 // The "raw" history that we don't access from the UI, prefilled with values
   List<String> _searchHistory = [];
-// The filtered & ordered history that's accessed from the UI
+
+  var prefs;
+
   late List<String> filteredSearchHistory;
 
-// The currently searched-for term
-  late String selectedTerm;
+  String selectedTerm='';
   final  controller = TextEditingController();
 
 
@@ -33,7 +40,7 @@ class _ExplorePageState extends State<ExplorePage> {
   List<String> filterSearchTerms({
       required String filter,
   }) {
-    if (filter != null && filter.isNotEmpty) {
+    if (filter != '' && filter.isNotEmpty) {
       // Reversed because we want the last added items to appear first in the UI
       return _searchHistory.reversed
           .where((term) => term.startsWith(filter))
@@ -41,7 +48,7 @@ class _ExplorePageState extends State<ExplorePage> {
     } else {
       return _searchHistory.reversed.toList();
     }
-  } //todo shared pref
+  }
   void addSearchTerm(String term) {
     if (_searchHistory.contains(term)) {
       // This method will be implemented soon
@@ -63,19 +70,34 @@ class _ExplorePageState extends State<ExplorePage> {
     deleteSearchTerm(term);
     addSearchTerm(term);
   }
+  void updateSearchList(val) {
+    prefs.setStringList('searchHis', val);
+  }
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     controller.dispose();
     super.dispose();
   }
+  Future<void> getHistoryState() async {
+    prefs =
+    await SharedPreferences.getInstance();
+
+    setState(() {
+      _searchHistory = prefs.getStringList('searchHis') ?? [];});
+  }
   void initState() {
     super.initState();
-    filteredSearchHistory = filterSearchTerms(filter: '');
-    selectedTerm='';
+    Future.delayed(Duration.zero,() async {
+      await getHistoryState();
+      filteredSearchHistory = filterSearchTerms(filter: '');
+      //your async 'await' codes goes here
+    });
   }
   // String searchValue = '';
   @override
   Widget build(BuildContext context) {
+
     // final cars = FirebaseFirestore.instance.collection('cars');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -101,7 +123,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 setState(() {
                   if(controller.text=='') {
                     FocusScope.of(context).unfocus();
-                    // searching=false;
+                    searching=false;
                   } else {
                     filteredSearchHistory = filterSearchTerms(filter: '');
                     controller.clear();
@@ -120,6 +142,7 @@ class _ExplorePageState extends State<ExplorePage> {
             setState(() {
               searching=true;
             });
+
           },
           onSubmitted: (query){
             setState(() {
@@ -127,9 +150,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 addSearchTerm(query);
               }
               selectedTerm = query;
-
               controller.clear();//as you leave leave it or add it
               searching=false;
+              updateSearchList(_searchHistory);
             });
           },
 
@@ -174,8 +197,14 @@ class _ExplorePageState extends State<ExplorePage> {
                     child: ScrollableCars(
                       width: 0.85 * width,
                       height: 0.3 * height,
-                      carsToShow: cars.orderBy("bids_count", descending: true),
-                      //todo change
+                      carsToShow: selectedTerm==''?
+                      cars.orderBy(widget.sortBy, descending: widget.desc)
+                          :
+                      cars.where('brand',isEqualTo:selectedTerm).orderBy('brand')
+                          .orderBy(widget.sortBy, descending: widget.desc) //todo not working
+                      // carsToShow:cars.orderBy('bids_count', descending: true)
+
+                      ,//todo change
                       align: Axis.vertical,
                       rightMargin: 0,
                     ),
@@ -185,7 +214,7 @@ class _ExplorePageState extends State<ExplorePage> {
               ],
             ),
           ),
-          if (searching &&  FocusScope.of(context).hasFocus) Card(
+          if (searching) Card(
             // height: ,
             // color: Colors.brown,
             child: ListView.builder(
@@ -205,9 +234,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         searching=false;
                         controller.clear();
                         FocusScope.of(context).unfocus();
-
-
-
+                        updateSearchList(_searchHistory);
                       });
                     },
                   );

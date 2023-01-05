@@ -37,7 +37,8 @@ class _CustomAppBarState extends State<CustomAppBar>{
           onPressed: () {
             // showSearch(context: context, delegate: CustomSearchDelegate());
             // showSearch(context: context, delegate: CustomSearchDelegate());
-            context.go('/mainPage/explore');
+            // context.go('/mainPage/explore');
+            context.go('/mainPage/explore',extra: {'sort':'bids_count','desc':true});
           },
         ),  IconButton(
         onPressed: () {
