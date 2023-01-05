@@ -52,7 +52,7 @@ class CarsService {
       "seller_id": car.sellerId,
     });
 
-     StorageService().clearCarPhotos(carId);
+    StorageService().clearCarPhotos(carId);
 
     List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
         (localPhoto) async =>
@@ -76,5 +76,20 @@ class CarsService {
         .collection('bids')
         .orderBy('value', descending: true)
         .limit(1);
+  }
+
+  Query queryCars1(String term) {
+    print("term= "+term); //todo rem print
+    return _carsReference.orderBy('brand').startAt([term]).endAt([term + '~']);
+
+    // return _carsReference.orderBy('brand').startAt([term]).endAt([term + '\uf8ff']);
+  }
+
+  Query queryCars2(String term) {
+        print("term= "+term); //todo rem print
+
+    // return _carsReference.orderBy('brand').startAt([term]).endAt([term + '~']);
+
+    return _carsReference.orderBy('brand').startAt([term]).endAt([term + '\uf8ff']);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:bar2_banzeen/services/cars_service.dart';
+import 'package:bar2_banzeen/services/storage_service.dart';
 import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/search_delegate.dart';
@@ -9,20 +11,18 @@ import '../widgets/scrollable_cars.dart';
 import '../widgets/search_delegate.dart';
 
 class ExplorePage extends StatefulWidget {
-  String sortBy ;
-  bool desc ;
-
-  ExplorePage({Key? key,this.desc=true,this.sortBy='bids-count'}) : super(key: key);
+  String sortBy;
+  bool desc;
+  String _query = '';
+  ExplorePage({Key? key, this.desc = true, this.sortBy = 'bids-count'})
+      : super(key: key);
   static const routeName = '/explore';
-
-
 
   @override
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-
   static const historyLength = 20;
 
 // The "raw" history that we don't access from the UI, prefilled with values
@@ -32,13 +32,12 @@ class _ExplorePageState extends State<ExplorePage> {
 
   late List<String> filteredSearchHistory;
 
-  String selectedTerm='';
-  final  controller = TextEditingController();
+  String selectedTerm = '';
+  final controller = TextEditingController();
 
-
-  bool searching =false;
+  bool searching = false;
   List<String> filterSearchTerms({
-      required String filter,
+    required String filter,
   }) {
     if (filter != '' && filter.isNotEmpty) {
       // Reversed because we want the last added items to appear first in the UI
@@ -49,6 +48,7 @@ class _ExplorePageState extends State<ExplorePage> {
       return _searchHistory.reversed.toList();
     }
   }
+
   void addSearchTerm(String term) {
     if (_searchHistory.contains(term)) {
       // This method will be implemented soon
@@ -62,47 +62,68 @@ class _ExplorePageState extends State<ExplorePage> {
     // Changes in _searchHistory mean that we have to update the filteredSearchHistory
     filteredSearchHistory = filterSearchTerms(filter: '');
   }
+
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
     filteredSearchHistory = filterSearchTerms(filter: '');
   }
+
   void putSearchTermFirst(String term) {
     deleteSearchTerm(term);
     addSearchTerm(term);
   }
+
   void updateSearchList(val) {
     prefs.setStringList('searchHis', val);
   }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     controller.dispose();
     super.dispose();
   }
+
+  List<String> getNamesFromQuery(List<QueryDocumentSnapshot>? q) {
+    List<String> brands = [];
+    print("q len = " + q!.length.toString()); //todo rem print
+
+    for (QueryDocumentSnapshot r in q!) {
+      r.reference.get().then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          brands.add(documentSnapshot['brand']);
+        }
+      });
+    }
+    print(brands); //todo rem print
+    return brands;
+  }
+
   Future<void> getHistoryState() async {
-    prefs =
-    await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      _searchHistory = prefs.getStringList('searchHis') ?? [];});
+      _searchHistory = prefs.getStringList('searchHis') ?? [];
+    });
   }
+
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero,() async {
+    Future.delayed(Duration.zero, () async {
       await getHistoryState();
       filteredSearchHistory = filterSearchTerms(filter: '');
       //your async 'await' codes goes here
     });
   }
+
   // String searchValue = '';
   @override
   Widget build(BuildContext context) {
-
     // final cars = FirebaseFirestore.instance.collection('cars');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final cars = FirebaseFirestore.instance.collection('cars');
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: TextField(
@@ -113,17 +134,16 @@ class _ExplorePageState extends State<ExplorePage> {
             // contentPadding: EdgeInsets.all(13),
             isDense: true,
             hintText: 'Search ',
-            border: OutlineInputBorder(
-              // borderSide: BorderSide(width: 3),
-                borderRadius: BorderRadius.all(Radius.circular(10))
-            ),
+            border: const OutlineInputBorder(
+                // borderSide: BorderSide(width: 3),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear_outlined),
               onPressed: () {
                 setState(() {
-                  if(controller.text=='') {
+                  if (controller.text == '') {
                     FocusScope.of(context).unfocus();
-                    searching=false;
+                    searching = false;
                   } else {
                     filteredSearchHistory = filterSearchTerms(filter: '');
                     controller.clear();
@@ -134,45 +154,45 @@ class _ExplorePageState extends State<ExplorePage> {
           ),
           onChanged: (query) {
             setState(() {
-              searching=true;
+              searching = true;
               filteredSearchHistory = filterSearchTerms(filter: query);
             });
           },
-          onTap: (){
+          onTap: () {
             setState(() {
-              searching=true;
+              searching = true;
             });
-
           },
-          onSubmitted: (query){
+          onSubmitted: (query) {
             setState(() {
-              if(query!='') {
+              if (query != '') {
                 addSearchTerm(query);
+                widget._query = query;
               }
               selectedTerm = query;
-              controller.clear();//as you leave leave it or add it
-              searching=false;
+              controller.clear(); //as you leave leave it or add it
+              searching = false;
               updateSearchList(_searchHistory);
             });
           },
-
         ),
         // backgroundColor: Colors.white,
-
-
       ),
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20, left: width*0.075, right: width*0.075),
+            margin: EdgeInsets.only(
+                top: 20, left: width * 0.075, right: width * 0.075),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(selectedTerm,style: Theme.of(context).textTheme.labelMedium,),
-
+                    Text(
+                      selectedTerm,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                     Row(
                       children: [
                         Directionality(
@@ -192,19 +212,22 @@ class _ExplorePageState extends State<ExplorePage> {
                   ],
                 ),
                 Expanded(
-                  child: SizedBox( //todo update only when not searching
+                  child: SizedBox(
+                    //todo update only when not searching
                     width: 0.85 * width,
                     child: ScrollableCars(
                       width: 0.85 * width,
                       height: 0.3 * height,
-                      carsToShow: selectedTerm==''?
-                      cars.orderBy(widget.sortBy, descending: widget.desc)
-                          :
-                      cars.where('brand',isEqualTo:selectedTerm).orderBy('brand')
-                          .orderBy(widget.sortBy, descending: widget.desc) //todo not working
+                      carsToShow: selectedTerm == ''
+                          ? cars.orderBy(widget.sortBy, descending: widget.desc)
+                          : cars
+                              .where('brand', isEqualTo: selectedTerm)
+                              .orderBy('brand')
+                              .orderBy(widget.sortBy,
+                                  descending: widget.desc) //todo not working
                       // carsToShow:cars.orderBy('bids_count', descending: true)
 
-                      ,//todo change
+                      , //todo change
                       align: Axis.vertical,
                       rightMargin: 0,
                     ),
@@ -214,33 +237,37 @@ class _ExplorePageState extends State<ExplorePage> {
               ],
             ),
           ),
-          if (searching) Card(
-            // height: ,
-            // color: Colors.brown,
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: filteredSearchHistory.length,
-                itemBuilder: (BuildContext context, int index) {
+          if (searching)
+            Card(
+                // height: ,
+                // color: Colors.brown,
+                child: FutureBuilder<QuerySnapshot>(
+                    future: CarsService().queryCars2(widget._query).get(),
+                    builder: (context, qs) {
+                      filteredSearchHistory = getNamesFromQuery(qs.data?.docs);
 
-                  return ListTile(
-                    leading: Icon(Icons.history),
-                    // dense: true,
-                    title: Text(filteredSearchHistory[index]),
-                    onTap: (){
-                      setState(() {
-                        FocusScope.of(context).unfocus();
-                        selectedTerm = filteredSearchHistory[index];
-                        addSearchTerm(filteredSearchHistory[index] );
-                        searching=false;
-                        controller.clear();
-                        FocusScope.of(context).unfocus();
-                        updateSearchList(_searchHistory);
-                      });
-                    },
-                  );
-                }
-            )
-          )
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: filteredSearchHistory.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              leading: Icon(Icons.history),
+                              // dense: true,
+                              title: Text(filteredSearchHistory[index]),
+                              onTap: () {
+                                setState(() {
+                                  FocusScope.of(context).unfocus();
+                                  selectedTerm = filteredSearchHistory[index];
+                                  addSearchTerm(filteredSearchHistory[index]);
+                                  searching = false;
+                                  controller.clear();
+                                  FocusScope.of(context).unfocus();
+                                  updateSearchList(_searchHistory);
+                                });
+                              },
+                            );
+                          });
+                    }))
         ],
       ),
     );
