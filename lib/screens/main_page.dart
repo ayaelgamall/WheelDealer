@@ -1,5 +1,6 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
-import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
+import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,22 +30,22 @@ class _MainPageState extends State<MainPage> {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
-        appBar: AppBar(title: Text("Explore"), actions: [
-          IconButton(
-            onPressed: () {
-              AuthenticationService().signOut();
-              context.go("/");
-            },
-            icon: Icon(Icons.logout),
-          ),
-          IconButton(
-            onPressed: () {
-              context.go("/mainPage/messages");
-              // context.push("/messages");
-            },
-            icon: Icon(Icons.message),
-          )
-        ]),
+        appBar:CustomAppBar(),
+        // AppBar(title: Text("Hi"), actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       AuthenticationService().signOut();
+        //       context.go("/");
+        //     },
+        //     icon: Icon(Icons.logout),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {
+        //       context.push("/mainPage/messages");
+        //     },
+        //     icon: Icon(Icons.message),
+        //   )
+        // ]),
         // appBar: AppBar(
         //   title: const Text(
         //     "BeebBeeb",
@@ -61,24 +62,24 @@ class _MainPageState extends State<MainPage> {
             },
             child: FutureBuilder<QuerySnapshot>(
               future: cars.where('sold', isNotEqualTo: true).limit(5).get(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return ListView(children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            MainHeading(text: "Trending"),
-                            ViewMoreText(),
-                          ],
-                        ),
-                        HorizontalCars(
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView(children: [
+                  Column(
+                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainHeading(text: "Trending"),
+                          ViewMoreText(),
+                        ],
+                      ),
+                      ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
@@ -95,10 +96,27 @@ class _MainPageState extends State<MainPage> {
                             ViewMoreText()
                           ],
                         ),
-                        HorizontalCars(
+                        ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
+                              // .where('sold', isNotEqualTo: true)
+                            .orderBy("creation_time", descending: true)
+                            .limit(5),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainHeading(text: "All cars"),
+                          ViewMoreText()
+                        ],
+                      ),
+                    ],
+                  ),
+                  // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                  //     ,align: Axis.vertical,rightMargin: 0,)
+
                               .where('sold', isNotEqualTo: true)
                               .orderBy('sold')
                               .orderBy("creation_time", descending: true)
