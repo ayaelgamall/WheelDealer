@@ -82,6 +82,7 @@ class _MainPageState extends State<MainPage> {
                         ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
+                          height2: 0.4 * height,
                           carsToShow: cars
                               .where('sold', isNotEqualTo: true)
                               .orderBy('sold')
@@ -99,6 +100,7 @@ class _MainPageState extends State<MainPage> {
                         ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
+                          height2: 0.4 * height,
                           carsToShow: cars
                               .where('sold', isNotEqualTo: true)
                               .orderBy('sold')

@@ -162,11 +162,14 @@ class _ExplorePageState extends State<ExplorePage> {
       ),
       body: Stack(
         children: [
+
           Container(
             margin: EdgeInsets.only(top: 20, left: width*0.075, right: width*0.075),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Text('here'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -190,25 +193,22 @@ class _ExplorePageState extends State<ExplorePage> {
                     )
                   ],
                 ),
-                Expanded(
-                  child: SizedBox( //todo update only when not searching
-                    width: 0.85 * width,
-                    child: ScrollableCars(
-                      width: 0.85 * width,
-                      height: 0.3 * height,
-                      carsToShow: selectedTerm==''?
-                      cars.orderBy(widget.sortBy, descending: widget.desc)
-                          :
-                      cars.where('brand',isEqualTo:selectedTerm)
-                          // cars.where('brand',isEqualTo:selectedTerm).orderBy('brand')
-                          // .orderBy(widget.sortBy, descending: widget.desc) //todo not working
-                      // carsToShow:cars.orderBy('bids_count', descending: true)
+                ScrollableCars(
 
-                      ,//todo change
-                      align: Axis.vertical,
-                      rightMargin: 0,
-                    ),
-                  ),
+                  width: 0.85 * width,
+                  height: 0.3 * height,
+                  height2: height*0.7,
+                  carsToShow: selectedTerm==''?
+                  cars.orderBy(widget.sortBy, descending: widget.desc)
+                      :
+                  // cars.where('brand',isEqualTo:selectedTerm)
+                      cars.where('brand',isEqualTo:selectedTerm)
+                      // .orderBy(widget.sortBy, descending: widget.desc) //todo not working
+                  // carsToShow:cars.orderBy('bids_count', descending: true)
+
+                  ,//todo change
+                  align: Axis.vertical,
+                  rightMargin: 0,
                 ),
                 // CarCard(width: 0.8 * width, height: 0.3 * height, rightMargin: )
               ],
