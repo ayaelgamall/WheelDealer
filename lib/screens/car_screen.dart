@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/screens/bids_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
+import 'package:bar2_banzeen/services/messaging_stream_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/timer.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:page_indicator/page_indicator.dart';
@@ -323,8 +325,21 @@ class _CarPageState extends State<CarPage> {
                                                                 const EdgeInsets
                                                                     .all(8.0),
                                                             child: InkWell(
-                                                                onTap: () {
-                                                                  //todo route to chat
+                                                                onTap:
+                                                                    () async {
+                                                                  print(
+                                                                      "pressed");
+                                                                  //add chat to db with both ids
+                                                                  String
+                                                                      chatId =
+                                                                      await MessagingStreamService().getChatId(
+                                                                          userId,
+                                                                          car.sellerId);
+                                                                  print(
+                                                                      '${car.sellerId}----${chatId}');
+                                                                  context.go(
+                                                                      '/chat/${car.sellerId}/${chatId}');
+                                                                  //use this chat id and seller id to route to chat
                                                                 },
                                                                 child: Icon(
                                                                   Icons

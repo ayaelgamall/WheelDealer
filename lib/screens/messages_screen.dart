@@ -87,6 +87,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
             StreamBuilder<QuerySnapshot>(
               stream: MessagingStreamService().getChats(thisUserId),
               builder: (context, chats) {
+                if (chats.data!.size == 0) {
+                  return (Center());
+                }
                 if (chats.connectionState == ConnectionState.waiting ||
                     !chats.hasData) {
                   return Center(
@@ -108,6 +111,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                             stream: MessagingStreamService()
                                 .getLastMessages(chatIds[index]),
                             builder: (context, messages) {
+                              if (messages.data!.size == 0) {
+                                return Container();
+                              }
                               if (messages.hasData) {
                                 String otherUserId =
                                     messages.data!.docs.first['to'] ==
@@ -121,6 +127,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                     future:
                                         UsersService().fetchUser(otherUserId),
                                     builder: (context, user) {
+                                      if (user.data == null) {
+                                        return Center();
+                                      }
                                       if (!user.hasData) {
                                         return Center(
                                           child: CircularProgressIndicator(),

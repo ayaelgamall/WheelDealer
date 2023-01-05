@@ -151,8 +151,6 @@ class CarsService {
         batch.set(carBidsColl, {"user": userId, "value": bidValue});
         batch.set(userBidsColl, {"car": carId, "value": bidValue});
       }
-      print(userId);
-      print(carId);
       await batch.commit();
     } catch (e) {
       return "Sorry! Placing the bid failed.";
