@@ -61,6 +61,7 @@ ThemeData darkTheme = ThemeData(
     bodyMedium:  const TextStyle(color: Colors.white),
     headlineSmall:  const TextStyle(color: Colors.white),
     labelMedium:  const TextStyle(color: Colors.white),
+
   ),
   hintColor: const Color(0xAFF3EFE0),
 
@@ -72,9 +73,11 @@ ThemeData darkTheme = ThemeData(
 //   ),
 
   primaryColor: const Color(0xff434242),
+  primaryColorLight: const Color(0xff606060),
 // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xff434242),
   disabledColor: const Color(0xff434242),
+  hoverColor: Color(0xff22A39F),
   // accentColor: kYellow,
   // primaryIconTheme: ,
   iconTheme: const IconThemeData(color: Colors.white),
@@ -92,7 +95,7 @@ ThemeData darkTheme = ThemeData(
       borderSide: BorderSide(color: Color(0xffff0000)),
     ),
   ),
-  highlightColor: const Color(0xff372901),
+  // highlightColor: const Color(0xff372901),
   textSelectionTheme:
       const TextSelectionThemeData(selectionColor: Colors.white),
   cardColor: const Color(0xff434242),
