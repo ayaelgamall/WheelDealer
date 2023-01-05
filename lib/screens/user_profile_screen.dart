@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../services/authentication_service.dart';
+import '../services/users_service.dart';
+
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
   static const routeName = '/profile';
