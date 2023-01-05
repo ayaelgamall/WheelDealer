@@ -23,7 +23,7 @@ class Notifications extends StatelessWidget {
       drawer: AppDrawer(
         location: 'notifications',
       ),
-      appBar: CustomAppBar(title: "Notifications"),
+      appBar: CustomAppBar(title: "Notifications",location: 'notifications',),
       // appBar: AppBar(
       //   title: const Text("Notifications"),
       //   actions: [

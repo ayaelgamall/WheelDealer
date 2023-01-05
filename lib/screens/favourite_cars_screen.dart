@@ -39,6 +39,7 @@ class FavouriteCarsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title:
         "Favourites",
+        location:'favourites' ,
       ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
@@ -67,7 +68,7 @@ class FavouriteCarsScreen extends StatelessWidget {
                                 child: ListView(
                                   children: (favouritesList).map((carId) {
                                     return Container(
-                                        height: 228,
+                                        height: 268,
                                         width: 400,
                                         alignment: Alignment.topCenter,
                                         child: Dismissible(
@@ -95,7 +96,7 @@ class FavouriteCarsScreen extends StatelessWidget {
                                             child: Stack(children: [
                                               CarCard(
                                                   width: 380,
-                                                  height: 200,
+                                                  height: 240,
                                                   rightMargin: 0,
                                                   carId: carId,
                                                   location: 'favourites'),

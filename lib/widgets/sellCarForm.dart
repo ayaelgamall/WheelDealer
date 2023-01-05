@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -156,17 +157,10 @@ class _SellCarFormState extends State<SellCarForm> {
         drawer: AppDrawer(
           location: 'sellCar',
         ),
-        appBar: AppBar(
-          title: const Text("Sell Your Car"),
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.go("/sellCar/messages");
-                // context.push("/messages");
-              },
-              icon: Icon(Icons.message),
-            )
-          ],
+        appBar: CustomAppBar(
+          title: "Sell Your Car",
+          location: 'sellCar',
+
         ),
         body: Form(
           key: _formKey,

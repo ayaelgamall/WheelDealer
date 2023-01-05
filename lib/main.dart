@@ -154,6 +154,13 @@ class _MyAppState extends State<MyApp> {
             },
             routes: <RouteBase>[
               GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
                   Map<String, Object?> extra =
@@ -194,6 +201,13 @@ class _MyAppState extends State<MyApp> {
             },
             routes: <RouteBase>[
               GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
                 path: 'messages',
                 builder: (BuildContext context, GoRouterState state) {
                   return const MessagingScreen();
@@ -221,6 +235,13 @@ class _MyAppState extends State<MyApp> {
             },
             routes: <RouteBase>[
               GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
                   path: 'settings',
                   builder: (BuildContext context, GoRouterState state) {
                     return Settings();
@@ -247,6 +268,13 @@ class _MyAppState extends State<MyApp> {
               return const UserProfile();
             },
             routes: <RouteBase>[
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
               GoRoute(
                 path: 'editProfile',
                 builder: (BuildContext context, GoRouterState state) {
