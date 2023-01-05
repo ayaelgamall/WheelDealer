@@ -29,6 +29,7 @@ class _CustomAppBarState extends State<CustomAppBar>{
       title: Text(widget.title),
       // backgroundColor: Colors.white,
 
+
       actions: [
         if(widget.isSearch)IconButton(
           icon: const Icon(Icons.search),
