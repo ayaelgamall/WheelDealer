@@ -123,7 +123,7 @@ class _ExplorePageState extends State<ExplorePage> {
     final cars = FirebaseFirestore.instance.collection('cars');
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         title: TextField(
           controller: controller,
           // autocorrect: false,

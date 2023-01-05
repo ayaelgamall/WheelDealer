@@ -51,6 +51,7 @@ primaryColorLight: const Color(0xffa4a4a4),
   cardColor: const Color(0xffB2B2B2),
   canvasColor: const Color(0xFFEAEAEA),
   appBarTheme: const AppBarTheme(
+    color: const Color(0xffB2B2B2),
     elevation: 0.0,
   ),
 );
