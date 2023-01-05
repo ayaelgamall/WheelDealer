@@ -312,6 +312,16 @@ class _MyAppState extends State<MyApp> {
             },
             routes: <RouteBase>[
               GoRoute(
+                path: 'car',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                  state.extra as Map<String, Object?>;
+                  Car car = extra['car'] as Car;
+                  int? value = extra['bid'] as int?;
+                  return CarPage(car: car, topBid: value);
+                },
+              ),
+              GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
                   Map<String, Object?> extra =

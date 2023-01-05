@@ -2,6 +2,9 @@ import 'package:bar2_banzeen/widgets/profile_popup_menu.dart';
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../models/car.dart';
 
 class ProfileCarCard extends StatelessWidget {
   double cardType;
@@ -48,7 +51,31 @@ class ProfileCarCard extends StatelessWidget {
             return carData['sold']
                 ? SoldCar(carData, topBid, doc.data!.id)
                 : InkWell(
-                    onTap: () {}, // TODO redirect to car page
+                    onTap: () {
+                        // Car car = Car(
+                        //     id: doc.data!.id,
+                        //     bidsCount: carData['bids_count'],
+                        //     brand: carData['brand'],
+                        //     color: carData['color'],
+                        //     deadline: carData['deadline']!.toDate(),
+                        //     description: carData['description'],
+                        //     engineCapacity: carData['engine_capacity'],
+                        //     location: carData['location'],
+                        //     model: carData['model'],
+                        //     photos: carData['photos'] is Iterable
+                        //         ? List.from(carData['photos'])
+                        //         : null,
+                        //     creationTime: carData['creation_time']!.toDate(),
+                        //     sellerId: carData['seller_id'],
+                        //     sold: carData['sold'],
+                        //     startingPrice: carData['starting_price'],
+                        //     transmission: carData['transmission'],
+                        //     year: '${carData['year']}',
+                        //     mileage: carData['mileage']);
+                        // GoRouter.of(context)
+                        //     .go('/profile/car', extra: {'car': car, 'bid': bidValue});
+
+                    }, // TODO redirect to car page has error
                     child: carCard(carData, topBid, doc.data!.id));
           }
         });
