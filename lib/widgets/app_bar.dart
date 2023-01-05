@@ -25,23 +25,16 @@ class _CustomAppBarState extends State<CustomAppBar>{
       // backgroundColor: Colors.white,
 
       actions: [
-          IconButton(
-            onPressed: () {
-              AuthenticationService().signOut();
-              context.go("/");
-            },
-            icon: Icon(Icons.logout),
-          ),
+
         IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            // showSearch(context: context, delegate: CustomSearchDelegate());
-            // showSearch(context: context, delegate: CustomSearchDelegate());
+
             context.go('/mainPage/explore');
           },
         ),  IconButton(
         onPressed: () {
-          context.push("/messages");
+          context.go("/mainPage/messages");
         },
         icon: Icon(Icons.message),
       )
