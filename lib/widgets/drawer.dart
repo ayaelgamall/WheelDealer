@@ -50,8 +50,8 @@ class AppDrawer extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       Text("@${user.data!['username']}",
-                          style: const TextStyle(
-                              color: Colors.white54, fontSize: 14))
+                          style: TextStyle(
+                              color: Theme.of(context).hintColor, fontSize: 14))
                     ],
                   ),
                 ],
