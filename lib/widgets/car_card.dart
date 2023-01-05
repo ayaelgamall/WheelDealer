@@ -79,13 +79,13 @@ class CarCard extends StatelessWidget {
                                 topLeft: Radius.circular(7),
                                 topRight: Radius.circular(7),
                               ),
-                            child: Image(
-                              image: NetworkImage(
-                                  carData['photos'][0]), // TODO read from db
-                              height: 0.73 * height,
-                              width: width,
-                              fit: BoxFit.cover,
-                            )),
+                              child: Image(
+                                image: NetworkImage(
+                                    carData['photos'][0]), // TODO read from db
+                                height: 0.73 * height,
+                                width: width,
+                                fit: BoxFit.cover,
+                              )),
                           Container(
                             width: width,
                             padding: const EdgeInsets.only(
@@ -131,8 +131,7 @@ class CarCard extends StatelessWidget {
                                       deadline: carData['deadline']!.toDate()),
                                   topBid == null
                                       ? Text(
-                                    '${NumberFormat('###,000').format(carData['starting_price'])} EGP'
-                                          ,
+                                          '${NumberFormat('###,000').format(carData['starting_price'])} EGP',
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -145,8 +144,7 @@ class CarCard extends StatelessWidget {
                                           builder: (context, qs) {
                                             bid = qs.data?.docs.first['value'];
                                             return Text(
-                                              '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP'
-                                              ,
+                                              '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,

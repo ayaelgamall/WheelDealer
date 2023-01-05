@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:bar2_banzeen/models/formData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import 'package:bar2_banzeen/models/car.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
@@ -29,7 +28,6 @@ class SellCarScreen extends StatefulWidget {
 }
 
 class _SellCarScreenState extends State<SellCarScreen> {
-
   final List<XFile?> _photos = [];
   final TextEditingController _brand = TextEditingController();
   final TextEditingController _model = TextEditingController();
@@ -62,7 +60,6 @@ class _SellCarScreenState extends State<SellCarScreen> {
     NotificationsService().registerNotifications();
   }
 
-
   @override
   Widget build(BuildContext context) {
     // User user = Provider.of<User>(context);
@@ -73,7 +70,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
             if (snapshot.hasData) {
               Map<String, dynamic> map =
                   snapshot.data!['doc'].data() as Map<String, dynamic>;
-             
+
               return SellCarForm(
                 car: FormData(
                     brand: TextEditingController(text: map['brand']),
@@ -109,14 +106,14 @@ class _SellCarScreenState extends State<SellCarScreen> {
       return SellCarForm(
         car: FormData(
             year: TextEditingController(),
-            brand: TextEditingController(text:"Mercedes-Benz"),
+            brand: TextEditingController(text: "Mercedes-Benz"),
             color: TextEditingController(),
             deadlineController: TextEditingController(),
             description: TextEditingController(),
             engineCapacity: TextEditingController(),
             location: TextEditingController(),
             mileage: TextEditingController(),
-            model: TextEditingController(text:"Mercedes-AMG CLS"),
+            model: TextEditingController(text: "Mercedes-AMG CLS"),
             photos: [],
             price: TextEditingController(),
             transmission: 'automatic'),
