@@ -92,16 +92,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   });
             },
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: Icon(
-                Icons.info_outlined,
-                color: Color(0xFFD2D2D8),
-                size: 30,
-              ),
-            )
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 12.0),
+          //     child: Icon(
+          //       Icons.info_outlined,
+          //       color: Color(0xFFD2D2D8),
+          //       size: 30,
+          //     ),
+          //   )
+          // ],
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: messages(),
