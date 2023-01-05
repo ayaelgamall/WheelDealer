@@ -30,19 +30,15 @@ ThemeData lightTheme = ThemeData(
   backgroundColor: const Color(0xFFEAEAEA),
   scaffoldBackgroundColor: const Color(0xFFEAEAEA),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
-  hoverColor: Color(0xff00ABB3),
-  primaryColorLight:Color(0xffa4a4a4),
-
   textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Color(0xff3C4048)),
-      bodyLarge: TextStyle(color: Color(0xff00ABB3)),
-    titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
-
-    headlineSmall:  const TextStyle(color:  Color(0xff3C4048)),
-    labelMedium:  const TextStyle(color: Color(0xff3C4048)),
-
+    bodyMedium: TextStyle(color: Color(0xff3C4048)),
+    bodyLarge: TextStyle(color: Color(0xff00ABB3)),
+    bodySmall: TextStyle(color: Color(0xff3C4048)),
+    titleLarge: TextStyle(
+      color: Color.fromARGB(255, 183, 150, 19),
+    ),
     // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
-      ),
+  ),
   primaryColor: const Color(0xffB2B2B2),
   // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xffcccccc),
@@ -65,14 +61,13 @@ ThemeData darkTheme = ThemeData(
 
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff22A39F)),
   primaryTextTheme: Typography().white,
-  textTheme:  TextTheme(
+  textTheme: TextTheme(
     bodyLarge: const TextStyle(color: Color(0xff00ABB3)),
     // bodyMedium: const TextStyle(color: Color(0xff3C4048)),
-    bodyMedium:  const TextStyle(color: Colors.white),
-    headlineSmall:  const TextStyle(color: Colors.white),
-    labelMedium:  const TextStyle(color: Colors.white),
-    titleLarge: TextStyle(color: Color.fromARGB(255, 128, 103, 4))),
-
+    bodyMedium: const TextStyle(color: Colors.white),
+    headlineSmall: const TextStyle(color: Colors.white),
+    labelMedium: const TextStyle(color: Colors.white),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
   ),
   hintColor: const Color(0xAFF3EFE0),
 
@@ -108,7 +103,7 @@ ThemeData darkTheme = ThemeData(
   ),
   // highlightColor: const Color(0xff372901),
   textSelectionTheme:
-      const TextSelectionThemeData(selectionColor: Colors.white),
+  const TextSelectionThemeData(selectionColor: Colors.white),
   cardColor: const Color(0xff434242),
   canvasColor: const Color(0xFF222222),
   // buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -120,7 +115,7 @@ ThemeData darkTheme = ThemeData(
 
 class AppTheme with ChangeNotifier {
   bool isDarkTheme =
-      false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
+  false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
 
   ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
