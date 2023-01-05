@@ -56,13 +56,13 @@ class _MyAppState extends State<MyApp> {
     initialLocation: "/",
     routes: <RouteBase>[
       /// Application shell
-      // GoRoute(
-      //     path: "/",
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       return const GetStarted();
-      //     }),
       GoRoute(
-        path: "/",
+          path: "/",
+          builder: (BuildContext context, GoRouterState state) {
+            return const GetStarted();
+          }),
+      GoRoute(
+        path: "/wrapper",
         builder: (BuildContext context, GoRouterState state) {
           return const Wrapper();
         },

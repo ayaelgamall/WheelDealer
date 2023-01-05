@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -148,7 +149,7 @@ class _SellCarFormState extends State<SellCarForm> {
 
   @override
   Widget build(BuildContext context) {
-    final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
 
     String userId = curretUser!.uid;
     return Scaffold(

@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,7 +20,7 @@ class FavouriteCarsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
     String userId = curretUser!.uid;
     FirebaseFirestore.instance
         .collection('users')

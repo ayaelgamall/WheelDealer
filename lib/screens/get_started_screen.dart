@@ -80,7 +80,6 @@ class GetStarted extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),
               ),
               onPressed: () {
-                AuthenticationService().signOut();
                 context.go('/wrapper');
               },
             ),

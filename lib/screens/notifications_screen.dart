@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/notifications_service.dart';
 import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/notifications_shimmer.dart';
@@ -15,7 +16,7 @@ class Notifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User?>(context);
+    final user = AuthenticationService().getCurrentUser();
 
     return Scaffold(
       drawer: AppDrawer(
