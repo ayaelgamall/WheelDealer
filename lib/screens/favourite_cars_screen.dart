@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../models/car.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 
 List<dynamic> favouritesList = [];
@@ -35,20 +36,10 @@ class FavouriteCarsScreen extends StatelessWidget {
         drawer: AppDrawer(
           location: 'favourites',
         ),
-        appBar: AppBar(
-          title: const Text(
-            "Favourites",
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.go("/favourites/messages");
-                // context.push("/messages");
-              },
-              icon: Icon(Icons.message),
-            )
-          ],
-        ),
+      appBar: CustomAppBar(
+        title:
+        "Favourites",
+      ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('users')

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import '../models/car.dart';
 import '../services/authentication_service.dart';
 import '../services/cars_service.dart';
+import '../widgets/app_bar.dart';
 
 class CarPage extends StatefulWidget {
   Car car;
@@ -60,8 +61,7 @@ class _CarPageState extends State<CarPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
-      // floatingActionButton: Container(
+      appBar: CustomAppBar(),      // floatingActionButton: Container(
       //   width: width,
       //   height: 0.1 * height,
       //   child: SizedBox(
