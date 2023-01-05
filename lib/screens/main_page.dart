@@ -83,7 +83,8 @@ class _MainPageState extends State<MainPage> {
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
-                              // .where('sold', isNotEqualTo: true)
+                              .where('sold', isNotEqualTo: true)
+                              .orderBy('sold')
                               .orderBy("bids_count", descending: true)
                               .limit(5),
                         ),
@@ -116,6 +117,21 @@ class _MainPageState extends State<MainPage> {
                   // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
                   //     ,align: Axis.vertical,rightMargin: 0,)
 
+                              .where('sold', isNotEqualTo: true)
+                              .orderBy('sold')
+                              .orderBy("creation_time", descending: true)
+                              .limit(5),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            ViewMoreText()
+                          ],
+                        ),
+                      ],
+                    ),
                     ...snapshot.data!.docs.map((doc) {
                       return Stack(children: [
                         CarCard(

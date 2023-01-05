@@ -24,6 +24,7 @@ class _CardTimerState extends State<CardTimer> {
     final seconds = dateDiff.inSeconds - 1;
     if (seconds <= 0) {
       setState(() {
+        dateDiff = Duration(days: 0, minutes: 0, seconds: 0, hours: 0);
         bidEnded = true;
       });
     } else {
@@ -46,12 +47,15 @@ class _CardTimerState extends State<CardTimer> {
   @override
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
+    var remDays = dateDiff.inDays;
     var remHours = strDigits(dateDiff.inHours);
     var remMin = strDigits(dateDiff.inMinutes.remainder(60));
     var remSec = strDigits(dateDiff.inSeconds.remainder(60));
 
     return Text(
-        bidEnded ? "Bid ended" : "${remHours}H : ${remMin}M : ${remSec}S",
+        bidEnded
+            ? "Bid ended"
+            : "${remDays}D:${remHours}H:${remMin}M:${remSec}S",
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,

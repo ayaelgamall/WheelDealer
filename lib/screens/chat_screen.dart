@@ -7,28 +7,27 @@ import 'package:bar2_banzeen/services/notifications_service.dart';
 import 'package:bar2_banzeen/services/sending_messages_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-  static const routeName = '/chat';
+  String toUserId;
+  String chatId;
+  ChatScreen({super.key, required this.toUserId, required this.chatId});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  //TODO
-  String chatId = '';
   late String thisUserId;
-  late String? toUserId;
   TextEditingController textController = TextEditingController();
 
   Stream<QuerySnapshot> messages() {
     return FirebaseFirestore.instance
         .collection("chats")
-        .doc(chatId)
+        .doc(widget.chatId)
         .collection("messages")
         .orderBy("time")
         .snapshots();
@@ -48,19 +47,20 @@ class _ChatScreenState extends State<ChatScreen> {
           leadingWidth: 35,
           leading: IconButton(
               onPressed: (() {
-                Navigator.of(context).pop();
+                context.go("/mainPage/messages");
               }),
               icon: Icon(Icons.arrow_back_ios_new_outlined)),
           title: FutureBuilder(
-            future:
-                SendingMessagesService().fetchOtherUserId(chatId, thisUserId),
+            future: SendingMessagesService()
+                .fetchOtherUserId(widget.chatId, thisUserId),
             builder: (context, otherUserId) {
               if (!otherUserId.hasData) {
                 return CircularProgressIndicator();
               }
-              toUserId = otherUserId.data;
+              widget.toUserId = otherUserId.data!;
               return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  stream: MessagingStreamService().getUser(toUserId.toString()),
+                  stream: MessagingStreamService()
+                      .getUser(widget.toUserId.toString()),
                   builder: (context, user) {
                     if (!user.hasData) {
                       return CircularProgressIndicator();
@@ -73,8 +73,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://googleflutter.com/sample_image.jpg'),
+                                image: NetworkImage((user
+                                                .data?['profile_photo'] ==
+                                            "" ||
+                                        user.data?['profile_photo'] == null)
+                                    ? "https://firebasestorage.googleapis.com/v0/b/bar2-banzeen.appspot.com/o/images%2FuserIcon.png?alt=media&token=aa3858d9-1416-4c79-a987-a87d85dc1397"
+                                    : user.data?['profile_photo']),
                                 fit: BoxFit.fill),
                           ),
                         ),
@@ -194,12 +198,14 @@ class _ChatScreenState extends State<ChatScreen> {
                           icon: Icon(Icons.send_rounded),
                           color: Color.fromARGB(255, 37, 37, 38),
                           onPressed: () {
+                            if (textController.text.isEmpty) return;
                             Message msg = Message(
                                 from: thisUserId,
-                                to: toUserId.toString(),
+                                to: widget.toUserId.toString(),
                                 text: textController.text,
                                 time: Timestamp.now());
-                            SendingMessagesService().sendMessage(msg, chatId);
+                            SendingMessagesService()
+                                .sendMessage(msg, widget.chatId);
                             textController.clear();
                           },
                         ),
@@ -220,12 +226,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 BorderRadius.all(Radius.circular(22))),
                       ),
                       onSubmitted: (msgText) {
+                        if (msgText.isEmpty) return;
                         Message msg = Message(
                             from: thisUserId,
-                            to: toUserId.toString(),
+                            to: widget.toUserId.toString(),
                             text: msgText,
                             time: Timestamp.now());
-                        SendingMessagesService().sendMessage(msg, chatId);
+                        SendingMessagesService()
+                            .sendMessage(msg, widget.chatId);
                         textController.clear();
                       },
                     ),
