@@ -39,7 +39,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
         drawer: AppDrawer(
           location: 'messages',
         ),
-        appBar: AppBar(
+        appBar:
+        AppBar(
           title: Text('Messages'),
           leading: IconButton(
               onPressed: (() {

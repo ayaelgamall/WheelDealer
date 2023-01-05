@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/widgets/profile_bids.dart';
 import 'package:bar2_banzeen/widgets/profile_posts.dart';
@@ -36,20 +37,9 @@ class _UserProfileState extends State<UserProfile> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        drawer: AppDrawer(
+        drawer: CustomAppBar(
+          title: 'My Profile',
           location: 'profile',
-        ),
-        appBar: AppBar(
-          title: const Text("My Profile"),
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.go("/profile/messages");
-                // context.push("/messages");
-              },
-              icon: Icon(Icons.message),
-            )
-          ],
         ),
         body: FutureBuilder<DocumentSnapshot>(
           future: UsersService().getUser(userData!.uid),
@@ -94,9 +84,7 @@ class _UserProfileState extends State<UserProfile> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text("@${user.data!.get('username')}",
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.white54)),
+                      Text("@${user.data!.get('username')}"),
                       const SizedBox(
                         height: 4,
                       ),

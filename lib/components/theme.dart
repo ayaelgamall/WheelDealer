@@ -26,7 +26,10 @@ ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
 
   primarySwatch: createMaterialColor(const Color(
-      0xff00ABB3)), //👈 this is the primary color that stuff like the AppBar and FloatingActionButton Widget will default to
+      0xff00ABB3)),
+  hoverColor: Color(0xff017379),
+primaryColorLight: const Color(0xffa4a4a4),
+//👈 this is the primary color that stuff like the AppBar and FloatingActionButton Widget will default to
   backgroundColor: const Color(0xFFEAEAEA),
   scaffoldBackgroundColor: const Color(0xFFEAEAEA),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),

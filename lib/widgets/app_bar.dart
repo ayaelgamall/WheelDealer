@@ -7,9 +7,10 @@ import '../services/authentication_service.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   String title='WheelDealer';
+  String location='main';
   bool isSearch;
   bool isMessage;
-  CustomAppBar({ Key? key,this.title='WheelDealer',this.isSearch=true,this.isMessage=true}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
+  CustomAppBar({ Key? key,this.title='WheelDealer',this.isSearch=true,this.isMessage=true,this.location='main'}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -37,12 +38,12 @@ class _CustomAppBarState extends State<CustomAppBar>{
           icon: const Icon(Icons.search),
           onPressed: () {
 
-            context.go('/mainPage/explore');
+            context.go('/${widget.location}/explore');
           },
         ),
         if(widget.isSearch)IconButton(
         onPressed: () {
-          context.go("/mainPage/messages");
+          context.go("/${widget.location}/messages");
         },
         icon: const ImageIcon(
             AssetImage(
