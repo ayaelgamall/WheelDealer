@@ -103,7 +103,7 @@ ThemeData darkTheme = ThemeData(
   ),
   // highlightColor: const Color(0xff372901),
   textSelectionTheme:
-      const TextSelectionThemeData(selectionColor: Colors.white),
+  const TextSelectionThemeData(selectionColor: Colors.white),
   cardColor: const Color(0xff434242),
   canvasColor: const Color(0xFF222222),
   // buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -115,7 +115,7 @@ ThemeData darkTheme = ThemeData(
 
 class AppTheme with ChangeNotifier {
   bool isDarkTheme =
-      false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
+  false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
 
   ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 

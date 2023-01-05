@@ -6,7 +6,10 @@ import '../screens/messages_screen.dart';
 import '../services/authentication_service.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CustomAppBar({ Key? key}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
+  String title='WheelDealer';
+  bool isSearch;
+  bool isMessage;
+  CustomAppBar({ Key? key,this.title='WheelDealer',this.isSearch=true,this.isMessage=true}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -22,9 +25,13 @@ class _CustomAppBarState extends State<CustomAppBar>{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      // leading: ,
+      title: Text(widget.title),
       // backgroundColor: Colors.white,
 
+
       actions: [
+        if(widget.isSearch)
 
         IconButton(
           icon: const Icon(Icons.search),
@@ -32,11 +39,14 @@ class _CustomAppBarState extends State<CustomAppBar>{
 
             context.go('/mainPage/explore');
           },
-        ),  IconButton(
+        ),
+        if(widget.isSearch)IconButton(
         onPressed: () {
           context.go("/mainPage/messages");
         },
-        icon: Icon(Icons.message),
+        icon: const ImageIcon(
+            AssetImage(
+                'lib/assets/images/icons/messenger 2.png'),),
       )
       ],
     );

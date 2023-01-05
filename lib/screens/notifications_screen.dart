@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../services/messaging_stream_service.dart';
+import '../widgets/app_bar.dart';
 
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
@@ -22,19 +23,20 @@ class Notifications extends StatelessWidget {
       drawer: AppDrawer(
         location: 'notifications',
       ),
-      appBar: AppBar(
-        title: const Text("Notifications"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print(GoRouterState.of(context).location);
-              context.go("/notifications/messages");
-              // context.push("/messages");
-            },
-            icon: Icon(Icons.message),
-          )
-        ],
-      ),
+      appBar: CustomAppBar(title: "Notifications"),
+      // appBar: AppBar(
+      //   title: const Text("Notifications"),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         print(GoRouterState.of(context).location);
+      //         context.go("/notifications/messages");
+      //         // context.push("/messages");
+      //       },
+      //       icon: Icon(Icons.message),
+      //     )
+      //   ],
+      // ),
       body: StreamBuilder<QuerySnapshot>(
           stream: NotificationsService().getUserNotifications(user!.uid),
           builder: (context, snapshot) {

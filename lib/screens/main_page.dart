@@ -84,14 +84,7 @@ class _MainPageState extends State<MainPage> {
                               .orderBy("creation_time", descending: true)
                               .limit(5),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            MainHeading(text: "All cars"),
-                            const ViewMoreText()
-                          ],
-                        ),
+
                         //   ],
                         // ),
                         // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
@@ -106,14 +99,7 @@ class _MainPageState extends State<MainPage> {
                         //             .limit(5),
                         //       ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            MainHeading(text: "All cars"),
-                            ViewMoreText()
-                          ],
-                        ),
+
                         //   ],
                         // ),
                         // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
