@@ -1,6 +1,8 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/prefrences/DarkThemePrefrence.dart';
 import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
           path: "/",
           builder: (BuildContext context, GoRouterState state) {
-            return Wrapper();
+            return const Wrapper();
           }),
       GoRoute(
           path: "/chat/:userId/:chatId",
@@ -65,6 +67,12 @@ class _MyAppState extends State<MyApp> {
                 toUserId: state.params['userId']!,
                 chatId: state.params['chatId']!);
           }),
+      // GoRoute(
+      //     path: "/editProfile",
+      //     builder: (BuildContext context, GoRouterState state) {
+      //       // return MyWidget();
+      //       return const EditProfile();
+      //     }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -179,6 +187,7 @@ class _MyAppState extends State<MyApp> {
   //tabs for bottom nav
   bool _initialized = false;
   bool _error = false;
+
   void initializeFirebase() async {
     try {
       await Firebase.initializeApp();
@@ -192,11 +201,19 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // This widget is the root of your application.
   @override
-  void initState() {
+  DarkThemePreference preference = DarkThemePreference();
+  @override
+  void initialThemeMode() async {
+    appTheme.isDarkTheme = await preference.getTheme();
+  }
+
+  @override
+  initState() {
     super.initState();
     appTheme.addListener(() {
+      initialThemeMode();
+
       //👈 this is to notify the app that the theme has changed
       setState(
           () {}); //👈 this is to force a rerender so that the changes are carried out
@@ -214,6 +231,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp.router(
         routerConfig: router,
+
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:
