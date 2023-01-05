@@ -3,6 +3,7 @@ import 'package:bar2_banzeen/prefrences/DarkThemePrefrence.dart';
 import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
 import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
+import 'package:bar2_banzeen/screens/explore_page.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/screens/get_started_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
@@ -10,9 +11,11 @@ import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/settings_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -130,6 +133,13 @@ class _MyAppState extends State<MyApp> {
                 path: 'messages',
                 builder: (BuildContext context, GoRouterState state) {
                   return const MessagingScreen();
+                },
+              ),
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),
             ],

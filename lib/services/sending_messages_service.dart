@@ -27,7 +27,8 @@ class SendingMessagesService {
     DocumentSnapshot<Map<String, dynamic>> chatDoc =
         await FirebaseFirestore.instance.collection("chats").doc(chatId).get();
 
-    List usersIds = chatDoc.data()?['users'];
-    return userId == usersIds[0] ? usersIds[1] : usersIds[0];
+    return userId == (chatDoc.data()?['user0'])
+        ? (chatDoc.data()?['user1'])
+        : (chatDoc.data()?['user0']);
   }
 }

@@ -61,12 +61,13 @@ ThemeData darkTheme = ThemeData(
 
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff22A39F)),
   primaryTextTheme: Typography().white,
-  textTheme: const TextTheme(
-    bodyLarge: TextStyle(color: Color(0xff00ABB3)),
-    titleLarge: TextStyle(
-      color: Color.fromARGB(255, 183, 150, 19),
-    ),
-    bodyMedium: TextStyle(color: Colors.white),
+  textTheme: TextTheme(
+    bodyLarge: const TextStyle(color: Color(0xff00ABB3)),
+    // bodyMedium: const TextStyle(color: Color(0xff3C4048)),
+    bodyMedium: const TextStyle(color: Colors.white),
+    headlineSmall: const TextStyle(color: Colors.white),
+    labelMedium: const TextStyle(color: Colors.white),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
   ),
   hintColor: const Color(0xAFF3EFE0),
 

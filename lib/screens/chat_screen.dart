@@ -54,6 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
             future: SendingMessagesService()
                 .fetchOtherUserId(widget.chatId, thisUserId),
             builder: (context, otherUserId) {
+              print(otherUserId.hasData);
               if (!otherUserId.hasData) {
                 return CircularProgressIndicator();
               }

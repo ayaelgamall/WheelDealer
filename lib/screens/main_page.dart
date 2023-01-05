@@ -1,7 +1,8 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
-import 'package:bar2_banzeen/widgets/horizontal_cars.dart';
+import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,24 +30,8 @@ class _MainPageState extends State<MainPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        drawer: AppDrawer(
-          location: 'mainPage',
-        ),
-        appBar: AppBar(title: const Text("Main"), actions: [
-          IconButton(
-            onPressed: () {
-              context.go("/mainPage/messages");
-              // context.push("/messages");
-            },
-            icon: const Icon(Icons.message),
-          )
-        ]),
-        // appBar: AppBar(
-        //   title: const Text(
-        //     "BeebBeeb",
-        //     style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
-        //   ),
-        // ),
+        appBar: CustomAppBar(),
+        drawer: AppDrawer(location: 'mainPage'),
         body: Container(
           margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: RefreshIndicator(
@@ -74,7 +59,7 @@ class _MainPageState extends State<MainPage> {
                             const ViewMoreText(),
                           ],
                         ),
-                        HorizontalCars(
+                        ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
@@ -91,15 +76,57 @@ class _MainPageState extends State<MainPage> {
                             const ViewMoreText()
                           ],
                         ),
-                        HorizontalCars(
+                        ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
-                              .where('sold', isNotEqualTo: true)
-                              .orderBy('sold')
+                              // .where('sold', isNotEqualTo: true)
                               .orderBy("creation_time", descending: true)
                               .limit(5),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            const ViewMoreText()
+                          ],
+                        ),
+                        //   ],
+                        // ),
+                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                        //     ,align: Axis.vertical,rightMargin: 0,)
+                        //  ScrollableCars(
+                        //         width: 0.73 * width,
+                        //         height: 0.4 * height,
+                        //         carsToShow: cars
+                        //             .where('sold', isNotEqualTo: true)
+                        //             .orderBy('sold')
+                        //             .orderBy("creation_time", descending: true)
+                        //             .limit(5),
+                        //       ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            ViewMoreText()
+                          ],
+                        ),
+                        //   ],
+                        // ),
+                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                        //     ,align: Axis.vertical,rightMargin: 0,)
+                        //  ScrollableCars(
+                        //         width: 0.73 * width,
+                        //         height: 0.4 * height,
+                        //         carsToShow: cars
+                        //             .where('sold', isNotEqualTo: true)
+                        //             .orderBy('sold')
+                        //             .orderBy("creation_time", descending: true)
+                        //             .limit(5),
+                        //       ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
