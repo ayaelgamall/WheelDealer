@@ -1,4 +1,6 @@
 import 'package:bar2_banzeen/widgets/app_bar.dart';
+import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/scrollable_cars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../services/authentication_service.dart';
 import '../services/users_service.dart';
 import '../widgets/car_card.dart';
 import '../widgets/view_more_button.dart';
@@ -23,37 +24,16 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
     String userId = curretUser!.uid;
     final cars = FirebaseFirestore.instance.collection('cars');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    int count = 5;
     return Scaffold(
         appBar: CustomAppBar(),
-        // AppBar(title: Text("Hi"), actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       AuthenticationService().signOut();
-        //       context.go("/");
-        //     },
-        //     icon: Icon(Icons.logout),
-        //   ),
-        //   IconButton(
-        //     onPressed: () {
-        //       context.push("/mainPage/messages");
-        //     },
-        //     icon: Icon(Icons.message),
-        //   )
-        // ]),
-        // appBar: AppBar(
-        //   title: const Text(
-        //     "BeebBeeb",
-        //     style: TextStyle(color: Color.fromARGB(255, 60, 64, 72)),
-        //   ),
-        // ),
+        drawer: AppDrawer(location: 'mainPage'),
         body: Container(
-          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: RefreshIndicator(
             onRefresh: () {
               return Future(() {
@@ -76,7 +56,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "Trending"),
-                            ViewMoreText(),
+                            const ViewMoreText(),
                           ],
                         ),
                         ScrollableCars(
@@ -93,7 +73,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "What's new"),
-                            ViewMoreText()
+                            const ViewMoreText()
                           ],
                         ),
                         ScrollableCars(
@@ -104,6 +84,28 @@ class _MainPageState extends State<MainPage> {
                               .orderBy("creation_time", descending: true)
                               .limit(5),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            const ViewMoreText()
+                          ],
+                        ),
+                        //   ],
+                        // ),
+                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                        //     ,align: Axis.vertical,rightMargin: 0,)
+                        //  ScrollableCars(
+                        //         width: 0.73 * width,
+                        //         height: 0.4 * height,
+                        //         carsToShow: cars
+                        //             .where('sold', isNotEqualTo: true)
+                        //             .orderBy('sold')
+                        //             .orderBy("creation_time", descending: true)
+                        //             .limit(5),
+                        //       ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,7 +132,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             MainHeading(text: "All cars"),
-                            ViewMoreText()
+                            const ViewMoreText()
                           ],
                         ),
                       ],
@@ -138,10 +140,12 @@ class _MainPageState extends State<MainPage> {
                     ...snapshot.data!.docs.map((doc) {
                       return Stack(children: [
                         CarCard(
-                            width: 0.89 * width,
-                            height: 0.4 * height,
-                            rightMargin: 0,
-                            carId: doc.id),
+                          width: 0.89 * width,
+                          height: 0.4 * height,
+                          rightMargin: 0,
+                          carId: doc.id,
+                          location: 'mainPage',
+                        ),
                         Positioned(
                             top: 20,
                             right: 20,

@@ -11,6 +11,7 @@ class CarCard extends StatelessWidget {
   double height;
   double width;
   double rightMargin;
+  String location;
   String? carId;
 
   CarCard(
@@ -18,6 +19,7 @@ class CarCard extends StatelessWidget {
       required this.width,
       required this.height,
       required this.rightMargin,
+      required this.location,
       this.carId});
 
   @override
@@ -62,7 +64,7 @@ class CarCard extends StatelessWidget {
                       year: '${carData['year']}',
                       mileage: carData['mileage']);
                   GoRouter.of(context)
-                      .go('/mainPage/car', extra: {'car': car, 'bid': bid});
+                      .go('/${location}/car', extra: {'car': car, 'bid': bid});
                 },
                 child: Card(
                     margin: EdgeInsets.only(
@@ -79,13 +81,13 @@ class CarCard extends StatelessWidget {
                                 topLeft: Radius.circular(7),
                                 topRight: Radius.circular(7),
                               ),
-                            child: Image(
-                              image: NetworkImage(
-                                  carData['photos'][0]), // TODO read from db
-                              height: 0.73 * height,
-                              width: width,
-                              fit: BoxFit.cover,
-                            )),
+                              child: Image(
+                                image: NetworkImage(
+                                    carData['photos'][0]), // TODO read from db
+                                height: 0.73 * height,
+                                width: width,
+                                fit: BoxFit.cover,
+                              )),
                           Container(
                             width: width,
                             padding: const EdgeInsets.only(
@@ -131,8 +133,7 @@ class CarCard extends StatelessWidget {
                                       deadline: carData['deadline']!.toDate()),
                                   topBid == null
                                       ? Text(
-                                    '${NumberFormat('###,000').format(carData['starting_price'])} EGP'
-                                          ,
+                                          '${NumberFormat('###,000').format(carData['starting_price'])} EGP',
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -144,16 +145,24 @@ class CarCard extends StatelessWidget {
                                           future: topBid.get(),
                                           builder: (context, qs) {
                                             bid = qs.data?.docs.first['value'];
-                                            return Text(
-                                              '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP'
-                                              ,
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 183, 150, 19),
-                                              ),
-                                            );
+                                            if (!qs.hasData ||
+                                                qs.connectionState ==
+                                                    ConnectionState.waiting)
+                                              return SizedBox(
+                                                  width: 20,
+                                                  height: 20,
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            else
+                                              return Text(
+                                                '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 183, 150, 19),
+                                                ),
+                                              );
                                           })
                                 ],
                               ))

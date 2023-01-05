@@ -1,5 +1,7 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +17,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
+import 'drawer.dart';
 
 DateTime _deadline = DateTime.now();
 
@@ -100,7 +104,7 @@ class _SellCarFormState extends State<SellCarForm> {
       content: Row(
         children: [
           const Icon(
-            Icons.error_outline,
+            Icons.done,
             color: Colors.white,
           ),
           const SizedBox(
@@ -145,12 +149,24 @@ class _SellCarFormState extends State<SellCarForm> {
 
   @override
   Widget build(BuildContext context) {
-    final curretUser = Provider.of<User?>(context);
+    final curretUser = AuthenticationService().getCurrentUser();
 
     String userId = curretUser!.uid;
     return Scaffold(
+        drawer: AppDrawer(
+          location: 'sellCar',
+        ),
         appBar: AppBar(
           title: const Text("Sell Your Car"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.go("/sellCar/messages");
+                // context.push("/messages");
+              },
+              icon: Icon(Icons.message),
+            )
+          ],
         ),
         body: Form(
           key: _formKey,

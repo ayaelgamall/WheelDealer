@@ -27,7 +27,7 @@ class _SettingsState extends State<Settings> {
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text("Edit profle"),
             onTap: () {
-              // context.push('/editProfile');
+              context.go('${GoRouterState.of(context).location}/editProfile');
             },
           ),
           SwitchListTile(
