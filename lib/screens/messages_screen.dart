@@ -35,7 +35,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        backgroundColor: Color(0xFF29292A),
+        // backgroundColor: Color(0xFF29292A),
         drawer: AppDrawer(
           location: 'messages',
         ),
@@ -93,7 +93,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               builder: (context, chats) {
                 print(thisUserId);
                 print(chats.data!.docs.length);
-                if (chats.data!.size == 0) {
+                if (chats.data == null || chats.data!.size == 0) {
                   return (Center());
                 }
                 if (chats.connectionState == ConnectionState.waiting ||
@@ -117,7 +117,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                             stream: MessagingStreamService()
                                 .getLastMessages(chatIds[index]),
                             builder: (context, messages) {
-                              if (messages.data!.size == 0) {
+                              if (messages.data == null ||
+                                  messages.data!.size == 0) {
                                 return Container();
                               }
                               if (messages.hasData) {
@@ -133,7 +134,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                     future:
                                         UsersService().fetchUser(otherUserId),
                                     builder: (context, user) {
-                                      if (user.data == null) {
+                                      if (user == null || user.data == null) {
                                         return Center();
                                       }
                                       if (!user.hasData) {
