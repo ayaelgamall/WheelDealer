@@ -17,24 +17,22 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    // final themeChange = Provider.of<AppTheme>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text("Settings"),
       ),
       body: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.account_circle_outlined),
-            title: Text("Edit profle"),
+            leading: const Icon(Icons.account_circle_outlined),
+            title: const Text("Edit profle"),
             onTap: () {
               // context.push('/editProfile');
             },
           ),
           SwitchListTile(
-              secondary: Icon(Icons.dark_mode_outlined),
-              title: Text("Dark mode"),
+              secondary: const Icon(Icons.dark_mode_outlined),
+              title: const Text("Dark mode"),
               value: appTheme.isDarkTheme,
               onChanged: (value) {
                 setState(() {

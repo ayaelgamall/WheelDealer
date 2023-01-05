@@ -194,23 +194,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // void getCurrentAppTheme() async {
-  //   themeChangeProvider.darkTheme =
-  //       await themeChangeProvider.darkThemePreference.getTheme();
-  // }
-
-  // This widget is the root of your application.
   @override
-  // void initState() {
-  //   super.initState();
-  //   // getCurrentAppTheme();
-
-  //   // appTheme.addListener(() {
-  //   //   //👈 this is to notify the app that the theme has changed
-  //   //   setState(
-  //   //       () {}); //👈 this is to force a rerender so that the changes are carried out
-  //   // });
-  // }
   DarkThemePreference preference = DarkThemePreference();
   @override
   void initialThemeMode() async {
@@ -237,22 +221,10 @@ class _MyAppState extends State<MyApp> {
           create: (_) => AuthenticationService().onAuthStateChanged,
           initialData: null,
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) {
-        //     return theme;
-        //   },
-        // )
       ],
       child: MaterialApp.router(
         routerConfig: router,
-        // themeMode:
-        //     themeChangeProvider.darkTheme ? ThemeMode.dark : ThemeMode.light,
 
-        // // themeMode: appTheme
-        // //     .themeMode, //👈 this is the themeMode defined in the AppTheme class
-        // darkTheme:
-        //     darkTheme, //👈 this is the darkTheme that we defined in the theme.dart file
-        // theme: theme.darkTheme ? darkTheme : lightTheme,
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

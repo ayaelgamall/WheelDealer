@@ -103,23 +103,9 @@ ThemeData darkTheme = ThemeData(
   ), //todo change
 );
 
-// class AppTheme with ChangeNotifier {
-//   DarkThemePreference darkThemePreference = DarkThemePreference();
-//   bool _darkTheme = false;
-//   // ThemeMode get themeMode => _darkTheme ? ThemeMode.dark : ThemeMode.light;
-
-//   bool get darkTheme => _darkTheme;
-
-//   set darkTheme(bool value) {
-//     _darkTheme = value;
-//     darkThemePreference.setDarkTheme(value);
-//     notifyListeners();
-//   }
-// }
 class AppTheme with ChangeNotifier {
-
-
-  bool isDarkTheme =false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
+  bool isDarkTheme =
+      false; // TODO persist this make use of a storage library to store its value. I suggest get_storage
 
   ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
