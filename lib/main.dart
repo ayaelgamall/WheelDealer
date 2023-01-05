@@ -11,7 +11,6 @@ import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/settings_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
-import 'package:bar2_banzeen/widgets/explore_Page_Content.dart';
 import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
@@ -138,7 +137,20 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // :sort!=null ?
+                  // ExplorePage(sortBy: sort):
+                  //  ExplorePage();
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),
@@ -156,7 +168,17 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),
@@ -203,7 +225,18 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // return const ExplorePage();
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),
@@ -237,7 +270,17 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),
@@ -271,7 +314,17 @@ class _MyAppState extends State<MyApp> {
               GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const ExplorePage();
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
                   // return showSearch(context: context, delegate: CustomSearchDelegate());
                 },
               ),

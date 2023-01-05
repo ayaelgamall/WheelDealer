@@ -1,6 +1,7 @@
 import 'package:bar2_banzeen/main.dart';
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../services/users_service.dart';
@@ -13,13 +14,17 @@ class ScrollableCars extends StatelessWidget {
   Query<Map<String, dynamic>> carsToShow;
   Axis align;
   double rightMargin;
-  ScrollableCars(
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.carsToShow,
-      this.align = Axis.horizontal,
-      this.rightMargin = 20});
+
+  double height2;
+  ScrollableCars({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.height2,
+    required this.carsToShow,
+    this.align = Axis.horizontal,
+    this.rightMargin = 20,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class ScrollableCars extends StatelessWidget {
         .limit(5);
 
     return Container(
-      height: height,
+      height: height2,
       child: FutureBuilder<QuerySnapshot>(
           future: carsToShow.get(),
           builder: (context, snapshot) {
@@ -97,6 +102,7 @@ class ScrollableCars extends StatelessWidget {
                   ]);
                 },
               );
+              // .toList()]);
             }
           }),
     );
