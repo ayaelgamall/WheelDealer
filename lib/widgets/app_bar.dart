@@ -6,7 +6,18 @@ import '../screens/messages_screen.dart';
 import '../services/authentication_service.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CustomAppBar({ Key? key}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
+  String title = 'WheelDealer';
+  String location = 'mainPage';
+  bool isSearch;
+  bool isMessage;
+  CustomAppBar(
+      {Key? key,
+      this.title = 'WheelDealer',
+      this.isSearch = true,
+      this.isMessage = true,
+      this.location = 'mainPage'})
+      : preferredSize = Size.fromHeight(kToolbarHeight),
+        super(key: key);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -15,37 +26,34 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar>{
-
-
-
+class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      // leading: ,
+      title: Text(widget.title),
       // backgroundColor: Colors.white,
 
       actions: [
+        if (widget.isSearch)
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              context.go('/${widget.location}/explore', extra: {
+                'sort': 'bids_count',
+                'desc': true,
+              });
+            },
+          ),
+        if (widget.isSearch)
           IconButton(
             onPressed: () {
-              AuthenticationService().signOut();
-              context.go("/");
+              context.go("/${widget.location}/messages");
             },
-            icon: Icon(Icons.logout),
-          ),
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            // showSearch(context: context, delegate: CustomSearchDelegate());
-            // showSearch(context: context, delegate: CustomSearchDelegate());
-            // context.go('/mainPage/explore');
-            context.go('/mainPage/explore',extra: {'sort':'bids_count','desc':true});
-          },
-        ),  IconButton(
-        onPressed: () {
-          context.push("/messages");
-        },
-        icon: Icon(Icons.message),
-      )
+            icon: const ImageIcon(
+              AssetImage('lib/assets/images/icons/messenger 2.png'),
+            ),
+          )
       ],
     );
   }

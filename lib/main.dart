@@ -1,17 +1,21 @@
 import 'package:bar2_banzeen/components/theme.dart';
+import 'package:bar2_banzeen/prefrences/DarkThemePrefrence.dart';
 import 'package:bar2_banzeen/screens/chat_screen.dart';
 import 'package:bar2_banzeen/screens/dummy.dart';
+import 'package:bar2_banzeen/screens/edit_profile_screen.dart';
 import 'package:bar2_banzeen/screens/explore_page.dart';
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
+import 'package:bar2_banzeen/screens/get_started_screen.dart';
 import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
+import 'package:bar2_banzeen/screens/settings_screen.dart';
 import 'package:bar2_banzeen/screens/user_profile_screen.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:bar2_banzeen/widgets/search_bar.dart';
 import 'package:bar2_banzeen/widgets/wrapper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -57,8 +61,14 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
           path: "/",
           builder: (BuildContext context, GoRouterState state) {
-            return Wrapper();
+            return const GetStarted();
           }),
+      GoRoute(
+        path: "/wrapper",
+        builder: (BuildContext context, GoRouterState state) {
+          return const Wrapper();
+        },
+      ),
       GoRoute(
           path: "/chat/:userId/:chatId",
           builder: (BuildContext context, GoRouterState state) {
@@ -67,6 +77,12 @@ class _MyAppState extends State<MyApp> {
                 toUserId: state.params['userId']!,
                 chatId: state.params['chatId']!);
           }),
+      // GoRoute(
+      //     path: "/editProfile",
+      //     builder: (BuildContext context, GoRouterState state) {
+      //       // return MyWidget();
+      //       return const EditProfile();
+      //     }),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -100,6 +116,25 @@ class _MyAppState extends State<MyApp> {
                 },
               ),
               GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+              GoRoute(
                 path: 'explore',
                 builder: (BuildContext context, GoRouterState state) {
                   Map<String, Object?> extra =
@@ -129,18 +164,54 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, GoRouterState state) {
               return FavouriteCarsScreen();
             },
-            // routes: <RouteBase>[
-            //   /// Same as "/a/details", but displayed on the root Navigator by
-            //   /// specifying [parentNavigatorKey]. This will cover both screen B
-            //   /// and the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     parentNavigatorKey: _rootNavigatorKey,
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'B');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
+                path: 'car',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  Car car = extra['car'] as Car;
+                  int? value = extra['bid'] as int?;
+                  return CarPage(car: car, topBid: value);
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+            ],
           ),
 
           /// The Sell Car screen to display in the bottom navigation bar.
@@ -150,48 +221,139 @@ class _MyAppState extends State<MyApp> {
               return SellCarScreen(); //TODO REMOVE DUMMY
               // return  SellCarScreen(carId: "3EQL9bSGFwnUtlNaq24h",); //TODO REMOVE DUMMY
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // return const ExplorePage();
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+            ],
           ),
           GoRoute(
             path: '/notifications',
             builder: (BuildContext context, GoRouterState state) {
               return const Notifications();
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/profile',
             builder: (BuildContext context, GoRouterState state) {
               return const UserProfile();
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'explore',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map<String, Object?> extra =
+                      state.extra as Map<String, Object?>;
+                  String sort = extra['sort'] as String;
+                  bool desc = extra['desc'] as bool;
+                  return
+                      // sort!=null && desc!=null?
+                      ExplorePage(
+                    sortBy: sort,
+                    desc: desc,
+                    filters: {},
+                  );
+                  // return showSearch(context: context, delegate: CustomSearchDelegate());
+                },
+              ),
+              GoRoute(
+                path: 'editProfile',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const EditProfile();
+                },
+              ),
+              GoRoute(
+                path: 'messages',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MessagingScreen();
+                },
+              ),
+              GoRoute(
+                  path: 'settings',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return Settings();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'editProfile',
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const EditProfile();
+                      },
+                    ),
+                  ]),
+            ],
           ),
         ],
       ),
@@ -201,6 +363,7 @@ class _MyAppState extends State<MyApp> {
   //tabs for bottom nav
   bool _initialized = false;
   bool _error = false;
+
   void initializeFirebase() async {
     try {
       await Firebase.initializeApp();
@@ -214,11 +377,19 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // This widget is the root of your application.
   @override
-  void initState() {
+  DarkThemePreference preference = DarkThemePreference();
+  @override
+  void initialThemeMode() async {
+    appTheme.isDarkTheme = await preference.getTheme();
+  }
+
+  @override
+  initState() {
     super.initState();
     appTheme.addListener(() {
+      initialThemeMode();
+
       //👈 this is to notify the app that the theme has changed
       setState(
           () {}); //👈 this is to force a rerender so that the changes are carried out
@@ -236,6 +407,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp.router(
         routerConfig: router,
+
         themeMode: appTheme
             .themeMode, //👈 this is the themeMode defined in the AppTheme class
         darkTheme:

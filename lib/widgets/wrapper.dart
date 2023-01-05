@@ -3,6 +3,7 @@ import 'package:bar2_banzeen/screens/login_screen.dart';
 import 'package:bar2_banzeen/screens/main_page.dart';
 import 'package:bar2_banzeen/screens/selected_tab_screen.dart';
 import 'package:bar2_banzeen/screens/sell_car_screen.dart';
+import 'package:bar2_banzeen/screens/settings_screen.dart';
 import 'package:bar2_banzeen/screens/signup_screen.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +45,7 @@ class _WrapperState extends State<Wrapper> {
               return const SelectedTab(
                 child: MainPage(),
               );
+              // return Settings();
             } else {
               return const CompleteProfileScreen();
             }

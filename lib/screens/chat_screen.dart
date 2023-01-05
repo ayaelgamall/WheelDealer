@@ -54,6 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
             future: SendingMessagesService()
                 .fetchOtherUserId(widget.chatId, thisUserId),
             builder: (context, otherUserId) {
+              print(otherUserId.hasData);
               if (!otherUserId.hasData) {
                 return CircularProgressIndicator();
               }
@@ -91,16 +92,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   });
             },
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: Icon(
-                Icons.info_outlined,
-                color: Color(0xFFD2D2D8),
-                size: 30,
-              ),
-            )
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 12.0),
+          //     child: Icon(
+          //       Icons.info_outlined,
+          //       color: Color(0xFFD2D2D8),
+          //       size: 30,
+          //     ),
+          //   )
+          // ],
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: messages(),
@@ -164,7 +165,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(msg['text']),
+                                    Text(
+                                      msg['text'],
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 2.0, bottom: 0),

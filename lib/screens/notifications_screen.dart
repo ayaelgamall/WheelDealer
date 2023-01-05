@@ -1,22 +1,42 @@
+import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/notifications_service.dart';
+import 'package:bar2_banzeen/widgets/drawer.dart';
 import 'package:bar2_banzeen/widgets/notifications_shimmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../services/messaging_stream_service.dart';
+import '../widgets/app_bar.dart';
 
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User?>(context);
+    final user = AuthenticationService().getCurrentUser();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Notifications")),
+      drawer: AppDrawer(
+        location: 'notifications',
+      ),
+      appBar: CustomAppBar(title: "Notifications",location: 'notifications',),
+      // appBar: AppBar(
+      //   title: const Text("Notifications"),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         print(GoRouterState.of(context).location);
+      //         context.go("/notifications/messages");
+      //         // context.push("/messages");
+      //       },
+      //       icon: Icon(Icons.message),
+      //     )
+      //   ],
+      // ),
       body: StreamBuilder<QuerySnapshot>(
           stream: NotificationsService().getUserNotifications(user!.uid),
           builder: (context, snapshot) {

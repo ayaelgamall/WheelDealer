@@ -42,6 +42,7 @@ class UsersService {
       print(err);
     });
   }
+
   Future<void> addUser(UserModel user) async {
     String? profilePhotoLink = user.localPhoto != null
         ? await StorageService().uploadUserPhoto(user.uid, user.localPhoto!)
@@ -82,6 +83,10 @@ class UsersService {
     await _usersReference.doc(userId).update({"fcm_token": token});
   }
 
+  CollectionReference getUserBids(String uid) {
+    return _usersReference.doc(uid).collection('bids');
+  }
+
   Future<UserModel> fetchUser(String userId) async {
     DocumentSnapshot<Map<String, dynamic>> userDoc = await _usersReference
         .doc(userId)
@@ -96,5 +101,11 @@ class UsersService {
       profilePhotoLink: userDoc.data()?['profile_photo'],
     );
     return user;
+  }
+
+  Future<void> updateUserPostedCars(String uid, String carId) async {
+    await _usersReference.doc(uid).update({
+      "posted_cars": FieldValue.arrayUnion([carId])
+    });
   }
 }

@@ -54,6 +54,7 @@ dependencies:
   path_provider: ^2.0.11
   firebase_messaging: ^14.2.1
   shimmer: ^2.0.0
+  http: ^0.13.5
 
 
 
@@ -83,6 +84,7 @@ flutter:
   assets:
     - lib/assets/images/logos/
     - lib/assets/images/icons/
+    - lib/assets/images/backgrounds/
     - assets/images/
   #   - images/a_dot_ham.jpeg
 
@@ -101,7 +103,7 @@ flutter:
     - family: Roboto
       fonts:
         - asset: lib/assets/fonts/Roboto-Bold.ttf
-
-
+    
+  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
