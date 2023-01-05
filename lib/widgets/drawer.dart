@@ -69,9 +69,9 @@ class AppDrawer extends StatelessWidget {
       ),
       ListTile(
         leading: const Icon(Icons.logout_outlined),
-        title: const Text('Logout'),
+        title: Text('Logout'),
         onTap: () {
-          context.go('/wrapper');
+          AuthenticationService().signOut();
         },
       ),
     ]));
