@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/services/storage_service.dart';
+import 'package:bar2_banzeen/services/users_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/car.dart';
@@ -28,6 +29,7 @@ class CarsService {
       "bids_count": 0
     });
     String carId = carDocument.id;
+    await UsersService().updateUserPostedCars(car.sellerId, carId);
     List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
         (localPhoto) async =>
             await StorageService().uploadCarPhoto(carId, localPhoto!)));
@@ -52,7 +54,7 @@ class CarsService {
       "seller_id": car.sellerId,
     });
 
-     StorageService().clearCarPhotos(carId);
+    StorageService().clearCarPhotos(carId);
 
     List<String> uploadedPhotos = await Future.wait(car.localPhotos!.map(
         (localPhoto) async =>

@@ -29,7 +29,7 @@ class ProfileCarCard extends StatelessWidget {
         stream: car.snapshots(),
         builder: (context, doc) {
           if (!doc.hasData || doc.connectionState == ConnectionState.waiting) {
-            //TODOL: to be replaced by error check maybe?
+            //TODO: to be replaced by error check maybe?
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -47,8 +47,8 @@ class ProfileCarCard extends StatelessWidget {
 
             return carData['sold']
                 ? SoldCar(carData, topBid, doc.data!.id)
-                : GestureDetector(
-                    onTap: () {},
+                : InkWell(
+                    onTap: () {}, // TODO redirect to car page
                     child: carCard(carData, topBid, doc.data!.id));
           }
         });
@@ -72,8 +72,7 @@ class ProfileCarCard extends StatelessWidget {
                       topRight: Radius.circular(7),
                     ),
                     child: Image(
-                      image: const AssetImage(
-                          'assets/images/example.jpg'), // TODO read from db
+                      image: NetworkImage(carData['photos'][0]),
                       height: 0.7 * height,
                       width: width,
                       fit: BoxFit.cover,
@@ -89,11 +88,16 @@ class ProfileCarCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "${carData['brand']} ${carData['model']}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                "${carData['brand']} ${carData['model']}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.clip,
                               ),
                             ),
                             cardType == 0 && !carData['sold']
