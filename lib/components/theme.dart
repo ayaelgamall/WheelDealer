@@ -30,15 +30,19 @@ ThemeData lightTheme = ThemeData(
   backgroundColor: const Color(0xFFEAEAEA),
   scaffoldBackgroundColor: const Color(0xFFEAEAEA),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
+  hoverColor: Color(0xff00ABB3),
+  primaryColorLight:Color(0xffa4a4a4),
+
   textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Color(0xff3C4048)),
-    bodyLarge: TextStyle(color: Color(0xff00ABB3)),
-    bodySmall: TextStyle(color: Color(0xff3C4048)),
-    titleLarge: TextStyle(
-      color: Color.fromARGB(255, 183, 150, 19),
-    ),
+      bodyMedium: TextStyle(color: Color(0xff3C4048)),
+      bodyLarge: TextStyle(color: Color(0xff00ABB3)),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
+
+    headlineSmall:  const TextStyle(color:  Color(0xff3C4048)),
+    labelMedium:  const TextStyle(color: Color(0xff3C4048)),
+
     // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
-  ),
+      ),
   primaryColor: const Color(0xffB2B2B2),
   // Color.fromARGB(255, 183, 147, 0)
   unselectedWidgetColor: const Color(0xffcccccc),
@@ -61,13 +65,14 @@ ThemeData darkTheme = ThemeData(
 
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff22A39F)),
   primaryTextTheme: Typography().white,
-  textTheme: TextTheme(
+  textTheme:  TextTheme(
     bodyLarge: const TextStyle(color: Color(0xff00ABB3)),
     // bodyMedium: const TextStyle(color: Color(0xff3C4048)),
-    bodyMedium: const TextStyle(color: Colors.white),
-    headlineSmall: const TextStyle(color: Colors.white),
-    labelMedium: const TextStyle(color: Colors.white),
-    titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
+    bodyMedium:  const TextStyle(color: Colors.white),
+    headlineSmall:  const TextStyle(color: Colors.white),
+    labelMedium:  const TextStyle(color: Colors.white),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 128, 103, 4))),
+
   ),
   hintColor: const Color(0xAFF3EFE0),
 
