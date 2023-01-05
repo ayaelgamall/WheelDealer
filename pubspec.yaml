@@ -50,9 +50,10 @@ dependencies:
   page_indicator: ^0.4.0
   google_sign_in: ^5.4.2
   flutter_facebook_auth: ^5.0.7
-  path_provider: ^2.0.11
   firebase_messaging: ^14.2.1
   shimmer: ^2.0.0
+  http: ^0.13.5
+  path_provider: ^2.0.11
   shared_preferences: ^2.0.7
 
 

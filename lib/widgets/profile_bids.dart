@@ -9,7 +9,7 @@ class ProfileBids extends StatelessWidget {
   double height;
   double width;
   BuildContext ctx;
-  Query<Map<String, dynamic>>? carsToShow;
+  CollectionReference? carsToShow;
   ProfileBids(
       {super.key,
       this.carsToShow,
@@ -22,13 +22,13 @@ class ProfileBids extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: carsToShow == null
-          ? Center(child: Text("No bids yet"))
+          ? const Center(child: Text("No bids yet"))
           : StreamBuilder<QuerySnapshot>(
               stream: carsToShow?.snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData ||
                     snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
@@ -37,7 +37,7 @@ class ProfileBids extends StatelessWidget {
                     return ProfileCarCard(
                       bidValue: doc['value'],
                       width: 0.8 * width,
-                      height: 0.4 * height,
+                      height: 0.5 * height,
                       rightMargin: 0,
                       carId: doc['car'],
                       cardType: 1,

@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class ProfileAvatar extends StatelessWidget {
   double width;
   double height;
-  ProfileAvatar({super.key, required this.width, required this.height});
+  String photoURL;
+  ProfileAvatar(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.photoURL});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -14,7 +19,7 @@ class ProfileAvatar extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/example.jpg"),
+            backgroundImage: NetworkImage(photoURL),
             radius: 50,
           ),
           // Positioned(

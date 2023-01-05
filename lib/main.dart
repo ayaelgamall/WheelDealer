@@ -168,16 +168,14 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, GoRouterState state) {
               return const UserProfile();
             },
-            // routes: <RouteBase>[
-            //   // The details screen to display stacked on the inner Navigator.
-            //   // This will cover screen A but not the application shell.
-            //   GoRoute(
-            //     path: 'details',
-            //     builder: (BuildContext context, GoRouterState state) {
-            //       return const DetailsScreen(label: 'C');
-            //     },
-            //   ),
-            // ],
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'editProfile',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const EditProfile();
+                },
+              ),
+            ],
           ),
         ],
       ),
