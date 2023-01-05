@@ -35,7 +35,6 @@ class _ExplorePageState extends State<ExplorePage> {
   String selectedTerm='';
   final  controller = TextEditingController();
 
-
   bool searching =false;
   List<String> filterSearchTerms({
       required String filter,
@@ -200,8 +199,9 @@ class _ExplorePageState extends State<ExplorePage> {
                       carsToShow: selectedTerm==''?
                       cars.orderBy(widget.sortBy, descending: widget.desc)
                           :
-                      cars.where('brand',isEqualTo:selectedTerm).orderBy('brand')
-                          .orderBy(widget.sortBy, descending: widget.desc) //todo not working
+                      cars.where('brand',isEqualTo:selectedTerm)
+                          // cars.where('brand',isEqualTo:selectedTerm).orderBy('brand')
+                          // .orderBy(widget.sortBy, descending: widget.desc) //todo not working
                       // carsToShow:cars.orderBy('bids_count', descending: true)
 
                       ,//todo change
