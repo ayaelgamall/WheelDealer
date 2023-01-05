@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/drawer.dart';
+
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
   static const routeName = '/profile';
@@ -29,16 +31,26 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<User?>(context);
     final userData = AuthenticationService().getCurrentUser();
-    // FirebaseFirestore.instance
-    //     .collection('users')
-    //     .doc("fBDHfJIyBo908ecQdoaI");
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(title: const Text("My Profile")),
+        drawer: AppDrawer(
+          location: 'profile',
+        ),
+        appBar: AppBar(
+          title: const Text("My Profile"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.go("/profile/messages");
+                // context.push("/messages");
+              },
+              icon: Icon(Icons.message),
+            )
+          ],
+        ),
         body: FutureBuilder<DocumentSnapshot>(
           future: UsersService().getUser(userData!.uid),
           builder: ((context, user) {
@@ -111,7 +123,9 @@ class _UserProfileState extends State<UserProfile> {
                               size: 18,
                               Icons.settings_outlined,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              context.go("/profile/settings");
+                            },
                           )
                         ],
                       )

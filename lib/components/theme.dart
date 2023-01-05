@@ -33,6 +33,10 @@ ThemeData lightTheme = ThemeData(
   textTheme: const TextTheme(
     bodyMedium: TextStyle(color: Color(0xff3C4048)),
     bodyLarge: TextStyle(color: Color(0xff00ABB3)),
+    bodySmall: TextStyle(color: Color(0xff3C4048)),
+    titleLarge: TextStyle(
+      color: Color.fromARGB(255, 183, 150, 19),
+    ),
     // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
   ),
   primaryColor: const Color(0xffB2B2B2),
