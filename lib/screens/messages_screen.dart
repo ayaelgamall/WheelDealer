@@ -87,6 +87,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
             StreamBuilder<QuerySnapshot>(
               stream: MessagingStreamService().getChats(thisUserId),
               builder: (context, chats) {
+                print(thisUserId);
+                print(chats.data!.docs.length);
                 if (chats.data!.size == 0) {
                   return (Center());
                 }

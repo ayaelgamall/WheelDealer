@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
-        appBar:CustomAppBar(),
+        appBar: CustomAppBar(),
         // AppBar(title: Text("Hi"), actions: [
         //   IconButton(
         //     onPressed: () {
@@ -62,24 +62,24 @@ class _MainPageState extends State<MainPage> {
             },
             child: FutureBuilder<QuerySnapshot>(
               future: cars.where('sold', isNotEqualTo: true).limit(5).get(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return ListView(children: [
-                  Column(
-                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          MainHeading(text: "Trending"),
-                          ViewMoreText(),
-                        ],
-                      ),
-                      ScrollableCars(
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ListView(children: [
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "Trending"),
+                            ViewMoreText(),
+                          ],
+                        ),
+                        ScrollableCars(
                           width: 0.73 * width,
                           height: 0.4 * height,
                           carsToShow: cars
@@ -101,27 +101,30 @@ class _MainPageState extends State<MainPage> {
                           height: 0.4 * height,
                           carsToShow: cars
                               // .where('sold', isNotEqualTo: true)
-                            .orderBy("creation_time", descending: true)
-                            .limit(5),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          MainHeading(text: "All cars"),
-                          ViewMoreText()
-                        ],
-                      ),
-                    ],
-                  ),
-                  // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
-                  //     ,align: Axis.vertical,rightMargin: 0,)
-
-                              .where('sold', isNotEqualTo: true)
-                              .orderBy('sold')
                               .orderBy("creation_time", descending: true)
                               .limit(5),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainHeading(text: "All cars"),
+                            ViewMoreText()
+                          ],
+                        ),
+                        //   ],
+                        // ),
+                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
+                        //     ,align: Axis.vertical,rightMargin: 0,)
+                        //  ScrollableCars(
+                        //         width: 0.73 * width,
+                        //         height: 0.4 * height,
+                        //         carsToShow: cars
+                        //             .where('sold', isNotEqualTo: true)
+                        //             .orderBy('sold')
+                        //             .orderBy("creation_time", descending: true)
+                        //             .limit(5),
+                        //       ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,

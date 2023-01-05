@@ -5,7 +5,7 @@ class MessagingStreamService {
   Stream<QuerySnapshot> getChats(String userId) {
     return FirebaseFirestore.instance
         .collection("chats")
-        .where('user0', isEqualTo: userId)
+        .where('users', arrayContains: userId)
         .snapshots();
   }
 
