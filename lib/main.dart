@@ -377,9 +377,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  @override
   DarkThemePreference preference = DarkThemePreference();
-  @override
   void initialThemeMode() async {
     appTheme.isDarkTheme = await preference.getTheme();
   }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../models/car.dart';
+import 'dart:developer';
 
 class CarCard extends StatelessWidget {
   double height;
@@ -147,13 +148,13 @@ class CarCard extends StatelessWidget {
                                             bid = qs.data?.docs.first['value'];
                                             if (!qs.hasData ||
                                                 qs.connectionState ==
-                                                    ConnectionState.waiting)
-                                              return SizedBox(
+                                                    ConnectionState.waiting) {
+                                              return const SizedBox(
                                                   width: 20,
                                                   height: 20,
                                                   child:
                                                       CircularProgressIndicator());
-                                            else
+                                            } else {
                                               return Text(
                                                 '${NumberFormat('###,000').format(qs.data?.docs.first['value'])} EGP',
                                                 style: const TextStyle(
@@ -163,6 +164,7 @@ class CarCard extends StatelessWidget {
                                                       255, 183, 150, 19),
                                                 ),
                                               );
+                                            }
                                           })
                                 ],
                               ))

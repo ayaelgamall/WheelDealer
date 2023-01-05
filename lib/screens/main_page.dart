@@ -87,34 +87,6 @@ class _MainPageState extends State<MainPage> {
                               .limit(5),
                         ),
 
-                        //   ],
-                        // ),
-                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
-                        //     ,align: Axis.vertical,rightMargin: 0,)
-                        //  ScrollableCars(
-                        //         width: 0.73 * width,
-                        //         height: 0.4 * height,
-                        //         carsToShow: cars
-                        //             .where('sold', isNotEqualTo: true)
-                        //             .orderBy('sold')
-                        //             .orderBy("creation_time", descending: true)
-                        //             .limit(5),
-                        //       ),
-
-
-                        //   ],
-                        // ),
-                        // ScrollableCars(width:  0.89 * width, height: 0.4 * height, carsToShow: cars
-                        //     ,align: Axis.vertical,rightMargin: 0,)
-                        //  ScrollableCars(
-                        //         width: 0.73 * width,
-                        //         height: 0.4 * height,
-                        //         carsToShow: cars
-                        //             .where('sold', isNotEqualTo: true)
-                        //             .orderBy('sold')
-                        //             .orderBy("creation_time", descending: true)
-                        //             .limit(5),
-                        //       ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
