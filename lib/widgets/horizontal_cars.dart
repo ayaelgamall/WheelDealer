@@ -1,10 +1,11 @@
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/users_service.dart';
 
-String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
 class HorizontalCars extends StatelessWidget {
   double height;
@@ -18,6 +19,8 @@ class HorizontalCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     final trendyCars = FirebaseFirestore.instance
         .collection('cars')
         .orderBy("bids_count", descending: true)

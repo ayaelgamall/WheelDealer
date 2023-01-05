@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bar2_banzeen/models/car.dart';
 import 'package:bar2_banzeen/services/authentication_service.dart';
 import 'package:bar2_banzeen/services/cars_service.dart';
+import 'package:bar2_banzeen/services/notifications_service.dart';
 import 'package:bar2_banzeen/widgets/photo_thumbnail.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,6 +54,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
   @override
   void initState() {
     super.initState();
+    NotificationsService().registerNotifications();
   }
 
   @override
@@ -147,7 +149,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    // User user = Provider.of<User>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -583,7 +585,7 @@ class _SellCarScreenState extends State<SellCarScreen> {
                               model: _model.text,
                               localPhotos: _photos,
                               creationTime: DateTime.now(),
-                              sellerId: user.uid,
+                              sellerId: ' user.uid',
                               sold: false,
                               startingPrice: int.parse(_price.text),
                               transmission: _transmission,

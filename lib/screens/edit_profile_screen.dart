@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:provider/provider.dart';
 
 import '../services/storage_service.dart';
 
@@ -35,9 +36,10 @@ class _EditProfileState extends State<EditProfile> {
   XFile? _photo = XFile('/lib/assets/images/icons/userIcon.png');
   bool _formHasErrors = true;
   final ImagePicker picker = ImagePicker();
-  var userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
   @override
   void initState() {
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -68,6 +70,8 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         _photosLoading = true;
       });
+      final curretUser = Provider.of<User?>(context);
+      String userId = curretUser!.uid;
       XFile? photo = await picker.pickImage(source: ImageSource.gallery);
       String link = await StorageService().uploadUserPhoto(userId, photo!);
       setState(() {
@@ -149,6 +153,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Update Profile"),
