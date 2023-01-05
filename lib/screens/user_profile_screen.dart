@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/profile_avatar.dart';
 import 'package:bar2_banzeen/widgets/profile_bids.dart';
 import 'package:bar2_banzeen/widgets/profile_posts.dart';
@@ -34,7 +35,8 @@ class _UserProfileState extends State<UserProfile> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(title: const Text("beebbeeb")),
+      drawer: Drawer(),//todo change
+        appBar: CustomAppBar(),
         body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           future: userData.get(),
           builder: ((context, user) {

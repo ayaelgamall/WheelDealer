@@ -30,6 +30,7 @@ class _MainPageState extends State<MainPage> {
     double height = MediaQuery.of(context).size.height;
     int count = 5;
     return Scaffold(
+      drawer: Drawer(), //todo change with real
         appBar:CustomAppBar(),
         // AppBar(title: Text("Hi"), actions: [
         //   IconButton(
@@ -81,7 +82,7 @@ class _MainPageState extends State<MainPage> {
                         ),
                         ScrollableCars(
                           width: 0.73 * width,
-                          height: 0.4 * height,
+                          height: 0.37 * height,
                           carsToShow: cars
                               .where('sold', isNotEqualTo: true)
                               .orderBy('sold')

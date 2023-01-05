@@ -1,10 +1,12 @@
+
 import 'package:bar2_banzeen/widgets/car_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/users_service.dart';
 
-String userId = "IQ8O7SsY85NmhVQwghef7RF966z1"; //TODO change userID
 
 class ScrollableCars extends StatelessWidget {
   double height;
@@ -20,10 +22,10 @@ class ScrollableCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trendyCars = FirebaseFirestore.instance
-        .collection('cars')
-        .orderBy("bids_count", descending: true)
-        .limit(5);
+
+    final curretUser = Provider.of<User?>(context);
+    String userId = curretUser!.uid;
+
 
     return Container(
       height: height,

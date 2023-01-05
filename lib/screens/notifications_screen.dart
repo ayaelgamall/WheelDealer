@@ -1,4 +1,5 @@
 import 'package:bar2_banzeen/services/notifications_service.dart';
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/notifications_shimmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,8 @@ class Notifications extends StatelessWidget {
     final user = Provider.of<User?>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Notifications")),
+      drawer:Drawer(),//todo change to real
+      appBar: CustomAppBar(title: "Notifications"),
       body: StreamBuilder<QuerySnapshot>(
           stream: NotificationsService().getUserNotifications(user!.uid),
           builder: (context, snapshot) {

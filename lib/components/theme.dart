@@ -28,10 +28,16 @@ ThemeData lightTheme = ThemeData(
   backgroundColor: const Color(0xFFEAEAEA),
   scaffoldBackgroundColor: const Color(0xFFEAEAEA),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xff00ABB3)),
+  hoverColor: Color(0xff00ABB3),
+  primaryColorLight:Color(0xffa4a4a4),
+
   textTheme: const TextTheme(
       bodyMedium: TextStyle(color: Color(0xff3C4048)),
       bodyLarge: TextStyle(color: Color(0xff00ABB3)),
     titleLarge: TextStyle(color: Color.fromARGB(255, 183, 150, 19)),
+
+    headlineSmall:  const TextStyle(color:  Color(0xff3C4048)),
+    labelMedium:  const TextStyle(color: Color(0xff3C4048)),
 
     // headlineMedium: TextStyle(color: Colors.white, fontSize: 25)
       ),

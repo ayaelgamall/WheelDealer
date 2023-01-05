@@ -1,3 +1,4 @@
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -149,9 +150,8 @@ class _SellCarFormState extends State<SellCarForm> {
 
     String userId = curretUser!.uid;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Sell Your Car"),
-        ),
+      drawer: Drawer(),//todo change to real one
+        appBar:CustomAppBar(title: 'Sell Your Car',) ,
         body: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,

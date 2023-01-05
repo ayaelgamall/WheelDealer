@@ -1,5 +1,6 @@
 import 'package:bar2_banzeen/screens/favourite_cars_screen.dart';
 import 'package:bar2_banzeen/services/users_service.dart';
+import 'package:bar2_banzeen/widgets/app_bar.dart';
 import 'package:bar2_banzeen/widgets/main_page_heading.dart';
 import 'package:bar2_banzeen/widgets/timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,35 +53,7 @@ class _CarPageState extends State<CarPage> {
 
 
     return Scaffold(
-      appBar: AppBar(),
-      // floatingActionButton: Container(
-      //   width: width,
-      //   height: 0.1 * height,
-      //   child: SizedBox(
-      //     width: 80,
-      //     height: 30,
-      //     child: ElevatedButton.icon(
-      //       icon: const Padding(
-      //         padding: EdgeInsets.only(left: .0),
-      //         child: Icon(Icons.add),
-      //       ),
-      //       style: ButtonStyle(
-      //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      //           RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.circular(7),
-      //           ),
-      //         ),
-      //       ),
-      //       onPressed: () {},
-      //       label: const Padding(
-      //         padding: EdgeInsets.symmetric(vertical: 10),
-      //         child: Text(
-      //           'Place a bid',
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      appBar: CustomAppBar(),
       body: Stack(
         children: [
           Positioned(
@@ -164,7 +137,6 @@ class _CarPageState extends State<CarPage> {
                     child: Column(
                       children: [
                         Expanded(
-                          // height: (0.6*height-80),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,137 +201,91 @@ class _CarPageState extends State<CarPage> {
                                       if (!doc.hasData) {
                                         return const CircularProgressIndicator();
                                       } else {
-                                        return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    doc.data!["profile_photo"] != null
-                                                        ? CircleAvatar(
-                                                            backgroundImage: NetworkImage(
-                                                                doc.data![
-                                                                    "profile_photo"]))
-                                                        : const CircleAvatar(
-                                                            backgroundImage: AssetImage(
-                                                                'lib/assets/images/icons/userIcon.png')),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(doc.data!["display_name"],
-                                                                style: TextStyle(
-                                                                    color: Theme.of(context).hoverColor,
-                                                                    fontWeight:
-                                                                        FontWeight.bold)),
-                                                            // SizedBox(width: 10,),
-                                                            // InkWell(child: Icon(Icons.chat,size: 15,),)
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-
-
-                                                            const Icon(
-                                                              Icons.location_on_outlined,
-                                                              size: 17,
-                                                            ),
-                                                            Text(car.location)
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(width: 5,),
-                                                    Ink(
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(width: 0,color:Theme.of(context).primaryColorLight,),
-                                                        color:Theme.of(context).primaryColorLight,
-
-
-                                                        borderRadius: BorderRadius.circular(100.0),
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: InkWell(
-
-                                                            onTap: () { //todo route to chat
-
-                                                            }, child: Icon(Icons.chat_outlined,size: 20,)),
-                                                      ),
-                                                    ),
-
-                                                  ],
+                                                doc.data!["profile_photo"] != null
+                                                    ? CircleAvatar(
+                                                        backgroundImage: NetworkImage(
+                                                            doc.data![
+                                                                "profile_photo"]))
+                                                    : const CircleAvatar(
+                                                        backgroundImage: AssetImage(
+                                                            'lib/assets/images/icons/userIcon.png')),
+                                                const SizedBox(
+                                                  width: 10,
                                                 ),
-                                                // Column(
-                                                //   children: [
-                                                //     Text('Location',
-                                                //         style: TextStyle(
-                                                //             color: Theme.of(context).hoverColor,
-                                                //             fontWeight:
-                                                //             FontWeight.bold)),
-                                                //     Row(
-                                                //       children: [
-                                                //         const Icon(
-                                                //           Icons.location_on_outlined,
-                                                //           size: 17,
-                                                //         ),
-                                                //         Text(car.location),
-                                                //       ],
-                                                //     ),
-                                                //   ],
-                                                // ),
                                                 Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text("Ending In",
-                                                        style: TextStyle(
-                                                            color: Theme.of(context)
-                                                                .hoverColor,
-                                                            fontWeight: FontWeight.bold)),
-                                                    CardTimer(
-                                                      deadline: car.deadline,
-                                                    )
+                                                    Row(
+                                                      children: [
+                                                        Text(doc.data!["display_name"],
+                                                            style: TextStyle(
+                                                                color: Theme.of(context).hoverColor,
+                                                                fontWeight:
+                                                                    FontWeight.bold)),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+
+
+                                                        const Icon(
+                                                          Icons.location_on_outlined,
+                                                          size: 17,
+                                                        ),
+                                                        Text(car.location)
+                                                      ],
+                                                    ),
                                                   ],
-                                                )
+                                                ),
+                                                SizedBox(width: 5,),
+                                                Ink(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(width: 0,color:Theme.of(context).primaryColorLight,),
+                                                    color:Theme.of(context).primaryColorLight,
+
+
+                                                    borderRadius: BorderRadius.circular(100.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: InkWell(
+
+                                                        onTap: () { //todo route to chat
+
+                                                        }, child: ImageIcon(
+                                                      AssetImage(
+                                                          'lib/assets/images/icons/messenger 2.png'),size: 20,),),
+                                                  ),
+                                                ),
+
                                               ],
                                             ),
-                                            // Column(children: [
-                                            //   Text('Contact Seller')
-                                            // ],)
+
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Ending In",
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .hoverColor,
+                                                        fontWeight: FontWeight.bold)),
+                                                CardTimer(
+                                                  deadline: car.deadline,
+                                                )
+                                              ],
+                                            )
                                           ],
                                         );
                                       }
                                     }),
-                                // const SizedBox(
-                                //   height: 20,
-                                // ),
-                                // Column(
-                                //   children: [
-                                //     Text('Location',
-                                //         style: TextStyle(
-                                //             color: Theme.of(context).hoverColor,
-                                //             fontWeight:
-                                //             FontWeight.bold)),
-                                //     Row(
-                                //       children: [
-                                //         const Icon(
-                                //           Icons.location_on_outlined,
-                                //           size: 17,
-                                //         ),
-                                //         Text(car.location),
-                                //       ],
-                                //     ),
-                                //   ],
-                                // ),
                                 const SizedBox(
                                   height: 30,
                                 ),
