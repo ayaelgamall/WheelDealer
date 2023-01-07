@@ -315,10 +315,16 @@ class _MyAppState extends State<MyApp> {
                 path: 'car',
                 builder: (BuildContext context, GoRouterState state) {
                   Map<String, Object?> extra =
-                  state.extra as Map<String, Object?>;
+                      state.extra as Map<String, Object?>;
                   Car car = extra['car'] as Car;
                   int? value = extra['bid'] as int?;
                   return CarPage(car: car, topBid: value);
+                },
+              ),
+              GoRoute(
+                path: 'editPost/:carId',
+                builder: (context, state) {
+                  return SellCarScreen(carId: state.params['carId']);
                 },
               ),
               GoRoute(
