@@ -62,6 +62,7 @@ class ProfilePopUpMenu extends StatelessWidget {
       elevation: 0,
       onSelected: (value) {
         if (value == 1) {
+          context.go('/profile/editPost/$carID');
         } else if (value == 2) {
           CarsService().setCarSold(carID);
           // .then((value) => ScaffoldMessenger.of(context)
