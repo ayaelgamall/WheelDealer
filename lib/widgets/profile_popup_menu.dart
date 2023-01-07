@@ -87,7 +87,7 @@ class ProfilePopUpMenu extends StatelessWidget {
     Widget deleteButton = TextButton(
         child: const Text("Delete"),
         onPressed: () async {
-          Navigator.of(context).pop();
+          context.pop();
           bool success = true;
           await CarsService()
               .deleteCar(carID)
