@@ -1,6 +1,6 @@
 # Wheel Dealer
 
-![1](https://user-images.githubusercontent.com/61806738/211011917-9c1abded-f971-4522-bc86-71f50871bd3e.png)
+![1](https://user-images.githubusercontent.com/61806738/211156441-04d253a7-f872-4efc-b918-8f76440d1960.png)
 
 ![2](https://user-images.githubusercontent.com/61806738/211011923-65148876-2453-445b-b4db-bd3cb64d72d1.png)
 
@@ -8,7 +8,7 @@
 
 ![4](https://user-images.githubusercontent.com/61806738/211011989-148a94f5-4145-4afb-827b-0d8fc1b3d387.png)
 
-![5](https://user-images.githubusercontent.com/61806738/211011995-31405427-aab0-428b-87e5-a9038f3ed374.png)
+![5](https://user-images.githubusercontent.com/61806738/211156460-040ef313-2673-4928-b06a-4bf82e830b9a.png)
 
 ![6](https://user-images.githubusercontent.com/61806738/211012002-8722c7bf-a409-4928-836e-a979e7c3450c.png)
 
@@ -21,6 +21,8 @@
 ![10](https://user-images.githubusercontent.com/61806738/211012077-c38986a4-6191-4ed1-9710-907d369fd450.png)
 
 ![11](https://user-images.githubusercontent.com/61806738/211012092-d945960e-8338-4217-90b2-dea2fbe69d2e.png)
+
+![12](https://user-images.githubusercontent.com/61806738/211156512-5c046c66-c9ec-4515-8b44-ebf7e22b4032.png)
 
 ![12](https://user-images.githubusercontent.com/61806738/211012109-1a3f900e-e153-47c9-9b21-c525a35b8934.png)
 
